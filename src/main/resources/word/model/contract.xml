@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:contract xmlns:c="http://mwt.com/model/word/serviceContract/1.0">
+	<c:roleRef>roleRef</c:roleRef>
+	<c:roleName>roleName</c:roleName>
+	<c:startDate>startDate</c:startDate>
+	<c:endDate>endDate</c:endDate>
+	<c:PAYEstatus>PAYEStatus</c:PAYEstatus>
+	<c:totalContractValue>contractValue</c:totalContractValue>
+	<c:periodValue>paymentValue</c:periodValue>
+	<c:periodSpecifier>periodSpecifier</c:periodSpecifier>
+	<c:periodDuration>periodDuration</c:periodDuration>
+	<c:overtimePayable>overtimePayable</c:overtimePayable>
+	<c:overtimeRate>overtimeRate</c:overtimeRate>
+	<c:contractValueCurrency>contractValueCurrency</c:contractValueCurrency>
+	<c:noticePeriodSpecifier>noticePeriodSpecifier</c:noticePeriodSpecifier>
+	<c:noticePeriodDuration>noticePeriodDuration</c:noticePeriodDuration>
+	<c:location>location</c:location>
+	<c:serviceProviderName>serviceProviderName</c:serviceProviderName>
+	<c:serviceProviderOrganisation>serviceProviderOrganisation</c:serviceProviderOrganisation>
+	<c:serviceProviderAddress>serviceProviderAddress</c:serviceProviderAddress>
+	<c:serviceProviderCoNumber>serviceProviderCoNumber</c:serviceProviderCoNumber>
+	<c:serviceProviderVATNumber>serviceProviderVATNumber</c:serviceProviderVATNumber>
+	<c:contractDate>contractDate</c:contractDate>
+	<c:clientName>clientName</c:clientName>
+	<c:clientAddress>clientAddress</c:clientAddress>
+	<c:hsProviderNotified>H_S Notifications</c:hsProviderNotified>
+	<c:hsClientMitigated>H_S Mitigation</c:hsClientMitigated>
+</c:contract>

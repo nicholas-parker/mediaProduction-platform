@@ -1,0 +1,11 @@
+<webscript>
+	<shortname>DataLists - Data retrieval</shortname>
+	<description>Data Lists Component - retrieve data within a given list
+	</description>
+	<!-- url>/slingshot/datalists/data/site/{site}/{container}/{list}</url -->
+	<url>/nvp/ahha/datalists/{siteName}/{listType}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

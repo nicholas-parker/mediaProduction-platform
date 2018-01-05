@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="nvp:contentModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+	<!-- Optional meta-data about the model -->
+	<description>Sample Document Model</description>
+	<author>My Name</author>
+	<version>1.0</version>
+
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<!-- Import Alfresco System Model Definitions -->
+		<import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
+		<!-- Import Alfresco Data List Model Definitions -->
+		<import uri="http://www.alfresco.org/model/datalist/1.0" prefix="dl" />
+		<import uri="http://www.alfresco.org/model/site/1.0" prefix="st" />
+		<import uri="http://www.alfresco.org/model/sitecustomproperty/1.0" prefix="stcp" />
+		<import uri="http://www.alfresco.org/model/bpm/1.0" prefix="bpm" />
+		
+	</imports>
+
+	<!-- Custom namespaces for Production Manager platform -->
+	<!-- nvp.com/model/content licenced by Nick Parker -->
+	<namespaces>
+		<namespace uri="http://nvp.com/model/content/1.0" prefix="nvp" />
+		<namespace uri="http://nvp.com/model/datalist/1.0" prefix="nvpList" />
+		<namespace uri="http://nvp.com/model/contract/1.0" prefix="contract" />
+		<namespace uri="http://nvp.com/model/mediaProduction/1.0" prefix="prod" />
+		<namespace uri="http://com.mwt/model/legal" prefix="legal" />
+		<namespace uri="http://com.mwt/model/workflow/1.0" prefix="mwtwf" />
+	</namespaces>
+
+
+
+	<!-- =============================================================================================================== 
+		Constraints, Types, and Aspects go here... -->
+	<constraints>
+		<constraint name="contract:contractApprovalStatusConstraint"
+			type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<!-- Empty for default search -->
+					<value>APPROVED</value>
+					<value>NOT APPROVED</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="nvp:PAYEStatusOptions" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<!-- Empty for default search -->
+					<value>PAYE</value>
+					<value>Self Employed</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:partyPositionConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<!-- Empty for default search -->
+					<value>PENDING</value>
+					<value>NEGOTIATION</value>
+					<value>AGREED</value>
+					<value>DECLINED</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:partyRoleConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<!-- Empty for default search -->
+					<value>SERVICE PROVIDER</value>
+					<value>SERVICE RECIPIENT</value>
+					<value>LEGAL SERVICE</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:contractDeliverableTypeConstraint"
+			type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>SERVICE</value>
+					<value>PRODUCT</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:contractCurrencyConstraint"
+			type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>GBP</value>
+					<value>EUR</value>
+					<value>USD</value>
+					<value>AUS</value>
+					<value>KRN</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:periodSpecifierConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Milestone</value>
+					<value>Daily</value>
+					<value>Weekly</value>
+					<value>Monthly</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:ratePeriodConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value>per hour</value>
+					<value>per day</value>
+					<value>per week</value>
+					<value>per month</value>
+					<value>fixed price contract</value>
+				</list>
+			</parameter>
+		</constraint>
+		
+		<constraint name="contract:yesNoConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>NO</value>
+					<value>YES</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:workingWeekConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Five (5) days per week</value>
+					<value>Six (6) days per week</value>
+					<value>Eleven (11) days per fortnight</value>
+				</list>
+			</parameter>
+		</constraint>
+
+		<constraint name="contract:identityDocumentTypeConstraint"
+			type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Passport</value>
+					<value>Drivers Licence</value>
+				</list>
+			</parameter>
+		</constraint>
+		
+		<constraint name="contract:workflowNameConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Contract management process</value>
+					<value>Simple reminder</value>
+					<value>Manual process</value>
+				</list>
+			</parameter>
+		</constraint>
+		
+		<constraint name="contract:contractAdministrationTeamConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Contracts admin team</value>
+				</list>
+			</parameter>
+		</constraint>
+		
+		
+	</constraints>
+
+	<types>
+		<!-- Enterprise-wide Document root type. All other custom document types 
+			would extend this one. -->
+
+		<type name="nvpList:productionRoleType">
+			<title>Production Roles Types</title>
+			<description>A list of default role types, charge codes, PAYE status and a link to the template contract</description>
+			<parent>dl:dataListItem</parent>
+			<properties>
+				<property name="nvpList:typeName">
+					<title>Role Type</title>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="nvpList:typeDescription">
+					<title>Role description</title>
+					<description>A description of role responsibilities and how executed</description>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:typeDeliverableType">
+					<title>Deliverable type</title>
+					<description>The type of deliverable provided by this role</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:contractDeliverableTypeConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeChargeCode">
+					<title>Charge code</title>
+					<description>General ledger charge code this role is booked to</description>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:typePAYEStatus">
+					<title>PAYE status</title>
+					<description>The PAYE status for this role</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="nvp:PAYEStatusOptions" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeWorkingWeek">
+					<title>Working week</title>
+					<description>The days in a week expected to work</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:workingWeekConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeBudgetMin">
+					<title>Minimum Budget</title>
+					<description>The minimum budget expected to pay</description>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:typeBudgetMax">
+					<title>Maximum Budget</title>
+					<description>The maximum budget expected to pay</description>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:typePaymentPeriod">
+					<title>Payment period</title>
+					<description>The frequency the role is paid</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:periodSpecifierConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeRatePeriod">
+					<title>Rate period</title>
+					<description>The period the contract rate applies to</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:ratePeriodConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeCurrency">
+					<title>Currency</title>
+					<description>Currency role is paid in</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:contractCurrencyConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeProcessName">
+					<title>Management Process</title>
+					<description>The name of the workflow process which is used to manage this type of role</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:workflowNameConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:typeAdministrationTeam">
+					<title>Administration team</title>
+					<description>The team who will manage this contract type to completion</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:contractAdministrationTeamConstraint" />
+					</constraints>
+				</property>
+			</properties>
+			<associations>
+				<association name="nvpList:contractTemplate">
+					<title>Contract Template</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>contract:contractTemplate</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+			</associations>
+		</type>
+
+
+
+
+		<!-- A party who signs a contract -->
+		<type name="contract:party">
+			<title>Contract Party</title>
+			<description>An instance of a party who is engaged in contractual negotiation</description>
+			<parent>sys:base</parent>
+			<properties>
+				<property name="contract:signDate">
+					<title>Date party signs document</title>
+					<type>d:date</type>
+				</property>
+				<property name="contract:contractPosition">
+					<title>Contract position</title>
+					<description>The position this party has taken on the contract relating to the agreement of the contract</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:partyPositionConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:contractRole">
+					<title>Contract Role</title>
+					<description>Role of party relating to contract</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:partyRoleConstraint" />
+					</constraints>
+				</property>
+			</properties>
+			<associations>
+				<association name="contract:partyPerson">
+					<title>Person</title>
+					<description>The person who is taking part in the contract</description>
+					<source>
+						<mandatory>true</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:person</class>
+						<mandatory>true</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+				<!-- association name="contract:partyOrganisation"> <title>Represented 
+					Organisation</title> <description>The organisation which the person represents 
+					in the contract</description> <source> <mandatory>false</mandatory> <many>true</many> 
+					</source> <target> <class>nvp:organisation</class> <mandatory>false</mandatory> 
+					<many>false</many> </target> </association -->
+			</associations>
+		</type>
+
+
+		<type name="contract:contractContainer">
+			<title>Contract Container</title>
+			<description>A container which contains content which has the contract aspect</description>
+			<parent>cm:folder</parent>
+			<mandatory-aspects>
+				<aspect>sys:undeletable</aspect>
+				<aspect>sys:unmovable</aspect>
+			</mandatory-aspects>
+		</type>
+		
+        <type name="prod:crewContainer">
+			<title>Crew Container</title>
+			<description>A container which contains folders for crew members</description>
+			<parent>cm:folder</parent>
+			<mandatory-aspects>
+				<aspect>sys:undeletable</aspect>
+				<aspect>sys:unmovable</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="contract:contractTemplateContainer">
+			<title>Contract Template Container</title>
+			<description>A container which contains the template contracts for a production</description>
+			<parent>cm:folder</parent>
+			<mandatory-aspects>
+				<aspect>sys:undeletable</aspect>
+				<aspect>sys:unmovable</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="nvpList:productionRole">
+			<title>Production Role</title>
+			<parent>dl:dataListItem</parent>
+			<properties>
+				<property name="nvpList:roleType">
+					<title>Role Type</title>
+					<description></description>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:roleName">
+					<title>Role Title</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:roleDescription">
+					<title>Role Description</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:createdDate">
+					<title>Date created</title>
+					<type>d:date</type>
+				</property>
+				<property name="nvpList:offerDate">
+					<title>Date role offered</title>
+					<type>d:date</type>
+				</property>
+				<property name="nvpList:acceptDate">
+					<title>Date role accepted</title>
+					<type>d:date</type>
+				</property>
+				<property name="nvpList:roleStatus">
+					<title>Current status of role</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:chargeCode">
+					<title>Charge code this role is assigned to in finance platform</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:PAYEStatus">
+					<title>The PAYE status for this role</title>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="nvp:PAYEStatusOptions" />
+					</constraints>
+				</property>
+				<property name="nvpList:contractProcessId">
+					<title>The process id of the Activiti process instance which is managing the contract</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:startDate">
+					<title>Start date</title>
+					<type>d:date</type>
+				</property>
+				<property name="nvpList:endDate">
+					<title>End date</title>
+					<type>d:date</type>
+				</property>
+				<property name="nvpList:ratePeriod">
+					<title>The period the contract value applies to, e.g. hourly, daily, weekly, pa.a</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:paymentPeriod">
+					<title>The period the payment to the provider is made on</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:budgetMin">
+					<title>The minimum budget expected to pay</title>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:budgetMax">
+					<title>The maximum budget expected to pay</title>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:totalBudgetMin">
+					<title>The minimum budget expected to pay</title>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:totalBudgetMax">
+					<title>The maximum budget expected to pay</title>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:totalContractsAmount">
+					<title>The maximum budget expected to pay</title>
+					<description>The total amount of all the contracts which have been agreed to fulfill this crew position.  Takes into account that different people may fulfill this role over the period of the production</description>
+					<type>d:float</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="nvpList:assignee">
+					<title>Assignee</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:person</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+				<association name="nvpList:roleContractDocuments">
+					<title>Contract Document</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>contract:contractDocument</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+		</type>
+
+		<!-- WORKFLOW TYPES -->
+		<type name="mwtwf:setupContractDetailsTask">
+			<parent>bpm:startTask</parent>
+			<properties>
+				<property name="mwtwf:newSupplierFirstName">
+					<title>Crew Member first name (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+				<property name="mwtwf:newSupplierLastName">
+					<title>Crew Member last name (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+				<property name="mwtwf:newSupplierEmail">
+					<title>Crew Member email (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="mwtwf:existingSupplier">
+					<title>Crew Member name (for a previous crew)</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:person</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="mwtwf:reviewContractDetailsTask">
+			<parent>bpm:activitiOutcomeTask</parent>
+			<properties>
+				<property name="mwtwf:acceptContractOutcome">
+					<type>d:text</type>
+					<default>Accept</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Accept</value>
+									<value>Decline</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>mwtwf:acceptContractOutcome</default>
+				</property>
+			</overrides>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+				<aspect>contract:rightToWork</aspect>
+				<aspect>contract:individualSupplier</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="mwtwf:approveContractDetailsTask">
+			<parent>bpm:activitiOutcomeTask</parent>
+			<properties>
+				<property name="mwtwf:approveContractOutcome">
+					<type>d:text</type>
+					<default>Accept</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Accept</value>
+									<value>Reject</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>mwtwf:approveContractOutcome</default>
+				</property>
+			</overrides>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+				<aspect>contract:rightToWork</aspect>
+				<aspect>contract:individualSupplier</aspect>
+			</mandatory-aspects>
+		</type>
+	</types>
+
+	<aspects>
+
+		<!-- aspect name="nvp:organisation"> <title>Organisation</title> <description>An 
+			organisation with legal status which is involved in processes</description> 
+			<parent>sys:base</parent> <properties> <property name="nvp:orgName"> <title>Organisation 
+			Name</title> <type>d:text</type> </property> </properties> <associations> 
+			<child-association name="nvp:children"> <title>Child Organisations</title> 
+			<source> <mandatory>false</mandatory> <many>true</many> </source> <target> 
+			<class>nvp:organisation</class> <mandatory>false</mandatory> <many>true</many> 
+			</target> <duplicate>false</duplicate> </child-association> </associations> 
+			<mandatory-aspects> <aspect>contract:signee</aspect> <aspect>contract:registeredOrg</aspect> 
+			</mandatory-aspects> </aspect -->
+		<!-- an aspect which is applied to each person who can participate in contract 
+			signing -->
+			
+		<aspect name="prod:bankAccount">
+		  <title>Bank account</title>
+		  <properties>
+		    <property name="prod:bankName">
+		      <title>Bank name</title>
+		      <description></description>
+		      <type>d:text</type>
+		    </property>
+		    <property name="prod:bankAccountName">
+		      <title>Bank account name</title>
+		      <description></description>
+		      <type>d:text</type>
+		    </property>
+		    <property name="prod:bankAccountNumber">
+		      <title>Bank account number</title>
+		      <description></description>
+		      <type>d:int</type>
+		    </property>
+		    <property name="prod:bankBranchSortCode">
+		      <title>Branch sort</title>
+		      <description></description>
+		      <type>d:int</type>
+		    </property>
+		  </properties>
+		</aspect>
+		
+		<aspect name="contract:signee">
+			<title>Contract signee</title>
+			<description>An entity that can sign a contract</description>
+			<properties>
+				<property name="contract:publicKey">
+					<title>Public Key</title>
+					<description>The public key this entity uses for signing items</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:privateKey">
+					<title>Private Key</title>
+					<description>The public key this entity uses for signing items</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+        <aspect name="contract:individualSupplier">
+        	<title>Details of an individual supplier</title>
+        	<description>Applied to a workflow task where we want to see individual person details</description>
+        	<properties>
+        	<property name="contract:supplierFirstName">
+					<title>First name</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierLastName">
+					<title>Last name</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierEmail">
+					<title>Email</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierTelephone">
+					<title>Telephone</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierMobile">
+					<title>Mobile</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierAddress1">
+					<title>Address</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierAddress2">
+					<title>Address</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierAddress3">
+					<title>Address</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierPostCode">
+					<title>Post code</title>
+					<type>d:text</type>
+				</property>
+        	</properties>
+        </aspect>
+		
+		<aspect name="contract:rightToWork">
+			<title>Identifies an individuals right to work</title>
+			<description>An aspect which describes the details of an employable person</description>
+			<properties>
+				<property name="contract:dateOfBirth">
+					<title>Date of birth</title>
+					<type>d:date</type>
+				</property>
+				<property name="contract:townOfBirth">
+					<title>Town of birth</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:countryOfBirth">
+					<title>Country of birth</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:nationalInsuranceNumber">
+					<title>National Insurance</title>
+					<type>d:text</type>
+				</property>
+				<property name="contract:identityDocumentReference">
+					<title>Identity reference number</title>
+					<description>Reference number of the document provided as proof of identity</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:identityDocumentType">
+					<title>Identity reference document type</title>
+					<description>The type of document used as identity</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:identityDocumentTypeConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:identityDocumentIssuer">
+					<title>Identity document issuing body</title>
+					<description>The organisation which issues the identity document</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:visaNumber">serviceRegistry
+					<title>Work visa number</title>
+					<description>The work visa number (if required)</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:visaExpiryDate">
+					<title>Work visa expiry date</title>
+					<description>The expiry date of your work visa</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:rightToWorkAsserted">
+					<title>I have the right to work in the UK</title>
+					<description>The type of document used as identity</description>
+					<type>d:boolean</type>
+				</property>
+				<!-- property name="contract:rightToWorkApproved">
+					<title>Right to work is approved</title>
+					<description>The type of document used as identity</description>
+					<type>d:boolean</type>
+				</property>
+				<property name="contract:rightToWorkApprovedDate">
+					<title>Date right to work is approved</title>
+					<description>The type of document used as identity</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:rightToWorkRenewDate">
+					<title>Date right the right to work should be renewed</title>
+					<description>The date the current right to work approval expires</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:rightToWorkExpireDate">
+					<title>Date right to work expires</title>
+					<description>The date the current right to work expires</description>
+					<type>d:date</type>
+				</property -->
+			</properties>
+		</aspect>
+		<aspect name="contract:registeredOrg">
+			<title>Registered Legal Organisation</title>
+			<description>Attributes which records an organisations legal references</description>
+			<properties>
+			    <property name="contract:registeredName">
+					<title>Registered Name</title>
+					<description>Legal registered name of the organisation</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:operatingName">
+					<title>Operating Name</title>
+					<description>The name the organisation operates or trades as</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:formalAddress">
+					<title>Registered address</title>
+					<description>The address to be used in all formal communication</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:formalPostCode">
+					<title>Registered post code</title>
+					<description></description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:registeredNum">
+					<title>Registered Number</title>
+					<description>Registration number with registration authority</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:registerOrg">
+					<title>Registered Organisation</title>
+					<description>Name of organisation</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:registerRegion">
+					<title>Registered Region</title>
+					<description>Region the organisation is registered in</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:taxNumber">
+					<title>VAT Number</title>
+					<description>Tax registration number</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:taxRegion">
+					<title>Registered tax region</title>
+					<description>Region the organisation is registered in for tax purposes</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:orgContactEmail">
+					<title>Contact email</title>
+					<description></description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:orgContactTel">
+					<title>Contact telephone number</title>
+					<description></description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="contract:contractTemplate">
+			<title>Contract</title>
+			<description>A document which forms a binding contract between two or more parties</description>
+			<properties>
+				<property name="contract:templatePAYEstatus">
+					<title>PAYE status</title>
+					<description>Indicates if this contract is managed under PAYE, Self Employed or Company</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="nvp:PAYEStatusOptions" />
+					</constraints>
+				</property>
+				<property name="contract:deliverableType">
+					<title>Deliverable Type</title>
+					<description>The type of deliverable this contract is to procure</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:contractDeliverableTypeConstraint" />
+					</constraints>
+				</property>
+			</properties>
+			<associations>
+				<association name="contract:productionRoleType">
+					<title>Production Role</title>
+					<description>The Production Role which this contract has been created for</description>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>nvpList:productionRoleType</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+
+			</associations>
+		</aspect>
+
+  
+        <aspect name="prod:document">
+        	<title>Document</title>
+        	<properties>
+        		<property name="prod:docType">
+					<title>Document Type</title>
+					<description>Type of document suc as employment contract, invoice etc</description>
+					<type>d:text</type>
+				</property>
+        		<property name="prod:docCategory">
+					<title>Document Category</title>
+					<description>Type of document such as contract, finance etc</description>
+					<type>d:text</type>
+				</property>
+				<property name="prod:legalIssuingCountry">
+					<title>Legal Issuing Country</title>
+					<description>Legal regional context</description>
+					<type>d:text</type>
+				</property>
+				<property name="prod:docValidFrom">
+					<title>Valid From</title>
+					<description>Start of document validity period</description>
+					<type>d:date</type>
+				</property>
+				<property name="prod:docValidTo">
+					<title>Valid To</title>
+					<description>End of document validity period</description>
+					<type>d:date</type>
+				</property>
+				<property name="prod:issuerDocRefNumber">
+					<title>Reference number for document as defined by issuer</title>
+					<description>Passport number, invoice number etc</description>
+					<type>d:date</type>
+				</property>
+				<property name="prod:recipientDocRefNumber">
+					<title>Reference number for document as defined by recipient</title>
+					<description>Internal reference number</description>
+					<type>d:date</type>
+				</property>
+        	</properties>
+        </aspect>
+        
+		<!-- an aspect which is applied to a contract document node which is electronically 
+			signed in the blockchain -->
+		<aspect name="contract:contractDocument">
+			<title>Contract</title>
+			<description>A document which forms a binding contract between two or more parties</description>
+			<properties>
+				<property name="contract:contractDate">
+					<title>Contract date</title>
+					<description>Date the contract is provisioned</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:contractCode">
+					<title>Contract Code</title>
+					<description>A unique code in the share site for the contract</description>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+				<property name="contract:contractApprovalRole">
+					<title>Approval Role</title>
+					<description>Service recipient roles which can sign this content.  The role is represented by a group in the production share</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:contractApprovalStatus">
+					<title>Approval Status</title>
+					<description>A flag which indicates if content has been approved</description>
+					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+					<constraints>
+						<constraint ref="contract:contractApprovalStatusConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:contractApprovalDate">
+					<title>Approval Date</title>
+					<description>The date this content was approved</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:signingTransactionId">
+					<title>Signing Transaction Id</title>
+					<description>The Id of the transaction in the block chain where all parties sign the contract</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:PAYEstatus">
+					<title>PAYE status</title>
+					<description>Indicates if this contract is managed under PAYE, Self Employed or Company</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="nvp:PAYEStatusOptions" />
+					</constraints>
+				</property>
+				<property name="contract:contractValue">
+					<title>Contract Value</title>
+					<description>The amount which will be paid in return for the services delivered</description>
+					<type>d:int</type>
+				</property>
+				<property name="contract:ratePeriodSpecifier">
+					<title>Rate period</title>
+					<description>The period between each payment, the value of each payment is in contractValue</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:ratePeriodConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:contractValueCurrency">
+					<title>Contract Value Currency</title>
+					<description>The currency in which the contract will be paid</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:contractCurrencyConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:contractDeliverableType">
+					<title>Contract Deliverable Type</title>
+					<description>The type of deliverable item, currently SERVICE or PRODUCT</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:workingWeek">
+					<title>Working Week</title>
+					<description>Days per week service is required</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:workingWeekConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:paymentPeriodSpecifier">
+					<title>Payment Period</title>
+					<description>The period each payment will be made under the contract</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:periodSpecifierConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:overtimePayable">
+					<title>Overtime paid</title>
+					<description>Indicates if overtime is paid for this contract</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:yesNoConstraint" />
+					</constraints>
+				</property>
+				<property name="contract:overtimeRate">
+					<title>Overtime rate</title>
+					<description>Indicates the amount paid in the overtime period</description>
+					<type>d:int</type>
+				</property>
+				<property name="contract:holidayRate">
+					<title>Holiday rate</title>
+					<description>Indicates the amount paid in the overtime period</description>
+					<type>d:float</type>
+				</property>
+				<property name="contract:noticePeriod">
+					<title>Notice period</title>
+					<description>Notice period in days</description>
+					<type>d:int</type>
+				</property>
+				<property name="contract:location">
+					<title>Location</title>
+					<description>Location the service will be delivered in</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="contract:productionRole">
+					<title>Production Role</title>
+					<description>The Production Role which this contract has been created for</description>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>nvpList:productionRole</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+				<!-- association name="contract:parties"> <title>Parties</title> <description>A 
+					list of parties which are involved in the contractual agreement</description> 
+					<source> <mandatory>false</mandatory> <many>false</many> </source> <target> 
+					<class>contract:party</class> <mandatory>false</mandatory> <many>true</many> 
+					</target> </association -->
+				<association name="contract:contractSupplier">
+					<title>Supplier</title>
+					<description>The supplier who will fulfil the contractual agreement</description>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:person</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+			</associations>
+		</aspect>
+
+		<!-- aspect name="nvp:docTypeAspect">
+			<title>Document type</title>
+			<description>A an aspect which allows a document to have a type</description>
+			<properties>
+				<property name="nvp:docType">
+					<title>Document type</title>
+					<description>A category or type of document</description>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect -->
+		
+		<!-- aspect name="legal:legalDocumentAspect">
+			<title>Legal document</title>
+			<description>An aspect which encapsulates the meta data around a document which establishes some legal status of the document owner</description>
+			<properties>
+				<property name="legal:docType">
+					<title>Document type</title>
+					<description>The generic type of legal document such as passport</description>
+					<type>d:text</type>
+				</property>
+				<property name="legal:docContext">
+					<title>Document context</title>
+					<description>The context which the document is used in, such as establishing right to work or identity</description>
+					<type>d:text</type>
+				</property>
+				<property name="legal:issuerName">
+					<title>Issuing name</title>
+					<description>The name of the organisation which issued the document</description>
+					<type>d:text</type>
+				</property>
+				<property name="legal:documentReference">
+					<title>Document number</title>
+					<description>Unique number or reference such as passport number, driving licence number or solicitors reference</description>
+					<type>d:text</type>
+				</property>
+				<property name="legal:startDate">
+					<title>Start date</title>
+					<description>Date document becomes in force</description>
+					<type>d:date</type>
+				</property>
+				<property name="legal:endDate">
+					<title>End date</title>
+					<description>The date which the document ceases to have official legal status and can be used to establish a legal position</description>
+					<type>d:date</type>
+				</property>
+				<property name="legal:validated">
+					<title>Validated</title>
+					<description>A flag to indicate that a party has validated the document as real</description>
+					<type>d:boolean</type>
+				</property>
+				<property name="legal:assertsCause">
+					<title>Asserts cause</title>
+					<description>A flag to indicate that this document is considered to support the context in which it is being used</description>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</aspect -->
+
+		<aspect name="contract:servicePeriod">
+			<title>Service Period</title>
+			<description>An aspect which can be applied to any node which relates to services being supplied between a start and stop date</description>
+			<properties>
+				<property name="contract:serviceName">
+					<title>Service Name</title>
+					<description>The name of the service which is being provided</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:serviceDescription">
+					<title>Service Description</title>
+					<description>A description of the service being provided to add details and clarity to the contract</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:serviceTypeCode">
+					<title>Service Type Code</title>
+					<description>A code which defines the type of service being provided</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:serviceStart">
+					<title>Service Start Date</title>
+					<description>The datetime which the service will start on</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:serviceEnd">
+					<title>Service End Date</title>
+					<description>The datetime which the service will start on</description>
+					<type>d:date</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="prod:mediaProduction">
+			<title>Media Production</title>
+			<description>An aspect which describes the media production organisation</description>
+			<properties>
+				<property name="prod:productionName">
+					<title>Production Name</title>
+					<description>Name of the production</description>
+					<type>d:text</type>
+				</property>
+				<property name="prod:productionAddress1">
+					<title>Address 1</title>
+					<type>d:text</type>
+				</property>
+				<property name="prod:productionAddress2">
+					<title>Address 2</title>
+					<type>d:text</type>
+				</property>
+				<property name="prod:productionAddress3">
+					<title>Address 3</title>
+					<type>d:text</type>
+				</property>
+				<property name="prod:productionPOCode">
+					<title>Post Code</title>
+					<type>d:text</type>
+				</property>
+				<property name="prod:productionCountry">
+					<title>Country</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+
+	</aspects>
+
+
+</model>

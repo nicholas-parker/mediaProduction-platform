@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="mwtwf:workflowModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    <!-- Optional meta-data about the model -->
+    <description>Sample Workflow Model</description>
+    <author>My Name</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco Workflow Model Definitions -->
+        <import uri="http://www.alfresco.org/model/bpm/1.0" prefix="bpm"/>
+        <!-- Import MWT Contract Model -->
+        <import uri="http://nvp.com/model/datalist/1.0" prefix="nvpList"/>
+        <import uri="http://nvp.com/model/contract/1.0" prefix="contract"/>
+        <import uri="http://nvp.com/model/mediaProduction/1.0" prefix="prod"/>
+    </imports>
+
+    <!-- Custom namespace for your domain -->
+    <namespaces>
+        <namespace uri="http://com.mwt/model/workflow/1.0" prefix="mwtwf"/>
+    </namespaces>
+
+    <!-- ===============================================================================================================
+        Constraints, Types, and Aspects go here...
+        -->
+    <constraints>
+    
+    	<constraint name="mwtwf:contractApprovalStatusConstraint" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <!-- Empty for default search-->
+                    <value>APPROVED</value>
+                    <value>NOT APPROVED</value>
+                </list>
+            </parameter>
+        </constraint>
+        
+            <constraint name="mwtwf:PAYEStatusOptions" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <!-- Empty for default search-->
+                    <value>PAYE</value>
+                    <value>Self Employed</value>
+                </list>
+            </parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:partyPositionConstraint" type="LIST">
+        	<parameter name="allowedValues">
+        		<list>
+        		    <value></value>
+                    <!-- Empty for default search-->
+                    <value>PENDING</value>
+                    <value>NEGOTIATION</value>
+                    <value>AGREED</value>
+                    <value>DECLINED</value>
+        		</list>
+        	</parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:partyRoleConstraint" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                <value></value>
+                    <!-- Empty for default search-->
+                    <value>SERVICE PROVIDER</value>
+                    <value>SERVICE RECIPIENT</value>
+                    <value>LEGAL SERVICE</value>
+                </list>
+            </parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:contractDeliverableTypeConstraint" type="LIST">
+        	<parameter name="allowedValues">
+        		<list>
+        			<value></value>
+        			<value>SERVICE</value>
+        			<value>PRODUCT</value>
+        		</list>
+        	</parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:contractCurrencyConstraint" type="LIST">
+        	<parameter name="allowedValues">
+        		<list>
+        			<value></value>
+        			<value>GBP</value>
+        			<value>EUR</value>
+        			<value>USD</value>
+        			<value>AUS</value>
+        			<value>KRN</value>
+        		</list>
+        	</parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:periodSpecifierConstraint" type="LIST">
+        	<parameter name="allowedValues">
+        		<list>
+        			<value></value>
+        			<value>Milestone</value>
+        			<value>Daily</value>
+        			<value>Weekly</value>
+        			<value>Monthly</value>
+        		</list>
+        	</parameter>
+        </constraint>
+        
+        <constraint name="mwtwf:yesNoConstraint" type="LIST">
+        	<parameter name="allowedValues">
+        		<list>
+        			<value></value>
+        			<value>NO</value>
+        			<value>YES</value>
+        		</list>
+        	</parameter>
+        </constraint>
+    
+    </constraints>
+    
+    <types>
+    	<type name="mwtwf:setupContractDetailsTask">
+    		<parent>bpm:startTask</parent>
+    			<mandatory-aspects>
+					<aspect>contract:contractDocument</aspect>
+    			</mandatory-aspects>
+    	</type>
+    	<type name="mwtwf:reviewContractDetailsTask">
+    		<parent>bpm:workflowTask</parent>
+    	</type>
+    </types>
+    
+    <aspects>
+            <aspect name="mwtwf:contractDocument">
+            <title>Contract</title>
+            <description>A document which forms a binding contract between two or more parties</description>
+            <properties>
+                <property name="mwtwf:contractDate">
+                	<title>Contract date</title>
+                	<description>Date the contract is provisioned</description>
+                	<type>d:date</type>
+                </property>
+                <property name="mwtwf:contractCode">
+                	<title>Contract Code</title>
+                	<description>A unique code in the share site for the contract</description>
+                	<type>d:text</type>
+                	<index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
+                </property>
+                <property name="mwtwf:contractApprovalRole">
+                    <title>Approval Role</title>
+                    <description>Service recipient roles which can sign this content.  The role is represented by a group in the production share</description>
+                    <type>d:text</type>
+                </property>
+                <property name="mwtwf:contractApprovalStatus">
+                    <title>Approval Status</title>
+                    <description>A flag which indicates if content has been approved</description>
+                    <type>d:text</type>
+                    <index enabled="true">
+                        <atomic>true</atomic>
+                        <stored>false</stored>
+                        <tokenised>false</tokenised>
+                    </index>
+                    <constraints>
+                        <constraint ref="mwtwf:contractApprovalStatusConstraint"/>
+                    </constraints>
+                </property>
+                <property name="mwtwf:contractApprovalDate">
+                    <title>Approval Date</title>
+                    <description>The date this content was approved</description>
+                    <type>d:date</type>
+                </property>
+                <property name="mwtwf:signingTransactionId">
+                    <title>Signing Transaction Id</title>
+                    <description>The Id of the transaction in the block chain where all parties sign the contract</description>
+                    <type>d:text</type>
+                </property>
+                <property name="mwtwf:PAYEstatus">
+        	        <title>PAYE status</title>
+        	        <description>Indicates if this contract is managed under PAYE, Self Employed or Company</description>
+        	        <type>d:text</type>
+        	        <constraints>
+        	        	<constraint ref="mwtwf:PAYEStatusOptions" />
+        	        </constraints>
+        	    </property>
+        	    <property name="mwtwf:contractValue">
+        	        <title>Contract Value</title>
+        	        <description>The gross amount which will be paid in return for the services delivered</description>
+        	        <type>d:int</type>
+        	    </property>
+        	    <property name="mwtwf:contractValueCurrency">
+        	        <title>Contract Value Currency</title>
+        	        <description>The currency in which the contract will be paid</description>
+        	        <type>d:text</type>
+        	        <constraints>
+                    	<constraint ref="mwtwf:contractCurrencyConstraint" />
+                    </constraints>
+        	    </property>
+        	    <property name="mwtwf:contractDeliverableType">
+        	        <title>Contract Deliverable Type</title>
+        	        <description>The type of deliverable item, currently SERVICE or PRODUCT</description>
+        	        <type>d:text</type>
+        	    </property>
+        	    <property name="mwtwf:paymentPeriodSpecifier">
+        	    	<title>Payment Period</title>
+        	    	<description>The period each payment will be made under the contract</description>
+        	        <type>d:text</type>
+        	        <constraints>
+        	        	<constraint ref="mwtwf:periodSpecifierConstraint" />
+        	        </constraints>
+        	    </property>
+        	    <property name="mwtwf:overtimePayable">
+        	    	<title>Overtime paid</title>
+        	    	<description>Indicates if overtime is paid for this contract</description>
+        	    	<type>d:text</type>
+        	    	<constraints>
+        	    		<constraint ref="mwtwf:yesNoConstraint" />
+        	    	</constraints>
+        	    </property>
+        	    <property name="mwtwf:overtimeRate">
+        	    	<title>Overtime rate</title>
+        	    	<description>Indicates the amount paid in the overtime period</description>
+        	    	<type>d:int</type>
+        	    </property>
+        	    <property name="mwtwf:noticePeriod">
+        	    	<title>Notice period</title>
+        	    	<description>Notice period in days</description>
+        	    	<type>d:int</type>
+        	    </property>
+        	    <property name="mwtwf:location">
+        	    	<title>Location</title>
+        	    	<description>Location the service will be delivered in</description>
+        	    	<type>d:text</type>
+        	    </property>
+                <!--  property name="mwtwf:contractParties">
+                    <title>Contract Parties</title>
+                    <description>Parties who are relevent in the signing and delivering of services relating to this contract</description>
+                    <type>mwtwf:party</type>
+                    <multiple>true</multiple>
+                </property -->
+            </properties>
+        </aspect>
+    
+    
+    </aspects>
+</model>
+

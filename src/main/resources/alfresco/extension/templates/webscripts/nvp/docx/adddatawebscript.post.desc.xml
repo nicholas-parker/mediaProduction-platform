@@ -1,0 +1,9 @@
+<webscript>
+    <shortname>Add Data Webscript</shortname>
+    <description>Updates the data bindings within a word document.  JSON Post payload { nodeRef : 'a node ref', data : 'string representation of an XML document'</description>
+    <url>/nvp/docx/adddata</url>
+    <!-- authentication>user</authentication -->
+    <format default="json"></format>
+    <lifecycle>sample</lifecycle>
+    <authentication>user</authentication>  
+</webscript>

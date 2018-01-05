@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Get Contract Template</shortname>
+	<description>Return a list of contract templates nodes and nodeid</description>
+	<url>/mwt/contract/template/{siteShortName}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

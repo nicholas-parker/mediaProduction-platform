@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://mwt.com/workflow">
+  <process id="role-offer-contract_v0-1" name="Manage role process" isExecutable="true" activiti:candidateStarterGroups="${contract_contractApprovalRole}">
+    <documentation>Manage the role &amp; contract definition, offer and acceptance of a role</documentation>
+    <endEvent id="endevent1" name="End">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[bpm_status = 'Complete';]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+      </extensionElements>
+    </endEvent>
+    <userTask id="usertask_setup_role" name="Complete contract details" activiti:candidateGroups="${contract_contractApprovalRole}" activiti:formKey="mwtwf:setupContractDetailsTask">
+      <extensionElements>
+        <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[task.description = "Complete new contract details for " + nvpList_roleName;]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.MergePropertiesToContractDocument"></activiti:taskListener>
+        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.UpdateRoleAfterContractSetup"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask_supplier_review_offer" name="Review job offer" activiti:assignee="${contract_contractSupplier}" activiti:category="personal" activiti:formKey="mwtwf:reviewContractDetailsTask">
+      <extensionElements>
+        <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[task.description = "You have an outstanding job offer of a position as " + contract_serviceName + ". Please review the offer";
+                                      task.name="Review your job offer for " + contract_serviceName;]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierReview"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow_review_approve" sourceRef="usertask_supplier_review_offer" targetRef="usertask_productionTeam_approve_offer"></sequenceFlow>
+    <startEvent id="startevent_role-offer-contract" name="Start role-offer-contract process">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.CreateRoleFromDefault"></activiti:executionListener>
+        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.CreateContractDocument"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="flow9" sourceRef="startevent_role-offer-contract" targetRef="usertask_setup_role"></sequenceFlow>
+    <serviceTask id="servicetask_invite_new_user" name="Invite new supplier to production site" activiti:class="com.mwt.contract.activiti.ContractInvitation"></serviceTask>
+    <sequenceFlow id="flow10" sourceRef="usertask_setup_role" targetRef="servicetask_invite_new_user"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="servicetask_invite_new_user" targetRef="usertask_supplier_review_offer"></sequenceFlow>
+    <userTask id="usertask_productionTeam_approve_offer" name="Check right to work and confirm crew position" activiti:candidateGroups="${contract_contractApprovalRole}" activiti:formKey="mwtwf:approveContractDetailsTask">
+      <extensionElements>
+        <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[task.description = "Check the right to work and approve the crew member for " + contract_serviceName;]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow12" sourceRef="usertask_productionTeam_approve_offer" targetRef="servicetask_activate_new_user"></sequenceFlow>
+    <serviceTask id="servicetask_activate_new_user" name="Activate new supplier after final approval" activiti:class="com.mwt.activiti.handlers.roleContract.CreateCrewMemberFolder"></serviceTask>
+    <sequenceFlow id="flow14" sourceRef="servicetask_activate_new_user" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_role-offer-contract_v0-1">
+    <bpmndi:BPMNPlane bpmnElement="role-offer-contract_v0-1" id="BPMNPlane_role-offer-contract_v0-1">
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="610.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask_setup_role" id="BPMNShape_usertask_setup_role">
+        <omgdc:Bounds height="75.0" width="121.0" x="60.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask_supplier_review_offer" id="BPMNShape_usertask_supplier_review_offer">
+        <omgdc:Bounds height="75.0" width="121.0" x="342.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent_role-offer-contract" id="BPMNShape_startevent_role-offer-contract">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask_invite_new_user" id="BPMNShape_servicetask_invite_new_user">
+        <omgdc:Bounds height="75.0" width="121.0" x="200.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask_productionTeam_approve_offer" id="BPMNShape_usertask_productionTeam_approve_offer">
+        <omgdc:Bounds height="75.0" width="105.0" x="480.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow_review_approve" id="BPMNEdge_flow_review_approve">
+        <omgdi:waypoint x="463.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="480.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="35.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="60.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="181.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="321.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="585.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

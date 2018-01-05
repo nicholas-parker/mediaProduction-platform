@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>DataList - read</shortname>
+	<description>Data Lists Component - retrieve data within a given list</description>
+	<url>/nvp/datalist/{siteName}/{listType}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

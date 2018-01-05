@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Create Production Role</shortname>
+	<description>Posting data to this service creates a production role entry in the sites productionRole list</description>
+	<url>/mwt/{siteName}/roles</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

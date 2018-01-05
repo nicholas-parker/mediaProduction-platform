@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Start Process/shortname</shortname>
+	<description>Create a new process instance</description>
+	<url>/mwt/workflow/process</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">none</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Setup Production</shortname>
+	<description>Create the folders and assets for a production</description>
+	<url>/mwt/production/setup/{siteShortName}/{productCode}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

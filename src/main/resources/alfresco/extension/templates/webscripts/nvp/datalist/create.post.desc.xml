@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>DataList - create</shortname>
+	<description>Data Lists Component - create a new instance of a data list</description>
+	<url>/nvp/datalist/{siteName}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">none</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>
