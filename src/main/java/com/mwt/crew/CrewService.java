@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.action.executer.MailActionExecuter;
@@ -24,8 +25,10 @@ import org.alfresco.service.cmr.security.PersonService;
 import org.alfresco.service.cmr.security.PersonService.PersonInfo;
 import org.alfresco.service.cmr.site.SiteService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.lang.RandomStringUtils;
 import org.alfresco.repo.security.authentication.PasswordGenerator;
 
+import com.mwt.crew.CrewServiceException;
 import com.mwt.contract.ContractServiceException;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.crew.model.CrewModel;
@@ -41,15 +44,26 @@ public class CrewService {
 
     /**
      * 
-     * Searches all the Alfresco users and returns the first user with the email match
+     * Searches all the Alfresco users and returns the first 10 users with the email match
      * 
      * @param email
      * @return
      */
-    public NodeRef getGlobalMemberByEmail(String email) {
+    public Set<NodeRef> getGlobalMembersByEmail(String email) throws CrewServiceException {
     	
-    	return null;
+    	Set<NodeRef> people = null;
+    	try {
     	
+    		PersonService personService = this.registry.getPersonService();
+        	people = personService.getPeopleFilteredByProperty( ContentModel.PROP_EMAIL, email, 10);
+        	
+    	} catch (Exception e) {
+    		
+    		throw new CrewServiceException("Error whilst searching for crew member by email [" + email + "]." + e.getMessage(), e);
+    		
+    	}
+    	
+    	return people;
     }
     
     /**
@@ -60,6 +74,8 @@ public class CrewService {
      * @param firstName
      * @param lastName
      * @param email
+     * @return returns a map of the person nodeId and the new password
+     * 
      */
 	public Map<String, String> createNewStandbyMember(final String firstName, final String lastName, final String email) throws CrewServiceException {
 
@@ -107,6 +123,7 @@ public class CrewService {
 		} catch ( Exception e) {
 			
 			throw new CrewServiceException("Error creating new account for supplier " ,e);
+		
 		}
 		
         Map<String, String> result = new HashMap<String, String>();
@@ -182,6 +199,9 @@ public class CrewService {
 		    actionService.executeAction(mailAction, null);
 		    
 		} catch (Exception e) {
+			
+			e.printStackTrace();
+			throw new CrewServiceException("Error creating new account for supplier " ,e);
 			
 		}
 	}
@@ -440,8 +460,10 @@ public class CrewService {
 	 */
 	public String getRandomPassword() {
 		
-		PasswordGenerator gen = new org.alfresco.repo.security.authentication.BasicPasswordGenerator();
-		return gen.generatePassword();
+		// PasswordGenerator gen = new org.alfresco.repo.security.authentication.BasicPasswordGenerator();
+		// gen.setPasswordLength(8);
+		
+		return RandomStringUtils.randomAlphanumeric(8);
 		
 	}
 }

@@ -38,6 +38,59 @@ public class AbstractAlfrescoListener {
     }
 	
 
+	/**
+	 * returns true if the workflow contains this variable
+	 * 
+	 * @name name of the property to check for
+	 * @return returns true if the property exists
+	 * 
+	 */
+	protected Boolean hasVariable(String name, DelegateTask task) {
+	
+		return task.hasVariable(name);
+		
+	}
+	
+	protected Boolean hasVariable(String name, DelegateExecution exec) {
+		
+		return exec.hasVariable(name);
+		
+	}
+	
+	/**
+	 * return true if the workflow contains this variable and it is not null or an empty string
+	 * 
+	 * @name name of the property to check for
+	 * @return returns true if not null or empty
+	 * 
+	 */
+	protected Boolean hasValue(String name, DelegateTask task) {
+		
+		if(task.hasVariable(name) == Boolean.FALSE) { return Boolean.FALSE; }
+		if( null == task.getVariable(name))  { return Boolean.FALSE; }
+		String val = task.getVariable(name).toString();
+		if(val.isEmpty()) {
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+		
+	}
+	
+	protected Boolean hasValue(String name, DelegateExecution exec) {
+		
+		if(exec.hasVariable(name) == Boolean.FALSE) { return Boolean.FALSE; }
+		if( null == exec.getVariable(name))  { return Boolean.FALSE; }
+		String val = exec.getVariable(name).toString();
+		if(val.isEmpty()) {
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+		
+	}
+	
+	
     protected MapperUtil getMapper(){
 		
 		if(AbstractAlfrescoListener.mapperUtil == null) { 

@@ -1,5 +1,5 @@
 package com.mwt.contract.model;
-
+ 
 import org.alfresco.service.namespace.QName;
 import java.util.HashMap;
 import java.io.Serializable;

@@ -1,5 +1,5 @@
 package com.mwt.contract;
- 
+    
 public class ContractServiceException extends Exception {
 
 	/**

@@ -1,5 +1,5 @@
 package com.mwt.crew.model;
-
+  
 import org.alfresco.service.namespace.QName;
 
 public class CrewModel {
