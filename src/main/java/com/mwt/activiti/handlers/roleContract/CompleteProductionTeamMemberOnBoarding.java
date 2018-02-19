@@ -14,19 +14,30 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
+import com.mwt.contract.ContractService;
+import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.crew.CrewService;
+import com.mwt.roles.ProductionRoleManager;
 import com.nvp.util.DocUtil;
 import com.nvp.util.NodeRefUtil;
 
-public class CreateCrewMemberFolder extends AbstractAlfrescoListener implements JavaDelegate {
+public class CompleteProductionTeamMemberOnBoarding extends AbstractAlfrescoListener implements JavaDelegate {
 
 	/**
 	 * 
-	 * This listener should be invoked when the crew member is assured a place on the team.
-	 * The listener creates a folder for the crew member and copies all the workflow
-	 * documents into the folder
+	 * This listener completes the member on boarding process.
+	 * Invoked after the right to work is confirmed, right to work being last manual step
+	 * 
+	 * Actions are
+	 * - create a folder for the crew member and copies all the workflow documents into the folder
+	 * - adds the user as a production crew member with associated rights
+	 * - notifies the new crew member that right to work has been approved
+	 * - sets the status of the contract to complete
 	 * 
 	 */
+	
+	private static String ROLE_NODE_REF = "nvpList_roleNodeRef";
+	
 	@Override
 	public void execute(DelegateExecution exec) throws Exception {
 		
@@ -57,13 +68,13 @@ public class CreateCrewMemberFolder extends AbstractAlfrescoListener implements 
 		}
         
         /**
-         *
+         *  add the crew member to the production and
          *  get reference to the crew members folder in the site's Crew folder
          */
         CrewService crewService = new CrewService();
         crewService.setServiceRegistry(this.getServiceRegistry());
 
-        NodeRef crewFolder = crewService.getSiteCrewMemberFolder(exec.getVariable(userName).toString(), 
+        NodeRef crewFolder = crewService.addNewCrewToSite(exec.getVariable(userName).toString(), 
         		                                                 exec.getVariable(site).toString());
         
         /**
@@ -84,10 +95,7 @@ public class CreateCrewMemberFolder extends AbstractAlfrescoListener implements 
         
         List<ChildAssociationRef> children = nodeService.getChildAssocs(packageRef);
         for(ChildAssociationRef childRef : children) {
-        	
-        	// QName childType = childRef.getTypeQName();
-        	// if( childType == ContentModel.TYPE_CONTENT) {
- 
+
         		try {
         			
         		  NodeRef childNode = childRef.getChildRef();
@@ -100,8 +108,65 @@ public class CreateCrewMemberFolder extends AbstractAlfrescoListener implements 
         		  System.out.println("ERROR: error copying document from workflow package into crew folder," + e.getMessage());
         		  
         		}
-        	// }
+
         }
+        
+        
+        /**
+         * 
+         * set the contract status to FINAL_COMPLETE, an end state.
+         * 
+         */
+        if( this.hasValue(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID, exec)) {
+            
+        	try {
+       
+        		String nodeUUID = exec.getVariable(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID).toString();
+        		ContractService contractService = new ContractService();
+            	contractService.setServiceRegistry(this.getServiceRegistry());
+            	contractService.setStatusFinalApproved(nodeUUID);
+            
+        	} catch (Exception e) {
+        		
+        		e.printStackTrace();
+        		throw e;
+        		
+        	}
+        	
+        } else {
+        	
+        	RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ROLE_NODE_REF);
+        	e.printStackTrace();
+        	throw e;
+        }
+        
+        /**
+         * set the role status to complete
+         * 
+         */
+        if( this.hasValue(ROLE_NODE_REF, exec)) {
+        
+        	try {
+       
+        		String nodeUUID = NodeRefUtil.UUIDfromURL( exec.getVariable(ROLE_NODE_REF).toString() );
+        		ProductionRoleManager productionRoleManager = new ProductionRoleManager();
+            	productionRoleManager.setServiceRegistry(this.getServiceRegistry());
+            	productionRoleManager.setStatusApproved(nodeUUID);
+            
+        	} catch (Exception e) {
+        		
+        		e.printStackTrace();
+        		throw e;
+        		
+        	}
+        	
+        } else {
+        	
+        	RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ROLE_NODE_REF);
+        	e.printStackTrace();
+        	throw e;
+        }
+        	
 	}
 
 }

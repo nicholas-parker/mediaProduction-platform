@@ -1,34 +1,18 @@
 package com.mwt.activiti.handlers.roleContract;
     
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
-import org.activiti.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.alfresco.repo.workflow.WorkflowModel;
 import org.alfresco.repo.workflow.activiti.ActivitiScriptNode;
-import org.alfresco.service.cmr.model.FileFolderService;
-import org.alfresco.service.cmr.repository.ChildAssociationRef;
-import org.alfresco.service.cmr.repository.CopyService;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
-import org.alfresco.service.cmr.site.SiteInfo;
-import org.alfresco.service.cmr.site.SiteService;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.contract.ContractService;
 import com.mwt.contract.model.ContractDocumentModel;
-import com.mwt.contract.model.INdividu;
-import com.mwt.production.ContractDocumentTypes;
-import com.mwt.production.ProductionDocumentModel;
-import com.mwt.roles.ProductionRoleModel;
-import com.nvp.alfresco.docx.WordPropertiesManager;
-import com.nvp.util.DocUtil;
 
 /**
  * Java service task delegate which will 
@@ -145,7 +129,16 @@ public class CreateContractDocument extends AbstractAlfrescoListener implements 
 			  System.out.println("Unable to add new contract document to workflow package, " + e.getMessage());
 			  throw e;
 		  }
-		   
+		 
+		  /**
+		   * 
+		   * add the contract node UUID into the process for reference later
+		   * we will want to display it in workflow forms and update its status
+		   * 
+		   */
+		  execution.setVariable(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID, contractDocumentNode.getId().toString());
+		  
+		  
 	}
 
 	

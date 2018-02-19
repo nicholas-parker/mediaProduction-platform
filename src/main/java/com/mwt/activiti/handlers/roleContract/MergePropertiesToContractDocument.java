@@ -18,9 +18,11 @@ import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
+import com.mwt.contract.ContractService;
 import com.mwt.production.ContractDocumentTypes;
 import com.nvp.alfresco.docx.WordPropertiesManager;
 import com.nvp.util.DocUtil;
+import com.nvp.util.NodeRefUtil;
 
 /**
  * 
@@ -105,6 +107,15 @@ public class MergePropertiesToContractDocument extends AbstractAlfrescoListener 
 	    wordPropertiesManager.setWordNodeRef(contractDocs.get(0));
 	    wordPropertiesManager.mergeProperties(wordProperties);
 	    wordPropertiesManager.writeToNodeContent(contractDocs.get(0));
+
+        /**
+         * 
+         * set the contract document status
+         * 
+         */
+        ContractService contractService = new ContractService();
+        contractService.setServiceRegistry(this.getServiceRegistry());
+        contractService.setStatusSupplierReview( contractDocs.get(0).getId());
 
 		} catch (Exception e) {
 		

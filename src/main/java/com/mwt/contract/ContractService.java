@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.site.SiteModel;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.model.FileFolderService;
@@ -22,7 +23,11 @@ import com.mwt.contract.ContractServiceException;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.production.ContractDocumentTypes;
 import com.mwt.production.ProductionDocumentModel;
+import com.mwt.roles.ProductionRoleException;
+import com.mwt.roles.ProductionRoleManager;
+import com.mwt.roles.ProductionRoleModel;
 import com.nvp.util.DocUtil;
+import com.nvp.util.NodeRefUtil;
    
 public class ContractService {
 
@@ -117,9 +122,210 @@ public class ContractService {
 			 this.registry.getNodeService().addAspect(contractDocumentNode, ProductionDocumentModel.QN_PROD_DOCUMENT_ASPECT, documentAspectProperties);
 		 }
 
+		 /**
+		  * 
+		  * set the 'contract' aspect & properties in the node
+		  * 
+		  */
+		 Map<QName, Serializable> contractAspectProperties = new HashMap<QName, Serializable>();
+		 contractAspectProperties.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PREPARING);
+
+		 if( this.registry.getNodeService().hasAspect(contractDocumentNode, ContractDocumentModel.QN_CONTRACT_ASPECT)) {
+			 this.registry.getNodeService().setProperties(contractDocumentNode, contractAspectProperties);
+		 } else {
+			 this.registry.getNodeService().addAspect(contractDocumentNode, ContractDocumentModel.QN_CONTRACT_ASPECT, contractAspectProperties);
+		 }
+		 
+		 
 		 return contractDocumentNode;
 		 
     }
+    
+    /**
+     * 
+     * This status indicates that the contract is being prepared
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusPreparing(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PREPARING);
+    	
+    }
+
+    /**
+     * 
+     * This status indicates that the contract has been prepared and is pending approval
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusPendingApproval(String nodeUUID)  throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PENDING_APPROVAL);
+    	
+    }
+
+    
+    /**
+     * 
+     * This status indicates that the contract has been fully prepared and may be sent to the supplier/candidate
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusPrepared(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PREPARED);
+
+    }
+
+    /**
+     * 
+     * This status indicates that the contract is with the supplier for review
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusSupplierReview(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_REVIEWING);
+
+    }
+
+    /**
+     * 
+     * This status indicates that the supplier has accepted the contract,
+     * requires approval status to complete the contract acceptance process
+     * 
+     * This executes as admin since this status is set by 
+     * the candidate who does not have access to the contract node
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusSupplierAccepted(final String nodeUUID)  throws ContractServiceException {
+    	
+   	
+		final ServiceRegistry localRegistry = this.registry;
+		
+		AuthenticationUtil.runAsSystem(new AuthenticationUtil.RunAsWork<Object>() {
+            public Object doWork() throws Exception {
+
+               ContractService.setContractProperty(localRegistry, nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_SUPPLIER_ACCEPTED); 	   
+         	   return null;
+         	   
+            }
+        });
+
+    }
+    
+    /**
+     * 
+     * This status indicates that the supplier has declined the contract
+     * 
+     * This executes as admin since this status is set by 
+     * the candidate who does not have access to the contract node
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusSupplierDeclined(final String nodeUUID) throws ContractServiceException {
+    	
+		final ServiceRegistry localRegistry = this.registry;
+		
+		AuthenticationUtil.runAsSystem(new AuthenticationUtil.RunAsWork<Object>() {
+            public Object doWork() throws Exception {
+
+               ContractService.setContractProperty(localRegistry, nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_SUPPLIER_DECLINED); 	   
+         	   return null;
+         	   
+            }
+        });
+
+    }
+    
+    /**
+     * 
+     * This status indicates that the contract has been approved after final checks.
+     * This is an end state
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusFinalApproved(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_FINAL_APPROVAL);
+    	
+    }
+    
+    /**
+     * 
+     * This status indicates that the contract has been declined after final checks.
+     * This is an end state
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusFinalRejected(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_FINAL_REJECTED);
+    	
+    }
+
+    /**
+     * 
+     * This status indicates that the contract has been withdrawn.
+     * This is an end state
+     * 
+     * @param nodeUUID
+     */
+    public void setStatusWithdrawn(String nodeUUID) throws ContractServiceException {
+    	
+    	setContractProperty(nodeUUID, ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_WITHDRAWN);
+    	
+    }
+    
+    /**
+     * sets a single property of a contract
+     * 
+     * @param nodeUUID
+     * @param param
+     * @param value
+     * @throws ContractServiceException
+     */
+	public void setContractProperty(String nodeUUID, QName param, Serializable value) throws ContractServiceException {
+		
+		try {
+			
+			NodeRef roleNode = NodeRefUtil.NodeReffromUUID(nodeUUID);
+			Map<QName, Serializable> newProperty = new HashMap<QName, Serializable>(1);
+			newProperty.put(param, value);
+			NodeRefUtil.mergeNodeProperties(roleNode, newProperty, this.registry.getNodeService());
+			
+		} catch (Exception e) {
+			
+			throw new ContractServiceException("ERROR: Unable to set property for contract node [" + nodeUUID + "]", e);
+			
+		}
+	}
+
+    /**
+     * sets a single property of a contract
+     * 
+     * @param nodeUUID
+     * @param param
+     * @param value
+     * @throws ContractServiceException
+     */
+	public static void setContractProperty(ServiceRegistry registry, String nodeUUID, QName param, Serializable value) throws ContractServiceException {
+		
+		try {
+			
+			NodeRef roleNode = NodeRefUtil.NodeReffromUUID(nodeUUID);
+			Map<QName, Serializable> newProperty = new HashMap<QName, Serializable>(1);
+			newProperty.put(param, value);
+			NodeRefUtil.mergeNodeProperties(roleNode, newProperty, registry.getNodeService());
+			
+		} catch (Exception e) {
+			
+			throw new ContractServiceException("ERROR: Unable to set property for contract node [" + nodeUUID + "]", e);
+			
+		}
+	}
     
 /*    public NodeRef createServiceContractForRole(Map<QName, Serializable> contractProps, Map<QName, Serializable> serviceProps, String contractFileName, NodeRef contractTemplate ) throws ContractServiceException {
     	

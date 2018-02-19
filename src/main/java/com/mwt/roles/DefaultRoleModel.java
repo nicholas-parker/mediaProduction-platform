@@ -1,4 +1,4 @@
-package com.mwt.roles;
+package com.mwt.roles;  
 
 import org.alfresco.service.namespace.QName;
 
@@ -9,15 +9,14 @@ public class DefaultRoleModel {
 	public static String defaultRoleTypeName = "productionRoleType";
 	public static String prefix = "nvpList";
 	public static String roleTypeURI = "http://nvp.com/model/datalist/1.0";
-	 
 	public static String PAYMENT_PAYE = "PAYE";
 	public static String PAYMENT_SELF_EMPLOYED = "Self Employed";
 	
-	// local field names, useful for JSON to object
+	// local field names, useful for JSON to object•••••
 	public static String PROP_ROLE_TYPE = "roleType";
 	public static String PROP_TYPE_NAME = "typeName";
 	public static String PROP_TYPE_DESCRIPTION = "typeDescription";
-	public static String PROP_DELIVERABLE_TYPE = "deliverableType";
+	public static String PROP_DELIVERABLE_TYPE = "typeDeliverableType";
 	public static String PROP_CHARGE_CODE = "typeChargeCode";
 	public static String PROP_PAYE_STATUS = "typePAYEStatus";
 	public static String PROP_WORKING_WEEK = "typeWorkingWeek";
@@ -29,7 +28,10 @@ public class DefaultRoleModel {
 	public static String PROP_PROCESS_NAME = "typeProcessName";
 	public static String PROP_ADMINISTRATION_TEAM = "typeAdministrationTeam";  
 	public static String PROP_CONTRACT_TEMPLATE = "contractTemplate";
-	
+	public static String PROP_OVERTIME_PAYABLE = "overtimePayable";
+	public static String PROP_OVERTIME_RATE = "overtimeRate";
+	public static String PROP_NOTICE_PERIOD = "noticePeriod";
+	public static String PROP_DAYS_PAID_HOLIDAY = "daysPaidHoliday";
 	
 	// QNames, useful for node properties
 	public static QName QN_DEFAULT_ROLE = QName.createQName(roleTypeURI, defaultRoleTypeName);
@@ -48,6 +50,9 @@ public class DefaultRoleModel {
 	public static QName QN_PROCESS_NAME = QName.createQName(roleTypeURI, PROP_PROCESS_NAME);
 	public static QName QN_ADMINISTRATION_TEAM = QName.createQName(roleTypeURI, PROP_ADMINISTRATION_TEAM);
 	public static QName QN_CONTRACT_TEMPLATE = QName.createQName(roleTypeURI, PROP_CONTRACT_TEMPLATE);
+	public static QName QN_OVERTIME_PAYABLE = QName.createQName(roleTypeURI, PROP_OVERTIME_PAYABLE);
+	public static QName QN_OVERTIME_RATE = QName.createQName(roleTypeURI, PROP_OVERTIME_RATE);
+	public static QName QN_NOTICE_PERIOD = QName.createQName(roleTypeURI, PROP_NOTICE_PERIOD);
+	public static QName QN_DAYS_PAID_HOLIDAY = QName.createQName(roleTypeURI, PROP_DAYS_PAID_HOLIDAY);
 	
-
 }

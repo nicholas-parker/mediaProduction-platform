@@ -75,6 +75,13 @@
 	      parent="webscript">
 	      <property name='serviceRegistry' ref='ServiceRegistry' />
 	</bean>
+
+	<bean id="webscript.mwt.activiti.service.sendworkflowmessageservice.post"
+	      class="com.mwt.activiti.service.SendWorkflowMessageService"
+	      parent="webscript">
+	      <property name='serviceRegistry' ref='ServiceRegistry' />
+	      <property name='runtimeService' ref='activitiRuntimeService' />
+	</bean>
 	
 	<bean id="webscript.mwt.contract.acceptinvitationservice.get"
 	      class="com.mwt.contract.AcceptInvitationService"

@@ -8,16 +8,13 @@ import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.invitation.InvitationService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONObject;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 
 import com.nvp.alfresco.datalist.Create;
-import com.nvp.alfresco.datalist.DataListUtil;
 import com.nvp.util.MapperUtil;
 import com.nvp.util.RESTResponse;
-import com.nvp.util.WebscriptUtil;
 
 public class AcceptInvitationService extends AbstractWebScript {
 	

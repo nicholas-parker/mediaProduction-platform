@@ -25,7 +25,7 @@ import com.nvp.util.DocUtil;
 import com.nvp.util.MapperUtil;
 import com.nvp.util.NodeRefUtil;
 
-public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener implements TaskListener {
+public class UpdateContractAfterSupplierAccept extends AbstractAlfrescoListener implements TaskListener {
 
 	/**
 	 * 
@@ -36,10 +36,10 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 	
 	/**
 	 * 
-	 * the name of the workflow property which contains the review outcome
+	 * the name of the workflow property which contains the review outcome in 'opportunity.component.ts'
 	 * 
 	 */
-	private static String reviewStatusOutcome = "reviewStatusOutcome";
+	private static String candidateReviewOutcome = "candidateReviewOutcome";
 	
 	/**
 	 * 
@@ -62,9 +62,9 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 		 * set the review outcome status to accept or declined
 		 * 
 		 */
-		if(task.hasVariable(reviewStatusOutcome)) {
+		if(task.hasVariable(candidateReviewOutcome)) {
 		
-			String reviewOutcome = task.getVariable(reviewStatusOutcome).toString();
+			String reviewOutcome = task.getVariable(candidateReviewOutcome).toString();
 			
 			String roleNodeUUID = null;
 			if(task.hasVariable(roleNodeRef)) {
@@ -82,12 +82,12 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 			
 			try {
 			if(reviewOutcome.equals(ProductionRoleModel.ROLE_STATUS_ACCEPTED)) {
-				roleManager.setRoleAccepted(roleNodeUUID);
-		
+				roleManager.setStatusAccepted(roleNodeUUID);
+		        return;
 			}
 			
 			if(reviewOutcome.equals(ProductionRoleModel.ROLE_STATUS_DECLINED)) {
-				roleManager.setRoleDeclined(roleNodeUUID);
+				roleManager.setStatusDeclined(roleNodeUUID);
 				return;
 			}
 			
@@ -138,7 +138,7 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 		DocUtil.mergeBankAccountAspect(exec, contractDocs.get(0), this.getServiceRegistry());
 		ApplyRightToWorkAspectFromProcess.Merge(exec, contractDocs.get(0), this.getServiceRegistry());
 		
-		/*
+		/**
 		 * 
 		 * merge the contract document node properties into the contract docudocumentNodement itself
 		 * 
@@ -147,8 +147,8 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 			
 			// WordPropertiesManager.mergePropertiesToDocument(contractDocs.get(0), this.getServiceRegistry());
 			Map<QName, Serializable> wordProperties = new HashMap<QName, Serializable>();
-			 NodeService nodeService = this.getServiceRegistry().getNodeService();
-			 wordProperties = nodeService.getProperties(contractDocs.get(0));
+			NodeService nodeService = this.getServiceRegistry().getNodeService();
+			wordProperties = nodeService.getProperties(contractDocs.get(0));
 			 
 			WordPropertiesManager wordPropertiesManager = new WordPropertiesManager();
 			wordPropertiesManager.setServiceRegistry(this.getServiceRegistry());
@@ -162,7 +162,7 @@ public class UpdateContractAfterSupplierReview extends AbstractAlfrescoListener 
 			System.out.println(e);
 		
 		}
-		
+
 	}
 
 }

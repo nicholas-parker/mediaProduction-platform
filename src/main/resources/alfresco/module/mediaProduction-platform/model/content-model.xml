@@ -964,9 +964,6 @@
 						<stored>false</stored>
 						<tokenised>false</tokenised>
 					</index>
-					<constraints>
-						<constraint ref="contract:contractApprovalStatusConstraint" />
-					</constraints>
 				</property>
 				<property name="contract:contractApprovalDate">
 					<title>Approval Date</title>
@@ -1151,9 +1148,10 @@
 			</properties>
 		</aspect -->
 
+        
 		<aspect name="contract:servicePeriod">
 			<title>Service Period</title>
-			<description>An aspect which can be applied to any node which relates to services being supplied between a start and stop date</description>
+			<description>An aspect which can be applied to any node which relates to services being supplied or activities taking place between a start and stop date</description>
 			<properties>
 				<property name="contract:serviceName">
 					<title>Service Name</title>
@@ -1192,6 +1190,11 @@
 					<description>Name of the production</description>
 					<type>d:text</type>
 				</property>
+				<property name="prod:productionDescription">
+					<title>Production Name</title>
+					<description>Description of the production</description>
+					<type>d:text</type>
+				</property>
 				<property name="prod:productionAddress1">
 					<title>Address 1</title>
 					<type>d:text</type>
@@ -1212,9 +1215,51 @@
 					<title>Country</title>
 					<type>d:text</type>
 				</property>
-			</properties>
+		     </properties>
+			 <associations>
+				  <child-association name="prod:subProjects">
+					<title>SubProject</title>
+					<description>An association with sub project within the production which has a specifi start and end date</description>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>contract:servicePeriod</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</child-association>
+			</associations>
 		</aspect>
 
+        <aspect name="prod:product">
+			<title>Product</title>
+			<description>A product which has been deployed, this is usually paid for and will have a reference in the billing system.
+			             The content of a product node contains a JSON file which contains the rules for operating the product such as max contracts etc.</description>
+			<properties>
+				<property name="prod:productName">
+					<title>Product Name</title>
+					<description>Name of the product as seen by the purchaser</description>
+					<type>d:text</type>
+				</property>
+                <property name="prod:productCode">
+					<title>Product Code</title>
+					<description>The product code. A product name may have more than one product code, each code represents an iteration of the product</description>
+					<type>d:text</type>
+				</property>
+                <property name="prod:productId">
+					<title>Product Id</title>
+					<description>A unique Id for the instance of the product, this is the reference back to the billing system</description>
+					<type>d:text</type>
+				</property>
+                <property name="prod:active">
+					<title>Activated</title>
+					<description>Indicates that the product is active.  This typicaly means that payment is up to date</description>
+					<type>d:boolean</type>
+				</property>
+  			</properties>
+        </aspect>
 	</aspects>
 
 

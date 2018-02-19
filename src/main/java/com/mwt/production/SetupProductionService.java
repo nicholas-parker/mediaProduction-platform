@@ -2,24 +2,16 @@ package com.mwt.production;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.Map;
 
-import org.alfresco.model.ContentModel;
 import org.alfresco.service.ServiceRegistry;
-import org.alfresco.service.namespace.QName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONObject;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 
-import com.nvp.alfresco.datalist.DataListUtil;
-import com.nvp.alfresco.datalist.Write;
-import com.nvp.util.MapperUtil;
 import com.nvp.util.RESTResponse;
-import com.nvp.util.WebscriptUtil;
 
 public class SetupProductionService extends AbstractWebScript {
 

@@ -13,6 +13,7 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
+import com.mwt.contract.ContractService;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.contract.model.INdividu;
 import com.mwt.roles.ProductionRoleException;
@@ -69,7 +70,11 @@ public class UpdateRoleAfterContractSetup extends AbstractAlfrescoListener imple
 		Date endDate;
 		try {
 		
-			
+			/**
+			 * 
+			 * calculate and record the total contract value which has been offered based on rate, start and end date
+			 * 
+			 */
 			startDate = DateUtil.toDate(properties.get(ProductionRoleModel.QN_START_DATE));
 			endDate = DateUtil.toDate( properties.get(ProductionRoleModel.QN_END_DATE));
 			Float rate =  Float.valueOf( util.getExecVar(exec, ContractDocumentModel.QN_CONTRACT_VALUE).toString() );
@@ -81,6 +86,10 @@ public class UpdateRoleAfterContractSetup extends AbstractAlfrescoListener imple
 			roleManager.setServiceRegistry(getServiceRegistry());
             roleManager.setTotalContractsValue(roleNodeUUID, totalContractsAmount);
 			
+            /**
+             * 
+             * set the total budget min & max for this role based upon start and end date
+             */
             int budgetMin = 0;
             int budgetMax = 0;
             if(task.hasVariable(nvpList_budgetMin) && task.hasVariable(nvpList_budgetMax) && task.hasVariable(contract_ratePeriodSpecifier)) {
@@ -103,7 +112,14 @@ public class UpdateRoleAfterContractSetup extends AbstractAlfrescoListener imple
             	}
             } 
             
-			
+			/**
+			 * 
+			 * set the production role status
+			 * 
+			 */
+            roleManager.setStatusSupplierReview(roleNodeUUID);
+            
+            
 		} catch (ProductionRoleException e) {
 			
 			System.out.println("ERROR: Unable to update Role totalContractsAmount after contract setup");

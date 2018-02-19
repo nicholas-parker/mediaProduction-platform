@@ -1,4 +1,4 @@
-package com.mwt.roles;
+package com.mwt.roles;   
 
 import org.alfresco.service.namespace.QName;
  
@@ -75,9 +75,15 @@ public class ProductionRoleModel {
 	
 	// attribute values
 	public static String VALUE_DEFAULT_ROLE_TYPE = "DEFAULT";
+	public static String ROLE_STATUS_SETUP = "Set up";
+	public static String ROLE_STATUS_SUPPLIER_REVIEW = "Supplier review";
 	public static String ROLE_STATUS_ACCEPTED = "Accepted";
 	public static String ROLE_STATUS_DECLINED = "Declined";
-	public static String ROLE_STATUS_WITHDRAWN = "Withdrawn";
+	public static String ROLE_STATUS_FINAL_APPROVAL = "Final approval";
+	public static String ROLE_STATUS_APPROVED = "Approved";
+	public static String ROLE_STATUS_ACTIVE = "Active";
+	public static String ROLE_STATUS_COMPLETED = "COmpleted";
+	public static String ROLE_STATUS_NEW_SUPPLIER = "New supplier";
 	public static String ROLE_STATUS_CANCELED = "Canceled";
 	
 	

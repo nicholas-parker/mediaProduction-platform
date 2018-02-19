@@ -1,4 +1,4 @@
-package com.mwt.contract.model;
+package com.mwt.contract.model; 
 
 import org.alfresco.service.namespace.QName;
 

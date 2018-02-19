@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://mwt.com/workflow">
+  <message id="withdrawCandidateOffer" name="withdrawCandidateOfferMessage" />
   <process id="role-offer-contract_v0-1" name="Manage role process" isExecutable="true" activiti:candidateStarterGroups="${contract_contractApprovalRole}">
     <documentation>Manage the role &amp; contract definition, offer and acceptance of a role</documentation>
     <startEvent id="startevent_role-offer-contract" name="Start role-offer-contract process">
@@ -11,11 +12,8 @@
     <sequenceFlow id="flow9" sourceRef="startevent_role-offer-contract" targetRef="usertask_setup_role"></sequenceFlow>
     <userTask id="usertask_setup_role" name="Complete contract details" activiti:candidateGroups="${contract_contractApprovalRole}" activiti:formKey="mwtwf:setupContractDetailsTask">
       <extensionElements>
-        <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
-          <activiti:field name="script">
-            <activiti:string><![CDATA[task.description = "Complete new contract details for " + nvpList_roleName;]]></activiti:string>
-          </activiti:field>
-        </activiti:taskListener>
+        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.TaskContextProductionPublic"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.roleContract.SetSetupTaskDescription"></activiti:taskListener>
         <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.MergePropertiesToContractDocument"></activiti:taskListener>
         <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.UpdateRoleAfterContractSetup"></activiti:taskListener>
       </extensionElements>
@@ -25,18 +23,37 @@
     <sequenceFlow id="flow11" sourceRef="servicetask_invite_new_user" targetRef="usertask_supplier_review_offer"></sequenceFlow>
     <userTask id="usertask_supplier_review_offer" name="Review job offer" activiti:assignee="${contract_contractSupplier}" activiti:category="personal" activiti:formKey="mwtwf:reviewContractDetailsTask">
       <extensionElements>
+        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.TaskContextPersonal"></activiti:taskListener>
         <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
           <activiti:field name="script">
             <activiti:string><![CDATA[task.description = "You have an outstanding job offer of a position as " + contract_serviceName + ". Please review the offer";
                                       task.name="Review your job offer for " + contract_serviceName;]]></activiti:string>
           </activiti:field>
         </activiti:taskListener>
-        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierReview"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow_review_approve" sourceRef="usertask_supplier_review_offer" targetRef="usertask_productionTeam_approve_offer"></sequenceFlow>
+    <boundaryEvent id="boundary_withdraw_candidate_offer" attachedToRef="usertask_supplier_review_offer" cancelActivity="true">
+          <messageEventDefinition messageRef="withdrawCandidateOffer"/>
+    </boundaryEvent>
+    <sequenceFlow id="flow_withdraw_candidate_offer" sourceRef="boundary_withdraw_candidate_offer" targetRef="servicetask_withdraw_contract_from_candidate"></sequenceFlow>
+    <serviceTask id="servicetask_withdraw_contract_from_candidate" name="Update the role and contract after candidate declines" activiti:class="com.mwt.activiti.handlers.roleContract.WithdrawContractFromCandidate"></serviceTask>
+    <sequenceFlow id="flow_candidate_offer_withdrawn" sourceRef="servicetask_withdraw_contract_from_candidate" targetRef="usertask_setup_role"></sequenceFlow>
+    <sequenceFlow id="flow_review_accepted" sourceRef="usertask_supplier_review_offer" targetRef="usertask_productionTeam_approve_offer">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${candidateReviewOutcome == 'Accepted'} ]]>
+      </conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_review_declined" sourceRef="usertask_supplier_review_offer" targetRef="servicetask_update_rolecontract_after_candidate_decline">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${candidateReviewOutcome == 'Declined'} ]]>
+      </conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="servicetask_update_rolecontract_after_candidate_decline" name="Update the role and contract after candidate declines" activiti:class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierDecline"></serviceTask>
+    <sequenceFlow id="flow_return_to_setup" sourceRef="servicetask_update_rolecontract_after_candidate_decline" targetRef="usertask_setup_role"></sequenceFlow>
     <userTask id="usertask_productionTeam_approve_offer" name="Check right to work and confirm crew position" activiti:candidateGroups="${contract_contractApprovalRole}" activiti:formKey="mwtwf:approveContractDetailsTask">
       <extensionElements>
+        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.TaskContextProductionPublic"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierAccept"></activiti:taskListener>
         <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
           <activiti:field name="script">
             <activiti:string><![CDATA[task.description = "Check the right to work and approve the crew member for " + contract_serviceName;]]></activiti:string>
@@ -45,7 +62,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow12" sourceRef="usertask_productionTeam_approve_offer" targetRef="servicetask_activate_new_user"></sequenceFlow>
-    <serviceTask id="servicetask_activate_new_user" name="Activate new supplier after final approval" activiti:class="com.mwt.activiti.handlers.roleContract.CreateCrewMemberFolder"></serviceTask>
+    <serviceTask id="servicetask_activate_new_user" name="Activate new supplier after final approval" activiti:class="com.mwt.activiti.handlers.roleContract.CompleteProductionTeamMemberOnBoarding"></serviceTask>
     <sequenceFlow id="flow14" sourceRef="servicetask_activate_new_user" targetRef="endevent1"></sequenceFlow>
     <endEvent id="endevent1" name="End">
       <extensionElements>

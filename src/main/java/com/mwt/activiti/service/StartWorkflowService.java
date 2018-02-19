@@ -106,7 +106,7 @@ public class StartWorkflowService extends AbstractWebScript {
             WorkflowDefinition workflowDefinition = workflowService.getDefinitionByName(processName);
             NodeRef packageNodeRef = workflowService.createPackage(null);
             workflowProps.put(WorkflowModel.TYPE_PACKAGE , packageNodeRef);
-        
+            
             WorkflowPath wfPath = workflowService.startWorkflow(workflowDefinition.getId(), workflowProps);
 	  	    String wfId = wfPath.getId();
 	  	    

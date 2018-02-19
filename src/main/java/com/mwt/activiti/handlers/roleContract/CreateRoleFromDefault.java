@@ -107,7 +107,7 @@ public class CreateRoleFromDefault extends AbstractAlfrescoListener implements E
 	    	roleProps.put(INdividu.QN_SERVICE_END, roleProps.get( ProductionRoleModel.QN_END_DATE));
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_CODE , "");
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_DATE, "");
-	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_APPROVAL_NOT_APPROVED);
+	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PREPARING);
 	    	roleProps.put(ContractDocumentModel.QN_SIGNING_TRANSACTION_ID, "");
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_DATE, "");
 	    	util.copyToMap(roleProps, ContractDocumentModel.QN_PAYE_STATUS, roleProps, ProductionRoleModel.QN_PAYE_STATUS, "");
@@ -116,7 +116,7 @@ public class CreateRoleFromDefault extends AbstractAlfrescoListener implements E
 	    	util.copyToMap(roleProps, ContractDocumentModel.QN_CONTRACT_VALUE_CURRENCY, roleProps, DefaultRoleModel.QN_CURRENCY, "");
 	    	util.copyToMap(roleProps, ContractDocumentModel.QN_WORKING_WEEK, roleProps, DefaultRoleModel.QN_WORKING_WEEK, "");
 	    	util.copyToMap(roleProps, ContractDocumentModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER, roleProps, ProductionRoleModel.QN_PAYMENT_PERIOD, "");
-	    	roleProps.put(ContractDocumentModel.QN_OVERTIME_PAYABLE, "false");
+	    	roleProps.put(ContractDocumentModel.QN_OVERTIME_PAYABLE, "NO");
 	    	roleProps.put(ContractDocumentModel.QN_OVERTIME_RATE, 0);
 	    	roleProps.put(ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD, 0);
 	    	roleProps.put(ContractDocumentModel.QN_LOCATION , "");

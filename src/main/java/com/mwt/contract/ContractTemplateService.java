@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.alfresco.model.ContentModel;
 import org.alfresco.repo.site.SiteModel;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.model.FileFolderService;
@@ -21,7 +20,6 @@ import org.alfresco.service.namespace.QName;
 
 import com.mwt.contract.model.ContractTemplateModel;
 import com.mwt.crew.CrewServiceException;
-import com.mwt.crew.model.CrewModel;
 
 public class ContractTemplateService {
 

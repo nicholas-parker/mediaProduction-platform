@@ -11,6 +11,7 @@ import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.crew.CrewService;
 import com.mwt.production.ProductionManagementService;
+import com.nvp.util.ProcessUtil;
 
 public class SendSupplierInvitation extends AbstractAlfrescoListener implements JavaDelegate {
 
@@ -118,8 +119,20 @@ public class SendSupplierInvitation extends AbstractAlfrescoListener implements 
                 System.out.println("Creating a new account for member");
             	Map<String, String> crew =crewService.createNewStandbyMember(firstName, lastName, email);
             	
+            	/**
+            	 * 
+            	 * send the email notification to the new user
+            	 * 
+            	 */
             	System.out.println("Sending invitation to new member");
             	crewService.sendJobNotificationNewSupplier(email, crew.get("password"), firstName, lastName, jobTitle, productionName, email, productionAdminEmail);
+            	
+            	/**
+            	 * 
+            	 * give new user write access to process package so they can upload right to work documents
+            	 * 
+            	 */
+            	ProcessUtil.giveUserWritePackageAccess(this.getServiceRegistry(), email, exec);
             
             } else {
             	

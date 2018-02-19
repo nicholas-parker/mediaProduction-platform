@@ -1,21 +1,18 @@
 package com.mwt.roles;
  
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //
 import org.alfresco.model.ContentModel;
-import org.alfresco.repo.site.SiteModel;
-import org.alfresco.repo.workflow.WorkflowModel;
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.repository.AssociationRef;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
-import org.alfresco.service.cmr.site.SiteInfo;
 import org.alfresco.service.cmr.site.SiteService;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
@@ -24,9 +21,6 @@ import org.json.simple.JSONObject;
 
 import com.mwt.contract.ContractService;
 import com.mwt.contract.model.ContractDocumentModel;
-import com.mwt.contract.model.ContractFormsModel;
-import com.mwt.contract.model.ContractTemplateModel;
-import com.mwt.contract.model.INdividu;
 import com.mwt.roles.DefaultRoleModel;
 import com.nvp.alfresco.datalist.DataListUtil;
 import com.nvp.util.DateUtil;
@@ -43,7 +37,7 @@ public class ProductionRoleManager {
 	
     public void setServiceRegistry(ServiceRegistry registry) {
         this.serviceRegistry = registry;
-       }
+    }
     
     /**
      * Creates a new role for a given site.  Role is created under 
@@ -109,6 +103,9 @@ public class ProductionRoleManager {
     		roleProperties.put(ProductionRoleModel.QN_RATE_PERIOD, defaultRoleProps.get(DefaultRoleModel.QN_RATE_PERIOD));
     		roleProperties.put(ProductionRoleModel.QN_PAYMENT_PERIOD, defaultRoleProps.get(DefaultRoleModel.QN_PAYMENT_PERIOD));
     		roleProperties.put(ContractDocumentModel.QN_CONTRACT_DELIVERABLE_TYPE, defaultRoleProps.get(DefaultRoleModel.QN_DELIVERABLE_TYPE));
+    		roleProperties.put(ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD , defaultRoleProps.get(DefaultRoleModel.QN_NOTICE_PERIOD));
+    		roleProperties.put(ContractDocumentModel.QN_HOLIDAY_RATE , defaultRoleProps.get(DefaultRoleModel.QN_DAYS_PAID_HOLIDAY));
+    		roleProperties.put(ContractDocumentModel.QN_OVERTIME_PAYABLE , defaultRoleProps.get(DefaultRoleModel.QN_OVERTIME_PAYABLE));
     	}
     	
     	/** calculate the totalBudgetMin/Max */
@@ -142,10 +139,10 @@ public class ProductionRoleManager {
   	  	
   	  	/** new role done......add some additional default role properties to the properties list as these will be used for the process variables  */
   	    util.copyToMap(roleProperties, DefaultRoleModel.QN_CURRENCY, defaultRoleProps, DefaultRoleModel.QN_CURRENCY, "");
-  	    util.copyToMap(roleProperties, DefaultRoleModel.QN_CURRENCY, defaultRoleProps, DefaultRoleModel.QN_CURRENCY, "");
   	    util.copyToMap(roleProperties, DefaultRoleModel.QN_WORKING_WEEK, defaultRoleProps, DefaultRoleModel.QN_WORKING_WEEK, "");
   	    util.copyToMap(roleProperties, DefaultRoleModel.QN_DELIVERABLE_TYPE, defaultRoleProps, DefaultRoleModel.QN_DELIVERABLE_TYPE, "");
   	    util.copyToMap(roleProperties, DefaultRoleModel.QN_PAYMENT_PERIOD, defaultRoleProps, DefaultRoleModel.QN_PAYMENT_PERIOD, "");
+  	    
   	      	  	
   	  	return roleProperties;
   	  	
@@ -441,19 +438,150 @@ public class ProductionRoleManager {
         this.setRoleProperty(roleNodeUUID, ProductionRoleModel.QN_TOTAL_BUDGET_MAX, totalBudgetMax);
         
 	}
-	
-	public void setRoleAccepted(String nodeUUID) throws ProductionRoleException {
+
+	/**
+	 * 
+	 * Sets the status of the role to indicate this role is in setup status.
+	 * Setup is when the role is being prepared for the first time or it has been rejected by a supplier
+	 * and a new suppler is required.
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+	public void setStatusSetup(String nodeUUID) throws ProductionRoleException {
 		
-		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_ACCEPTED);
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_SETUP);
+	}
+
+	/**
+	 * 
+	 * Sets the status of the role to indicate with the client for review
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+	public void setStatusSupplierReview(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_SUPPLIER_REVIEW);
 		
 	}
 	
-	public void setRoleDeclined(String nodeUUID) throws ProductionRoleException {
+	/**
+	 * 
+	 * Sets the status of the role to indicate that the supplier/candidate has accepted this role
+	 * This function is executed as admin because status is accepted
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+	public void setStatusAccepted(final String nodeUUID) throws ProductionRoleException {
 		
-		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_DECLINED);
+		final ServiceRegistry registry = this.serviceRegistry;
+		
+		AuthenticationUtil.runAsSystem(new AuthenticationUtil.RunAsWork<Object>() {
+            public Object doWork() throws Exception {
+
+               ProductionRoleManager.setRoleProperty(registry, nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_ACCEPTED); 	   
+         	   return null;
+         	   
+            }
+        });
 		
 	}
 	
+	/**
+	 * 
+	 * Sets the status of the role to indicate that the supplier/candidate has rejected this role
+	 * This function is executed as admin because status is accepted
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+	public void setStatusDeclined(final String nodeUUID) throws ProductionRoleException {
+		
+		final ServiceRegistry registry = this.serviceRegistry;
+		
+		AuthenticationUtil.runAsSystem(new AuthenticationUtil.RunAsWork<Object>() {
+            public Object doWork() throws Exception {
+
+               ProductionRoleManager.setRoleProperty(registry, nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_DECLINED); 	   
+         	   return null;
+         	   
+            }
+        });
+		
+	}
+
+
+	/**
+	 * 
+	 * Sets the status to indicate that role has been approved
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+    public void setStatusApproved(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_APPROVED);
+		
+	}
+    
+    /**
+	 * 
+	 * Sets the status to indicate that supplier/candidate was rejected and a new supplier/candidate is required
+	 * 
+	 * @param nodeUUID
+	 * @throws ProductionRoleException
+	 */
+    public void setStatusNewSupplier(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_NEW_SUPPLIER);
+		
+	}
+    
+    /**
+     * 
+     * Sets the status to indicate that this role has been withdrawn
+     * End state.
+     * 
+     * @param nodeUUID
+     * @throws ProductionRoleException
+     */
+    public void setStatusCanceled(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_CANCELED);
+		
+	}
+	
+    /**
+     * 
+     * Sets the status to indicate that this role is currently active on the production,
+     * e.g. the current date is between the start and end date of the role
+     * 
+     * @param nodeUUID
+     * @throws ProductionRoleException
+     */
+    public void setStatusActive(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_ACTIVE);
+		
+	}
+
+    /**
+     * 
+     * Sets the status to indicate that this role has been completed,
+     * e.g. the current date is after the start and end date of the role
+     * End state
+     * 
+     * @param nodeUUID
+     * @throws ProductionRoleException
+     */
+    public void setStatusCompleted(String nodeUUID) throws ProductionRoleException {
+		
+		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_ROLE_STATUS, ProductionRoleModel.ROLE_STATUS_COMPLETED);
+		
+	}
+
 	public void setTotalContractsValue(String nodeUUID, Float value)  throws ProductionRoleException {
 		
 		this.setRoleProperty(nodeUUID, ProductionRoleModel.QN_TOTAL_CONTRACTS_AMOUNT, value);
@@ -479,6 +607,20 @@ public class ProductionRoleManager {
 		}
 	}
 	
+    public static void setRoleProperty(ServiceRegistry registry, String nodeUUID, QName param, Serializable value) throws ProductionRoleException {
+		
+		try {
+			
+			NodeRef roleNode = NodeRefUtil.NodeReffromUUID(nodeUUID);
+			Map<QName, Serializable> newProperty = new HashMap<QName, Serializable>(1);
+			newProperty.put(param, value);
+			NodeRefUtil.mergeNodeProperties(roleNode, newProperty, registry.getNodeService());
+			
+		} catch (Exception e) {
+			
+			throw new ProductionRoleException(e);
+		}
+	}
     public void setRoleProperties(NodeRef nodeRef, Map<QName, Serializable> properties) throws ProductionRoleException {
 		
 		try {

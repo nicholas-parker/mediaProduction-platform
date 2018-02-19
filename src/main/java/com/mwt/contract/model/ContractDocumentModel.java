@@ -18,9 +18,16 @@ public class ContractDocumentModel extends HashMap<QName, Serializable> {
 	public static String prefix = "contract";
 	public static String contractModelURI = "http://nvp.com/model/contract/1.0";
 	
-	// document approval 
-	public static String CONTRACT_APPROVAL_APPROVED = "APPROVED";
-	public static String CONTRACT_APPROVAL_NOT_APPROVED = "NOT APPROVED";
+	// document lifecycle status
+	public static String CONTRACT_STATUS_PREPARING = "In preparation";
+	public static String CONTRACT_STATUS_PENDING_APPROVAL = "Pending approval";
+	public static String CONTRACT_STATUS_PREPARED = "Prepared";
+	public static String CONTRACT_STATUS_REVIEWING = "With supplier for review";
+	public static String CONTRACT_STATUS_SUPPLIER_ACCEPTED = "Supplier accepted";
+	public static String CONTRACT_STATUS_SUPPLIER_DECLINED = "Supplier declined";
+	public static String CONTRACT_STATUS_FINAL_APPROVAL = "Approved";
+	public static String CONTRACT_STATUS_FINAL_REJECTED = "Rejected";
+	public static String CONTRACT_STATUS_WITHDRAWN = "Withdrawn";
 	
 	// local field names, useful for JSON to object
 	public static String PROP_CONTRACT_DATE = "contractDate";
@@ -69,7 +76,7 @@ public class ContractDocumentModel extends HashMap<QName, Serializable> {
 	public static QName QN_PRODUCTION_ROLE = QName.createQName(contractModelURI, PROP_PRODUCTION_ROLE);
     public static QName QN_SUPPLIER = QName.createQName(contractModelURI, PROP_SUPPLIER);
     public static QName QN_HOLIDAY_RATE = QName.createQName(contractModelURI, PROP_HOLIDAY_RATE);
-    
+     
 	/** payment period */
     public static String RATE_PERIOD_PER_HOUR = "per hour";
     public static String RATE_PERIOD_PER_DAY = "per day";
@@ -80,5 +87,8 @@ public class ContractDocumentModel extends HashMap<QName, Serializable> {
     public static QName QN_CONTRACT_CONTAINER_TYPE = QName.createQName(contractModelURI, "contractContainer");
     public static String CONTRACT_CONTAINER_NAME = "Contracts";
     public static String CONTRACT_CONTAINER_ID = "contractContainer";
+   
+    /** the variable name of the process variable which contains a contract document node id */
+    public static String CONTRACT_DOCUMENT_NODE_ID = "contract_contractDocumentNodeId";
     
 }

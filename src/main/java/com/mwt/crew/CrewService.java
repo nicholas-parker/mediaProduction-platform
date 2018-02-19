@@ -68,7 +68,7 @@ public class CrewService {
     
     /**
      * 
-     * Create a new user account
+     * Create a new user account, but not a production member
      * 
      * 
      * @param firstName
@@ -206,6 +206,57 @@ public class CrewService {
 		}
 	}
 	
+	public void sendOfferWithdrawEmail(String firstName, String lastName, String jobTitle, String productionName, String recipient, String from) throws CrewServiceException {
+
+		try { 
+			
+			ActionService actionService = this.registry.getActionService();
+			Action mailAction = actionService.createAction(MailActionExecuter.NAME);
+
+		    final String subject = "Your job offer has been withdrawn";
+		    
+		    /**
+		     * temporary content until we use template
+		     * 
+		     */
+		    StringBuilder sb = new StringBuilder();
+		    sb.append("Dear ");
+		    sb.append(firstName);
+		    sb.append("\n\r");
+		    sb.append("You have been sent this email to inform you that your recent job offer has been withdrawn");
+		    
+	        /**
+	        // Build our model
+	        Map<String, Serializable> model = new HashMap<String, Serializable>(8, 1.0f);
+	        model.put("resourceName", siteName);
+	        model.put("resourceType", resourceType);
+	        model.put("inviteeRole", role);
+	        model.put("reviewComments", reviewComments);
+	        model.put("reviewer", reviewer);
+	        model.put("inviteeUserName", invitee);
+	
+	        // Process the template
+	        // Note - because we use a classpath template, rather than a Data Dictionary
+	        // one, we can't have the MailActionExecutor do the template for us
+	        String emailMsg = templateService.processTemplate("freemarker", REJECT_TEMPLATE, model);
+	        */
+		    
+		    mailAction.setParameterValue(MailActionExecuter.PARAM_SUBJECT, subject);
+		    mailAction.setParameterValue(MailActionExecuter.PARAM_TO, recipient);
+		    mailAction.setParameterValue(MailActionExecuter.PARAM_FROM, from);
+		    mailAction.setParameterValue(MailActionExecuter.PARAM_TEXT, sb.toString());
+	
+		    actionService.executeAction(mailAction, null);
+	    
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+			throw new CrewServiceException("Error sending offer withdraw email " ,e);
+		
+	    }
+
+	}
+	
 	/**
      * 
      * Adds a new crew member to a site, this consists of
@@ -214,16 +265,18 @@ public class CrewService {
      * 
      * @param userName
      * @param siteShortName
+     * @return the NodeRef for the new crew members folder in the production
      * 
      */
-	public void addNewCrewToSite(String userName, String siteShortName) throws CrewServiceException {
+	public NodeRef addNewCrewToSite(String userName, String siteShortName) throws CrewServiceException {
 		
 		/**
 		 * 
 		 * add the person to the site
 		 * 
 		 */
-		
+		SiteService siteService = this.registry.getSiteService();
+		siteService.setMembership(siteShortName, userName, SiteModel.SITE_CONSUMER);
 		
 		/**
 		 * 
@@ -231,13 +284,14 @@ public class CrewService {
 		 * 
 		 */
 		
+			// TO DO
 		
 		/**
 		 * 
 		 * create the folder for the crew member
 		 * 
 		 */
-		createCrewFolder(userName, siteShortName);
+		return createCrewFolder(userName, siteShortName);
 		
 	}
 
@@ -460,10 +514,8 @@ public class CrewService {
 	 */
 	public String getRandomPassword() {
 		
-		// PasswordGenerator gen = new org.alfresco.repo.security.authentication.BasicPasswordGenerator();
-		// gen.setPasswordLength(8);
-		
 		return RandomStringUtils.randomAlphanumeric(8);
 		
 	}
+	
 }
