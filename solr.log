@@ -1,2 +1,4 @@
-2018-02-19 08:32:02,173 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Building suggester index for: shingleBasedSuggestions
-2018-02-19 08:32:02,593 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Built suggester shingleBasedSuggestions, took 336 ms
+2018-02-21 18:21:41,650 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Initializing SuggestComponent
+2018-02-21 18:21:41,650 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Initializing SuggestComponent
+2018-02-21 18:21:42,230 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Loading suggester index for: shingleBasedSuggestions
+2018-02-21 18:21:42,876 INFO  [org.alfresco.solr.component.AsyncBuildSuggestComponent] Loaded suggester shingleBasedSuggestions, took 645 ms

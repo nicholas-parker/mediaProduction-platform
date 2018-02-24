@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<c:contract xmlns:c="http://mwt.com/model/word/serviceContract/1.0">
+<c:contract xmlns:c="http://nprcon.com/model/word/serviceContract/1.0">
 	<c:roleRef>roleRef</c:roleRef>
 	<c:roleName>roleName</c:roleName>
 	<c:startDate>startDate</c:startDate>
