@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:contract xmlns:c="http://mwt.com/model/contract/1.0">
+	<c:noticePeriod>0</c:noticePeriod>
+	<c:serviceDescription>Take the photos</c:serviceDescription>
+	<c:contractValue>20</c:contractValue>
+	<c:docName>Employment contract</c:docName>
+	<c:overtimeRate>0</c:overtimeRate>
+	<c:contractApprovalStatus>In preparation</c:contractApprovalStatus>
+	<c:formalPostCode>TN11 9SA</c:formalPostCode>
+	<c:docCategory>Contract</c:docCategory>
+	<c:contractValueCurrency>GBP</c:contractValueCurrency>
+	<c:paymentPeriodSpecifier>Weekly</c:paymentPeriodSpecifier>
+	<c:contractCode />
+	<c:operatingName />
+	<c:registeredName>Days of the week Ltd</c:registeredName>
+	<c:supplierFirstName>alice</c:supplierFirstName>
+	<c:serviceStart>Sun Mar 11 00:00:00 GMT 2018</c:serviceStart>
+	<c:contractDate />
+	<c:overtimePayable>NO</c:overtimePayable>
+	<c:serviceName>3rd Cameraman</c:serviceName>
+	<c:formalAddress>Week HOuse, Limpsfield</c:formalAddress>
+	<c:location>Pembury, Kent</c:location>
+	<c:workingWeek>Five (5) days per week</c:workingWeek>
+	<c:holidayRate>120.0</c:holidayRate>
+	<c:serviceEnd>Fri Mar 30 00:00:00 BST 2018</c:serviceEnd>
+	<c:supplierLastName>blogg</c:supplierLastName>
+	<c:ratePeriodSpecifier>per day</c:ratePeriodSpecifier>
+	<c:PAYEstatus>PAYE</c:PAYEstatus>
+</c:contract>

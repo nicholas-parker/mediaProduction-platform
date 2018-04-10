@@ -26,8 +26,8 @@
 	<!-- nvp.com/model/content licenced by Nick Parker -->
 	<namespaces>
 		<namespace uri="http://nvp.com/model/content/1.0" prefix="nvp" />
-		<namespace uri="http://nvp.com/model/datalist/1.0" prefix="nvpList" />
-		<namespace uri="http://nvp.com/model/contract/1.0" prefix="contract" />
+		<namespace uri="http://mwt.com/model/datalist/1.0" prefix="nvpList" />
+		<namespace uri="http://mwt.com/model/contract/1.0" prefix="contract" />
 		<namespace uri="http://nvp.com/model/mediaProduction/1.0" prefix="prod" />
 		<namespace uri="http://com.mwt/model/legal" prefix="legal" />
 		<namespace uri="http://com.mwt/model/workflow/1.0" prefix="mwtwf" />
@@ -145,6 +145,16 @@
 			</parameter>
 		</constraint>
 
+        <constraint name="contract:yesNoConstraint1" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>no</value>
+					<value>yes</value>
+				</list>
+			</parameter>
+		</constraint>
+		
 		<constraint name="contract:workingWeekConstraint" type="LIST">
 			<parameter name="allowedValues">
 				<list>
@@ -191,8 +201,6 @@
 	</constraints>
 
 	<types>
-		<!-- Enterprise-wide Document root type. All other custom document types 
-			would extend this one. -->
 
 		<type name="nvpList:productionRoleType">
 			<title>Production Roles Types</title>
@@ -291,6 +299,11 @@
 					<constraints>
 						<constraint ref="contract:contractAdministrationTeamConstraint" />
 					</constraints>
+				</property>
+				<property name="nvpList:typeCategory">
+					<title>categories</title>
+					<description>A comma separated list of categories which this role type is present in</description>
+					<type>d:text</type>
 				</property>
 			</properties>
 			<associations>
@@ -477,6 +490,11 @@
 					<description>The total amount of all the contracts which have been agreed to fulfill this crew position.  Takes into account that different people may fulfill this role over the period of the production</description>
 					<type>d:float</type>
 				</property>
+				<property name="nvpList:roleCategory">
+					<title>category</title>
+					<description>A single category this role instance is a member of</description>
+					<type>d:float</type>
+				</property>
 			</properties>
 			<associations>
 				<association name="nvpList:assignee">
@@ -505,108 +523,47 @@
 				</association>
 			</associations>
 		</type>
-
-		<!-- WORKFLOW TYPES -->
-		<type name="mwtwf:setupContractDetailsTask">
-			<parent>bpm:startTask</parent>
+		<type name="contract:servicePeriod">
+			<title>Service Period</title>
+			<description>An aspect which can be applied to any node which relates to services being supplied or activities taking place between a start and stop date</description>
+			<parent>cm:cmobject</parent>
 			<properties>
-				<property name="mwtwf:newSupplierFirstName">
-					<title>Crew Member first name (for a new crew member)</title>
+			    <property name="contract:servicePeriodId">
+					<title>Service Name</title>
+					<description>The name of the service which is being provided</description>
 					<type>d:text</type>
 				</property>
-				<property name="mwtwf:newSupplierLastName">
-					<title>Crew Member last name (for a new crew member)</title>
+				<property name="contract:servicePeriodName">
+					<title>Service Name</title>
+					<description>The name of the service which is being provided</description>
 					<type>d:text</type>
 				</property>
-				<property name="mwtwf:newSupplierEmail">
-					<title>Crew Member email (for a new crew member)</title>
+				<property name="contract:servicePeriodDescription">
+					<title>Service Description</title>
+					<description>A description of the service being provided to add details and clarity to the contract</description>
 					<type>d:text</type>
+				</property>
+				<property name="contract:serviceTypeCode">
+					<title>Service Type Code</title>
+					<description>The type of serviceperiod.  PRODUCTION_PERIOD | ENGAGEMENT_PERIOD</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:servicePeriodType">
+					<title>Service Type Code</title>
+					<description>A sub type of the service type code. For ENGAGEMENT_PERIOD we have 'SpecificDate', 'Period', 'UntilTerminated'</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:serviceStart">
+					<title>Service Start Date</title>
+					<description>The datetime which the service will start on</description>
+					<type>d:date</type>
+				</property>
+				<property name="contract:serviceEnd">
+					<title>Service End Date</title>
+					<description>The datetime which the service will start on</description>
+					<type>d:date</type>
 				</property>
 			</properties>
-			<associations>
-				<association name="mwtwf:existingSupplier">
-					<title>Crew Member name (for a previous crew)</title>
-					<source>
-						<mandatory>false</mandatory>
-						<many>false</many>
-					</source>
-					<target>
-						<class>cm:person</class>
-						<mandatory>false</mandatory>
-						<many>false</many>
-					</target>
-				</association>
-			</associations>
-			<mandatory-aspects>
-				<aspect>contract:contractDocument</aspect>
-				<aspect>contract:servicePeriod</aspect>
-			</mandatory-aspects>
-		</type>
-		<type name="mwtwf:reviewContractDetailsTask">
-			<parent>bpm:activitiOutcomeTask</parent>
-			<properties>
-				<property name="mwtwf:acceptContractOutcome">
-					<type>d:text</type>
-					<default>Accept</default>
-					<constraints>
-						<constraint type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>Accept</value>
-									<value>Decline</value>
-								</list>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-			</properties>
-			<overrides>
-				<property name="bpm:packageItemActionGroup">
-					<default>read_package_item_actions</default>
-				</property>
-				<property name="bpm:outcomePropertyName">
-					<default>mwtwf:acceptContractOutcome</default>
-				</property>
-			</overrides>
-			<mandatory-aspects>
-				<aspect>contract:contractDocument</aspect>
-				<aspect>contract:servicePeriod</aspect>
-				<aspect>contract:rightToWork</aspect>
-				<aspect>contract:individualSupplier</aspect>
-			</mandatory-aspects>
-		</type>
-		<type name="mwtwf:approveContractDetailsTask">
-			<parent>bpm:activitiOutcomeTask</parent>
-			<properties>
-				<property name="mwtwf:approveContractOutcome">
-					<type>d:text</type>
-					<default>Accept</default>
-					<constraints>
-						<constraint type="LIST">
-							<parameter name="allowedValues">
-								<list>
-									<value>Accept</value>
-									<value>Reject</value>
-								</list>
-							</parameter>
-						</constraint>
-					</constraints>
-				</property>
-			</properties>
-			<overrides>
-				<property name="bpm:packageItemActionGroup">
-					<default>read_package_item_actions</default>
-				</property>
-				<property name="bpm:outcomePropertyName">
-					<default>mwtwf:approveContractOutcome</default>
-				</property>
-			</overrides>
-			<mandatory-aspects>
-				<aspect>contract:contractDocument</aspect>
-				<aspect>contract:servicePeriod</aspect>
-				<aspect>contract:rightToWork</aspect>
-				<aspect>contract:individualSupplier</aspect>
-			</mandatory-aspects>
 		</type>
 	</types>
 
@@ -815,11 +772,6 @@
 					<description>Registration number with registration authority</description>
 					<type>d:text</type>
 				</property>
-				<property name="contract:registerOrg">
-					<title>Registered Organisation</title>
-					<description>Name of organisation</description>
-					<type>d:text</type>
-				</property>
 				<property name="contract:registerRegion">
 					<title>Registered Region</title>
 					<description>Region the organisation is registered in</description>
@@ -964,7 +916,7 @@
 						<stored>false</stored>
 						<tokenised>false</tokenised>
 					</index>
-				</property>
+				</property>	
 				<property name="contract:contractApprovalDate">
 					<title>Approval Date</title>
 					<description>The date this content was approved</description>
@@ -975,6 +927,35 @@
 					<description>The Id of the transaction in the block chain where all parties sign the contract</description>
 					<type>d:text</type>
 				</property>
+				<property name="contract:contractValue">
+					<title>Contract Value</title>
+					<description>The amount which will be paid in return for the services delivered</description>
+					<type>d:int</type>
+				</property>
+				<property name="contract:contractDeliverableType">
+					<title>Contract Deliverable Type</title>
+					<description>The type of deliverable item, currently SERVICE or PRODUCT</description>
+					<type>d:text</type>
+				</property>
+		      </properties>
+			</aspect>
+
+            <!-- aspects which are used to create an aspect for a particular contract type  -->
+            <!-- These aspects are never directly applied to a node -->			
+			<aspect name="contract:crewEngagement">
+			  <title>Crew Engagement</title>
+			  <description>Properties which define the specifics of the engagement of a crew member</description>
+			  <properties>
+  				<property name="contract:serviceName">
+					<title>Service Name</title>
+					<description>The name of the service which is being provided</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:serviceDescription">
+					<title>Service Description</title>
+					<description>A description of the service being provided to add details and clarity to the contract</description>
+					<type>d:text</type>
+				</property>
 				<property name="contract:PAYEstatus">
 					<title>PAYE status</title>
 					<description>Indicates if this contract is managed under PAYE, Self Employed or Company</description>
@@ -982,11 +963,6 @@
 					<constraints>
 						<constraint ref="nvp:PAYEStatusOptions" />
 					</constraints>
-				</property>
-				<property name="contract:contractValue">
-					<title>Contract Value</title>
-					<description>The amount which will be paid in return for the services delivered</description>
-					<type>d:int</type>
 				</property>
 				<property name="contract:ratePeriodSpecifier">
 					<title>Rate period</title>
@@ -1003,11 +979,6 @@
 					<constraints>
 						<constraint ref="contract:contractCurrencyConstraint" />
 					</constraints>
-				</property>
-				<property name="contract:contractDeliverableType">
-					<title>Contract Deliverable Type</title>
-					<description>The type of deliverable item, currently SERVICE or PRODUCT</description>
-					<type>d:text</type>
 				</property>
 				<property name="contract:workingWeek">
 					<title>Working Week</title>
@@ -1068,14 +1039,9 @@
 						<many>false</many>
 					</target>
 				</association>
-				<!-- association name="contract:parties"> <title>Parties</title> <description>A 
-					list of parties which are involved in the contractual agreement</description> 
-					<source> <mandatory>false</mandatory> <many>false</many> </source> <target> 
-					<class>contract:party</class> <mandatory>false</mandatory> <many>true</many> 
-					</target> </association -->
 				<association name="contract:contractSupplier">
 					<title>Supplier</title>
-					<description>The supplier who will fulfil the contractual agreement</description>
+					<description>The individual who will fulfil the contractual agreement for the crew member position</description>
 					<source>
 						<mandatory>false</mandatory>
 						<many>false</many>
@@ -1086,100 +1052,98 @@
 						<many>false</many>
 					</target>
 				</association>
+				<child-association name="contract:engagementPeriods">
+					<title>Engagement Periods</title>
+					<description>A period of time which the supplier will be required to fulfill the contract service agreement</description>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>contract:servicePeriod</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</child-association>
 			</associations>
 		</aspect>
 
-		<!-- aspect name="nvp:docTypeAspect">
-			<title>Document type</title>
-			<description>A an aspect which allows a document to have a type</description>
-			<properties>
-				<property name="nvp:docType">
-					<title>Document type</title>
-					<description>A category or type of document</description>
+		<aspect name="contract:crewTravelExpenses">
+			  <title>Crew Engagement</title>
+			  <description>Properties which define the specifics of the engagement of a crew member</description>
+			  <properties>
+			  <property name="contract:contractTravelExpensesAvailable">
+					<title>Travel expenses available</title>
+					<description>Travel expenses may be claimed if receipts provided, yes activates the travel rate in the UI and document</description>
 					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:yesNoConstraint1" />
+					</constraints>
 				</property>
-			</properties>
-		</aspect -->
-		
-		<!-- aspect name="legal:legalDocumentAspect">
-			<title>Legal document</title>
-			<description>An aspect which encapsulates the meta data around a document which establishes some legal status of the document owner</description>
-			<properties>
-				<property name="legal:docType">
-					<title>Document type</title>
-					<description>The generic type of legal document such as passport</description>
+				<property name="contract:contractTravelExpensesMinDistance">
+					<title>Travel expenses minimum distance</title>
+					<description>The minimum distance ini any one journey which must be traveled before travel expenses can be claimed on the whole journey</description>
+					<type>d:float</type>
+				</property>
+			    <property name="contract:contractTravelMileageClaimPence">
+					<title>Mileage allowance</title>
+					<description>Mileage allowance per mile in pence which can be claimed when using own private vehicle</description>
+					<type>d:float</type>
+				</property>
+			  </properties>
+	    </aspect>Document
+	    
+	    <aspect name="contract:crewNaturalExpenses">
+			  <title>Crew Engagement</title>
+			  <description>Properties which define the specifics of the engagement of a crew member</description>
+			  <properties>
+			    <property name="contract:contractPerDiem">
+					<title>Per diem</title>
+					<description>monies provided to a crew member on a daily basis to cover accommodation and subsistence</description>
+					<type>d:float</type>
+				</property>
+				<property name="contract:contractGeneralExpenses">
+					<title>General expenses</title>
+					<description>General expenses may be claimed if receipts provided</description>
 					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:yesNoConstraint1" />
+					</constraints>
 				</property>
-				<property name="legal:docContext">
-					<title>Document context</title>
-					<description>The context which the document is used in, such as establishing right to work or identity</description>
+                <property name="contract:contractTelephoneExpensesAvailable">
+					<title>Telephone expenses available</title>
+					<description>Telephone expenses may be claimed if receipts provided</description>
 					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:yesNoConstraint1" />
+					</constraints>
 				</property>
-				<property name="legal:issuerName">
-					<title>Issuing name</title>
-					<description>The name of the organisation which issued the document</description>
-					<type>d:text</type>
-				</property>
-				<property name="legal:documentReference">
-					<title>Document number</title>
-					<description>Unique number or reference such as passport number, driving licence number or solicitors reference</description>
-					<type>d:text</type>
-				</property>
-				<property name="legal:startDate">
-					<title>Start date</title>
-					<description>Date document becomes in force</description>
-					<type>d:date</type>
-				</property>
-				<property name="legal:endDate">
-					<title>End date</title>
-					<description>The date which the document ceases to have official legal status and can be used to establish a legal position</description>
-					<type>d:date</type>
-				</property>
-				<property name="legal:validated">
-					<title>Validated</title>
-					<description>A flag to indicate that a party has validated the document as real</description>
-					<type>d:boolean</type>
-				</property>
-				<property name="legal:assertsCause">
-					<title>Asserts cause</title>
-					<description>A flag to indicate that this document is considered to support the context in which it is being used</description>
-					<type>d:boolean</type>
-				</property>
-			</properties>
-		</aspect -->
+			  </properties>
+	    </aspect>
 
+        <aspect name="contract:IPProtection">
+              <title>Intelectual propertyright protection</title>
+			  <description>This aspect marks a document as containing intelectual propertyright protection</description>
+        </aspect>
         
-		<aspect name="contract:servicePeriod">
-			<title>Service Period</title>
-			<description>An aspect which can be applied to any node which relates to services being supplied or activities taking place between a start and stop date</description>
-			<properties>
-				<property name="contract:serviceName">
-					<title>Service Name</title>
-					<description>The name of the service which is being provided</description>
-					<type>d:text</type>
-				</property>
-				<property name="contract:serviceDescription">
-					<title>Service Description</title>
-					<description>A description of the service being provided to add details and clarity to the contract</description>
-					<type>d:text</type>
-				</property>
-				<property name="contract:serviceTypeCode">
-					<title>Service Type Code</title>
-					<description>A code which defines the type of service being provided</description>
-					<type>d:text</type>
-				</property>
-				<property name="contract:serviceStart">
-					<title>Service Start Date</title>
-					<description>The datetime which the service will start on</description>
-					<type>d:date</type>
-				</property>
-				<property name="contract:serviceEnd">
-					<title>Service End Date</title>
-					<description>The datetime which the service will start on</description>
-					<type>d:date</type>
-				</property>
-			</properties>
-		</aspect>
+        <aspect name="contract:smartContract">
+              <title>Smart Contract</title>
+			  <description>This aspect marks a document as being a smart contract and its node within the blockchain contains smart contract which can be executed</description>
+        </aspect>
+        
+        <!-- aspects which map document models -->
+        <aspect name="contract:crew-agreement-paye">
+              <title>Crew agreement</title>
+			  <description>Properties for the standard crew agreement contract</description>
+			  <mandatory-aspects>
+			    <aspect>contract:contractDocument</aspect>
+			    <aspect>contract:crewEngagement</aspect>
+			    <aspect>contract:crewTravelExpenses</aspect>
+			    <aspect>contract:crewNaturalExpenses</aspect>
+			    <aspect>contract:IPProtection</aspect>
+			  </mandatory-aspects>
+        </aspect>
+        
 
 		<aspect name="prod:mediaProduction">
 			<title>Media Production</title>

@@ -17,7 +17,7 @@ public class RightToWorkModel {
 	public static String ModelName = "Right to work";
 	public static String rightToWorkAspectName = "rightToWork";
 	public static String prefix = "contract";
-	public static String modelURI = "http://nvp.com/model/contract/1.0";
+	public static String modelURI = "http://mwt.com/model/contract/1.0";
 	
 	public static String PROP_DATE_OF_BIRTH = "dateOfBirth";
 	public static String PROP_TOWN_OF_BIRTH = "townOfBirth";

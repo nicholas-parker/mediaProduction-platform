@@ -2,7 +2,7 @@ package com.mwt.production;
 
 import org.alfresco.service.namespace.QName;
 
-public class MediaProductionOrganisationModel {
+public class MediaProductionModel {
 
 	
 	public static String aspectName = "mediaProduction";
@@ -10,6 +10,7 @@ public class MediaProductionOrganisationModel {
 	public static String productionModelURI = "http://nvp.com/model/mediaProduction/1.0";
 	
 	public static String PROP_PRODUCTION_NAME = "productionName";
+	public static String PROP_PRODUCTION_DESCRIPTION = "productionDescription";
 	public static String PROP_PRODUCTION_ORGANISATION_NAME = "productionOrganisationName";
 	public static String PROP_PRODUCTION_REGISTRATION_NUMBER = "productionRegistrationNumber";
 	public static String PROP_PRODUCTION_REGISTRATION_REGION = "productionRegistrationRegion";
@@ -20,7 +21,9 @@ public class MediaProductionOrganisationModel {
 	public static String PROP_PRODUCTION_PO_CODE = "productionPOCode";
 	public static String PROP_PRODUCTION_COUNTRY = "productionCountry";
 	
+	public static QName QN_MEDIA_PRODUCTION_ASPECT = QName.createQName(productionModelURI, aspectName);
 	public static QName QN_PRODUCTION_NAME = QName.createQName(productionModelURI, PROP_PRODUCTION_NAME);
+	public static QName QN_PRODUCTION_DESCRIPTION = QName.createQName(productionModelURI, PROP_PRODUCTION_DESCRIPTION);
 	public static QName QN_PRODUCTION_ORGANISATION_NAME = QName.createQName(productionModelURI, PROP_PRODUCTION_ORGANISATION_NAME);
 	public static QName QN_PRODUCTION_REGISTRATION_NUMBER = QName.createQName(productionModelURI, PROP_PRODUCTION_REGISTRATION_NUMBER);
 	public static QName QN_PRODUCTION_REGISTRATION_REGION = QName.createQName(productionModelURI, PROP_PRODUCTION_REGISTRATION_REGION);

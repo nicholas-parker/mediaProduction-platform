@@ -21,12 +21,15 @@ import org.alfresco.service.cmr.site.SiteService;
 import org.alfresco.service.namespace.QName;
 import com.mwt.contract.ContractServiceException;
 import com.mwt.contract.model.ContractDocumentModel;
+import com.mwt.contract.model.RegisteredOrgModel;
 import com.mwt.production.ContractDocumentTypes;
+import com.mwt.production.MediaProductionModel;
 import com.mwt.production.ProductionDocumentModel;
 import com.mwt.roles.ProductionRoleException;
 import com.mwt.roles.ProductionRoleManager;
 import com.mwt.roles.ProductionRoleModel;
 import com.nvp.util.DocUtil;
+import com.nvp.util.MapperUtil;
 import com.nvp.util.NodeRefUtil;
    
 public class ContractService {
@@ -40,7 +43,14 @@ public class ContractService {
         this.registry = registry;
        }
     
- 
+    
+    /**
+     * Utility function which provides the name of the contract document given the contract name as a string
+     * 
+     * @param contractName
+     * @return
+     * @throws ContractServiceException
+     */
     public String createContractDocumentFullFilename(String contractName) throws ContractServiceException {
     	
     	if(null == contractName || contractName.isEmpty()) {
@@ -106,10 +116,55 @@ public class ContractService {
 			
 		}
 		
+		/**
+		 * site properties requires for the registeredOrg and the mediaProduction data
+		 * 
+		 */
+		SiteInfo siteInfo = this.registry.getSiteService().getSite(siteName);
+		Map<QName, Serializable> siteProperties = this.registry.getNodeService().getProperties(siteInfo.getNodeRef());
+		 
+		/**
+		 * 
+		 * set the production information into the prod:mediaProduction aspect
+		 * 
+		 */
+		 Map<QName, Serializable> mediaProductionAspectProperties = new HashMap<QName, Serializable>();
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_NAME, siteProperties, MediaProductionModel.QN_PRODUCTION_NAME, "");
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_DESCRIPTION, siteProperties, MediaProductionModel.QN_PRODUCTION_DESCRIPTION, "");
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_ADDR1, siteProperties, MediaProductionModel.QN_PRODUCTION_ADDR1, "");
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_ADDR2, siteProperties, MediaProductionModel.QN_PRODUCTION_ADDR2, "");
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_ADDR3, siteProperties, MediaProductionModel.QN_PRODUCTION_ADDR3, "");
+		 MapperUtil.copyToMap(mediaProductionAspectProperties, MediaProductionModel.QN_PRODUCTION_PO_CODE, siteProperties, MediaProductionModel.QN_PRODUCTION_PO_CODE, "");
+		 
+		 if( this.registry.getNodeService().hasAspect(contractDocumentNode, MediaProductionModel.QN_MEDIA_PRODUCTION_ASPECT)) {
+			 this.registry.getNodeService().setProperties(contractDocumentNode, mediaProductionAspectProperties);
+		 } else {
+			 this.registry.getNodeService().addAspect(contractDocumentNode, MediaProductionModel.QN_MEDIA_PRODUCTION_ASPECT, mediaProductionAspectProperties);
+		 }
+
 		
 		/**
 		 * 
-		 * set the 'document' aspect & properties in the node
+		 * set the 'contract:registeredOrg' aspect & properties in the node
+		 * NOTE - this code should be moved to when we are ready to present the contract to the supplier
+		 * 
+		 */
+		 Map<QName, Serializable> registeredOrgAspectProperties = new HashMap<QName, Serializable>();
+		 MapperUtil.copyToMap(registeredOrgAspectProperties, RegisteredOrgModel.QN_REGISTERED_NAME, siteProperties, RegisteredOrgModel.QN_REGISTERED_NAME, "");
+		 MapperUtil.copyToMap(registeredOrgAspectProperties, RegisteredOrgModel.QN_OPERATING_NAME, siteProperties, RegisteredOrgModel.QN_OPERATING_NAME, "");
+		 MapperUtil.copyToMap(registeredOrgAspectProperties, RegisteredOrgModel.QN_FORMAL_ADDRESS, siteProperties, RegisteredOrgModel.QN_FORMAL_ADDRESS, "");
+		 MapperUtil.copyToMap(registeredOrgAspectProperties, RegisteredOrgModel.QN_FORMAL_POST_CODE, siteProperties, RegisteredOrgModel.QN_FORMAL_POST_CODE, "");
+		 
+
+		 if( this.registry.getNodeService().hasAspect(contractDocumentNode, RegisteredOrgModel.QN_REGISTERED_ORG_MODEL)) {
+			 this.registry.getNodeService().setProperties(contractDocumentNode, registeredOrgAspectProperties);
+		 } else {
+			 this.registry.getNodeService().addAspect(contractDocumentNode, RegisteredOrgModel.QN_REGISTERED_ORG_MODEL, registeredOrgAspectProperties);
+		 }
+		
+		/**
+		 * 
+		 * set the 'prod:document' aspect & properties in the node
 		 * 
 		 */
 		 Map<QName, Serializable> documentAspectProperties = new HashMap<QName, Serializable>();
@@ -124,7 +179,7 @@ public class ContractService {
 
 		 /**
 		  * 
-		  * set the 'contract' aspect & properties in the node
+		  * set the 'contract:contractDocument' aspect & properties in the node
 		  * 
 		  */
 		 Map<QName, Serializable> contractAspectProperties = new HashMap<QName, Serializable>();

@@ -12,6 +12,7 @@ import org.alfresco.service.cmr.invitation.NominatedInvitation;
 import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.nvp.util.MapperUtil;
 
@@ -73,7 +74,7 @@ public class ContractInvitation extends AbstractAlfrescoListener implements Java
 
 
 		String userName = invitation.getInviteeUserName();
-		arg0.setVariable(mapper.qNameToFlat(ContractDocumentModel.QN_SUPPLIER), userName);
+		arg0.setVariable(mapper.qNameToFlat(ContractCrewEngagementModel.QN_SUPPLIER), userName);
 		
 		System.out.print("Invited new candidate to site");
 		

@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Send process a message</shortname>
+	<description>Sends the given processId a message of the specified name.  The JSON payload is mapped to a name value pair and passed into the process</description>
+	<url>/mwt/workflow/{processId}/{messageName}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">none</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>

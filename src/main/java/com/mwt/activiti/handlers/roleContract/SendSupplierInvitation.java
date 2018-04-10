@@ -8,6 +8,7 @@ import org.activiti.engine.delegate.JavaDelegate;
 import org.alfresco.service.cmr.repository.NodeRef;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.crew.CrewService;
 import com.mwt.production.ProductionManagementService;
@@ -150,7 +151,7 @@ public class SendSupplierInvitation extends AbstractAlfrescoListener implements 
              * this is used to assign the candidate review task to the right member
              * 
              */
-            exec.setVariable(this.getMapper().qNameToFlat(ContractDocumentModel.QN_SUPPLIER), email);
+            exec.setVariable(this.getMapper().qNameToFlat(ContractCrewEngagementModel.QN_SUPPLIER), email);
         
         } catch (Exception e) {
 

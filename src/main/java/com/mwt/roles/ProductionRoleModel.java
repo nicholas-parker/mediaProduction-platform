@@ -8,7 +8,7 @@ public class ProductionRoleModel {
 	public static String RoleListName = "productionRoles";
 	public static String productionRoleTypeName = "productionRole";
 	public static String prefix = "nvpList";
-	public static String roleItemURI = "http://nvp.com/model/datalist/1.0";
+	public static String roleItemURI = "http://mwt.com/model/datalist/1.0";
 	public static String PRODUCTION_ROLE_LIST_NAME = "productionRoles";
 	
 	// local field names, useful for JSON to object
@@ -29,6 +29,7 @@ public class ProductionRoleModel {
 	public static String PROP_TOTAL_CONTRACTS_AMOUNT = "totalContractsAmount";
 	public static String PROP_CURRENCY = "currency";
 	public static String PROP_PAYE_STATUS = "PAYEStatus";
+	public static String PROP_ROLE_CATEGORY = "roleCategory";
 	
 	public static String PROP_ASSOC_ASSIGNEE = "assignee";
 	public static String PROP_ASSOC_ROLE_CONTRACT_DOCUMENTS = "roleContractDocuments";
@@ -58,6 +59,7 @@ public class ProductionRoleModel {
     public static QName QN_RATE_PERIOD = QName.createQName(roleItemURI, "ratePeriod");
     public static QName QN_PAYMENT_PERIOD = QName.createQName(roleItemURI, "paymentPeriod");
     public static QName QN_ROLE_DESCRIPTION = QName.createQName(roleItemURI, "roleDescription");
+    public static QName QN_ROLE_CATEGORY = QName.createQName(roleItemURI, PROP_ROLE_CATEGORY);
     
     // associations
     public static QName QN_ASSOC_ASSIGNEE = QName.createQName(roleItemURI, PROP_ASSOC_ASSIGNEE);

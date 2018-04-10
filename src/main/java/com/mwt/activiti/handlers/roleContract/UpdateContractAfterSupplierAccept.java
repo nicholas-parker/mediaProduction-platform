@@ -153,7 +153,7 @@ public class UpdateContractAfterSupplierAccept extends AbstractAlfrescoListener 
 			WordPropertiesManager wordPropertiesManager = new WordPropertiesManager();
 			wordPropertiesManager.setServiceRegistry(this.getServiceRegistry());
 		    wordPropertiesManager.setWordNodeRef(contractDocs.get(0));
-		    wordPropertiesManager.mergeProperties(wordProperties);
+		//    wordPropertiesManager.mergeProperties(wordProperties);
 		    wordPropertiesManager.writeToNodeContent(contractDocs.get(0));
 		 
 

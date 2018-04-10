@@ -1,0 +1,20 @@
+2018-03-22 09:04:18,165 ERROR [org.alfresco.repo.node.integrity.IntegrityChecker] [http-bio-8080-exec-17] Found 1 integrity violations:
+The association target type is incorrect: 
+   Target Node: workspace://SpacesStore/c8376513-121c-4b96-a28b-145250ba1253
+   Association: Association[ class=ClassDef[name={http://nvp.com/model/mediaProduction/1.0}mediaProduction], name={http://nvp.com/model/mediaProduction/1.0}subProjects, target class={http://mwt.com/model/contract/1.0}servicePeriod, source role=null, target role=null]
+   Required Target Type: {http://mwt.com/model/contract/1.0}servicePeriod
+   Actual Target Type: {http://www.alfresco.org/model/content/1.0}content
+2018-03-22 09:04:19,852 ERROR [org.alfresco.repo.node.integrity.IntegrityChecker] [http-bio-8080-exec-11] Found 1 integrity violations:
+The association target type is incorrect: 
+   Target Node: workspace://SpacesStore/5eeddbfd-5895-4994-9566-13ad696dcd7c
+   Association: Association[ class=ClassDef[name={http://nvp.com/model/mediaProduction/1.0}mediaProduction], name={http://nvp.com/model/mediaProduction/1.0}subProjects, target class={http://mwt.com/model/contract/1.0}servicePeriod, source role=null, target role=null]
+   Required Target Type: {http://mwt.com/model/contract/1.0}servicePeriod
+   Actual Target Type: {http://www.alfresco.org/model/content/1.0}content
+2018-03-22 09:04:19,991 ERROR [org.alfresco.repo.node.integrity.IntegrityChecker] [http-bio-8080-exec-13] Found 1 integrity violations:
+The association target type is incorrect: 
+   Target Node: workspace://SpacesStore/d8f90fb1-5233-4b7d-9d9f-970399a82a1c
+   Association: Association[ class=ClassDef[name={http://nvp.com/model/mediaProduction/1.0}mediaProduction], name={http://nvp.com/model/mediaProduction/1.0}subProjects, target class={http://mwt.com/model/contract/1.0}servicePeriod, source role=null, target role=null]
+   Required Target Type: {http://mwt.com/model/contract/1.0}servicePeriod
+   Actual Target Type: {http://www.alfresco.org/model/content/1.0}content
+2018-03-22 09:04:30,406 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-4] Starting 'Transformers' subsystem, ID: [Transformers, default]
+2018-03-22 09:04:32,818 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-4] Startup of 'Transformers' subsystem, ID: [Transformers, default] complete

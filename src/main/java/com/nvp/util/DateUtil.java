@@ -33,6 +33,10 @@ public class DateUtil {
 	 */
 	public static Date toDate(Serializable input) throws ParseException {
 		
+		if(null == input) {
+			return null;
+		}
+		
 		String strDate = input.toString();
 		if(null == strDate || strDate.isEmpty()){
 			return null;

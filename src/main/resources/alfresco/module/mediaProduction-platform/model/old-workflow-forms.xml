@@ -1,0 +1,102 @@
+		<!-- WORKFLOW TYPES -->
+		<type name="mwtwf:setupContractDetailsTask">
+			<parent>bpm:startTask</parent>
+			<properties>
+				<property name="mwtwf:newSupplierFirstName">
+					<title>Crew Member first name (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+				<property name="mwtwf:newSupplierLastName">
+					<title>Crew Member last name (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+				<property name="mwtwf:newSupplierEmail">
+					<title>Crew Member email (for a new crew member)</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="mwtwf:existingSupplier">
+					<title>Crew Member name (for a previous crew)</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</source>
+					<target>
+						<class>cm:person</class>
+						<mandatory>false</mandatory>
+						<many>false</many>
+					</target>
+				</association>
+			</associations>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="mwtwf:reviewContractDetailsTask">
+			<parent>bpm:activitiOutcomeTask</parent>
+			<properties>
+				<property name="mwtwf:acceptContractOutcome">
+					<type>d:text</type>
+					<default>Accept</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Accept</value>
+									<value>Decline</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>mwtwf:acceptContractOutcome</default>
+				</property>
+			</overrides>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+				<aspect>contract:rightToWork</aspect>
+				<aspect>contract:individualSupplier</aspect>
+			</mandatory-aspects>
+		</type>
+		<type name="mwtwf:approveContractDetailsTask">
+			<parent>bpm:activitiOutcomeTask</parent>
+			<properties>
+				<property name="mwtwf:approveContractOutcome">
+					<type>d:text</type>
+					<default>Accept</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Accept</value>
+									<value>Reject</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>mwtwf:approveContractOutcome</default>
+				</property>
+			</overrides>
+			<mandatory-aspects>
+				<aspect>contract:contractDocument</aspect>
+				<aspect>contract:servicePeriod</aspect>
+				<aspect>contract:rightToWork</aspect>
+				<aspect>contract:individualSupplier</aspect>
+			</mandatory-aspects>
+		</type>

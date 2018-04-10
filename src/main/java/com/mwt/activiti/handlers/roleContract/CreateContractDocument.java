@@ -13,6 +13,7 @@ import org.alfresco.service.namespace.QName;
 import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.contract.ContractService;
 import com.mwt.contract.model.ContractDocumentModel;
+import com.nvp.util.DocUtil;
 
 /**
  * Java service task delegate which will 
@@ -41,7 +42,7 @@ public class CreateContractDocument extends AbstractAlfrescoListener implements 
 		
 		/**
 		 * 
-		 * Create a contract document from the template and place it in the workflowPackage folder
+		 * Create a contract node with the contract document as the content from the template and place it in the workflowPackage folder
 		 * 
 		 * For this to happen the process must have 
 		 * 1 - a variable named 'nvpList:contractTemplate'
@@ -105,11 +106,21 @@ public class CreateContractDocument extends AbstractAlfrescoListener implements 
 		 
 		 ContractService contractService = new ContractService();
 		 contractService.setServiceRegistry(this.getServiceRegistry());
+		 /** get the name of the contract */
 		 String contractDocumentName = contractService.createContractDocumentFullFilename(execution.getVariable(nvpList_roleName).toString());
+		 /** create the contract node, using the template document to create the node content */
 		 NodeRef contractDocumentNode = contractService.createContractForProduction(execution.getVariable(site).toString(), 
 				                                                                    contractDocumentName,
 				                                                                    null,
 				                                                                    contractTemplateNode);
+		 
+		 /**
+		  * 
+		  * Add crew engagement aspect.  Assumption is that all contracts are crew engagement contracts at this point.
+		  * This will require re-factoring at some point
+		  * 
+		  */
+		 DocUtil.mergeCrewEngagementAspect(execution, contractDocumentNode, this.getServiceRegistry());
 		 
 	     /**
 		  * 

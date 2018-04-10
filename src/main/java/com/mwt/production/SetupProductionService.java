@@ -50,6 +50,7 @@ public class SetupProductionService extends AbstractWebScript {
 	        res.setContentEncoding("charset=UTF-8");
 	        res.setContentType("application/json");
 	        response.setOK();
+	        response.setEntry("siteShortName", siteShortName);
 	        os.write(response.getBytes());
 	       
         

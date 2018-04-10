@@ -30,6 +30,7 @@
                                       task.name="Review your job offer for " + contract_serviceName;]]></activiti:string>
           </activiti:field>
         </activiti:taskListener>
+        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.MergePropertiesToContractDocument"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <boundaryEvent id="boundary_withdraw_candidate_offer" attachedToRef="usertask_supplier_review_offer" cancelActivity="true">

@@ -20,6 +20,7 @@ import org.alfresco.service.namespace.RegexQNamePattern;
 import org.json.simple.JSONObject;
 
 import com.mwt.contract.ContractService;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.roles.DefaultRoleModel;
 import com.nvp.alfresco.datalist.DataListUtil;
@@ -102,10 +103,11 @@ public class ProductionRoleManager {
     		roleProperties.put(ProductionRoleModel.QN_CURRENCY, defaultRoleProps.get(DefaultRoleModel.QN_CURRENCY));
     		roleProperties.put(ProductionRoleModel.QN_RATE_PERIOD, defaultRoleProps.get(DefaultRoleModel.QN_RATE_PERIOD));
     		roleProperties.put(ProductionRoleModel.QN_PAYMENT_PERIOD, defaultRoleProps.get(DefaultRoleModel.QN_PAYMENT_PERIOD));
+    		roleProperties.put(ProductionRoleModel.QN_ROLE_CATEGORY, defaultRoleProps.get(DefaultRoleModel.QN_TYPE_CATEGORY));
     		roleProperties.put(ContractDocumentModel.QN_CONTRACT_DELIVERABLE_TYPE, defaultRoleProps.get(DefaultRoleModel.QN_DELIVERABLE_TYPE));
-    		roleProperties.put(ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD , defaultRoleProps.get(DefaultRoleModel.QN_NOTICE_PERIOD));
-    		roleProperties.put(ContractDocumentModel.QN_HOLIDAY_RATE , defaultRoleProps.get(DefaultRoleModel.QN_DAYS_PAID_HOLIDAY));
-    		roleProperties.put(ContractDocumentModel.QN_OVERTIME_PAYABLE , defaultRoleProps.get(DefaultRoleModel.QN_OVERTIME_PAYABLE));
+    		roleProperties.put(ContractCrewEngagementModel.QN_CONTACT_NOTICE_PERIOD , defaultRoleProps.get(DefaultRoleModel.QN_NOTICE_PERIOD));
+    		roleProperties.put(ContractCrewEngagementModel.QN_HOLIDAY_RATE , defaultRoleProps.get(DefaultRoleModel.QN_DAYS_PAID_HOLIDAY));
+    		roleProperties.put(ContractCrewEngagementModel.QN_OVERTIME_PAYABLE , defaultRoleProps.get(DefaultRoleModel.QN_OVERTIME_PAYABLE));
     	}
     	
     	/** calculate the totalBudgetMin/Max */
@@ -323,26 +325,26 @@ public class ProductionRoleManager {
 		 * calculate the min, max total budget based on payment period
 		 * 
 		 */
-		if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_HOUR)) {
+		if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_HOUR)) {
 			
 			/** TODO - provide this calculation */
 			
 		}
 		
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_DAY)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_DAY)) {
 			
 			totalBudgetMin = PaymentValueUtil.getTotalPaymentDayRate(startDate, endDate, budgetMin, 5);
 			totalBudgetMax = PaymentValueUtil.getTotalPaymentDayRate(startDate, endDate, budgetMax, 5);
 			
 		}
         
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_WEEK)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_WEEK)) {
 			
         	/** TODO - provide this calculation */
         	
 		}
         
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_MONTH)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_MONTH)) {
 			
 			/** TODO - provide this calculation */
 			
@@ -409,26 +411,26 @@ public class ProductionRoleManager {
 		 * calculate the min, max total budget based on payment period
 		 * 
 		 */
-		if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_HOUR)) {
+		if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_HOUR)) {
 			
 			/** TODO - provide this calculation */
 			
 		}
 		
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_DAY)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_DAY)) {
 			
         	totalBudgetMin = PaymentValueUtil.getTotalPaymentDayRate(startDate, endDate, budgetMin, 5);
 			totalBudgetMax = PaymentValueUtil.getTotalPaymentDayRate(startDate, endDate, budgetMax, 5);
 			
 		}
         
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_WEEK)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_WEEK)) {
 			
         	/** TODO - provide this calculation */
         	
 		}
         
-        if(paymentPeriod.equals(ContractDocumentModel.RATE_PERIOD_PER_MONTH)) {
+        if(paymentPeriod.equals(ContractCrewEngagementModel.RATE_PERIOD_PER_MONTH)) {
 			
 			/** TODO - provide this calculation */
 			

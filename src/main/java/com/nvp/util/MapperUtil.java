@@ -21,7 +21,7 @@ import org.json.simple.JSONObject;
 import com.mwt.roles.DefaultRoleModel;
 
 
-public class MapperUtil {
+public class MapperUtil { 
 
 	private HashMap<String, String> nsPrefixes = new HashMap<String, String>();
 	private NamespaceService nsService = null;
@@ -267,7 +267,7 @@ public class MapperUtil {
 		}
 	}
     
-    public void copyToMap(Map<QName, Serializable> targetMap, QName targetKey, Map<QName, Serializable> sourceMap, QName sourceKey, Serializable nullValue) {
+    public static void copyToMap(Map<QName, Serializable> targetMap, QName targetKey, Map<QName, Serializable> sourceMap, QName sourceKey, Serializable nullValue) {
     	
     	if(sourceMap.containsKey(sourceKey) && null != sourceMap.get(sourceKey)) {
     	      targetMap.put(targetKey , sourceMap.get(sourceKey).toString());}
@@ -276,4 +276,20 @@ public class MapperUtil {
     	  	}
     }
 	
+    /**
+     * 
+     * get a string representation of a map value, if map does not contain value return an empty string
+     * 
+     */
+    public static String getStringValue(QName key, HashMap<QName, Serializable> map) {
+    	
+    	if(map.containsKey(key)) {
+    		
+    		return map.get(key).toString();
+    		
+    	} else {
+    		
+    		return "";
+    	}
+    }
 }

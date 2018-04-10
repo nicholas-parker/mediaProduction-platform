@@ -7,7 +7,7 @@ public class IndividualSupplierModel {
 	// namespaces, types
 	public static String contractAspectName = "individualSupplier";
 	public static String prefix = "contract";
-	public static String contractModelURI = "http://nvp.com/model/contract/1.0";
+	public static String contractModelURI = "http://mwt.com/model/contract/1.0";
 	
 	public static QName QN_INDIVIDUAL_SUPPLIER_ASPECT = QName.createQName(contractModelURI, contractAspectName);
 	public static QName QN_SUPPLIER_FIRST_NAME = QName.createQName(contractModelURI, "supplierFirstName");

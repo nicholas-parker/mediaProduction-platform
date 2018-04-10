@@ -2,8 +2,13 @@ package com.mwt.activiti.handlers.roleContract;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
@@ -19,6 +24,9 @@ import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.contract.ContractService;
+import com.mwt.contract.activiti.ApplyRightToWorkAspectFromProcess;
+import com.mwt.contract.model.ServicePeriodModel;
+import com.mwt.contract.propertyBuilder.ContractContentBuilder;
 import com.mwt.production.ContractDocumentTypes;
 import com.nvp.alfresco.docx.WordPropertiesManager;
 import com.nvp.util.DocUtil;
@@ -86,27 +94,77 @@ public class MergePropertiesToContractDocument extends AbstractAlfrescoListener 
 		DocUtil.mergeContractDocumentAspect(exec, contractDocs.get(0), this.getServiceRegistry());
 		DocUtil.mergeServicePeriodAspect(exec, contractDocs.get(0), this.getServiceRegistry());
 		DocUtil.mergeIndividualSupplierAspect(exec, contractDocs.get(0), this.getServiceRegistry());
+		DocUtil.mergeCrewEngagementAspect(exec, contractDocs.get(0), this.getServiceRegistry());
+		DocUtil.mergeIndividualSupplierAspect(exec, contractDocs.get(0), this.getServiceRegistry());
+		DocUtil.mergeBankAccountAspect(exec, contractDocs.get(0), this.getServiceRegistry());
+		ApplyRightToWorkAspectFromProcess.Merge(exec, contractDocs.get(0), this.getServiceRegistry());
 		
-		/*
+		/**
 		 * 
-		 * merge the contract document node properties into the contract docudocumentNodement itself
+		 * merge the contract document node properties into the contract documentNodement itself
 		 * 
 		 */
-		// WordPropertiesManager.mergePropertiesToDocument(contractDocs.get(0), this.getServiceRegistry());
-		Map<QName, Serializable> wordProperties = new HashMap<QName, Serializable>();
+		Map<QName, Serializable> contractDocumentProperties = new HashMap<QName, Serializable>();
 		NodeService nodeService = this.getServiceRegistry().getNodeService();
-		wordProperties = nodeService.getProperties(contractDocs.get(0));
+		contractDocumentProperties = nodeService.getProperties(contractDocs.get(0));
+
+		/**
+		 * get an array of servicePeriod nodes
+		 */
+		Set<QName> servicePeriodTypeName = new HashSet<QName>();
+		servicePeriodTypeName.add(ServicePeriodModel.QN_SERVICEPERIOD_TYPE);
+		List<ChildAssociationRef> childRefs = nodeService.getChildAssocs(contractDocs.get(0), servicePeriodTypeName);
+		
+		/**
+		 * 
+		 * build the XML to merge into the document
+		 * 
+		 */
+		ContractContentBuilder contentBuilder = new ContractContentBuilder();
+		try {
+		contentBuilder.propertiesToCustomContent(contractDocumentProperties);
+		if(!childRefs.isEmpty()) {
+			Map<QName, Serializable> servicePeriodProperties = new HashMap<QName, Serializable>();
+			for(ChildAssociationRef childAssoc : childRefs ) {
+				servicePeriodProperties = nodeService.getProperties(childAssoc.getChildRef());
+				
+				String servicePeriodId = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_ID);
+				String servicePeriodName = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_NAME); 
+				String servicePeriodDesc = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_DESCRIPTION); 
+				String serviceTypeCode = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_TYPE_CODE);
+				String servicePeriodType = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_PERIOD_TYPE);
+				String serviceStart = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_START).toString(); 
+				String serviceEnd = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_END).toString();
+				
+				        contentBuilder.addServicePeriod(servicePeriodId,
+				        								servicePeriodName, 
+				        								servicePeriodDesc, 
+				        								serviceTypeCode, 
+				        								servicePeriodType,
+				        								serviceStart, 
+				        								serviceEnd);
+			}
+
+		}
+		
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (TransformerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+		
 		
 		try {
-		
-			
-			
 			
 		WordPropertiesManager wordPropertiesManager = new WordPropertiesManager();
 		wordPropertiesManager.setServiceRegistry(this.getServiceRegistry());
 	    wordPropertiesManager.setWordNodeRef(contractDocs.get(0));
-	    wordPropertiesManager.mergeProperties(wordProperties);
-	    wordPropertiesManager.writeToNodeContent(contractDocs.get(0));
+	    wordPropertiesManager.mergeProperties(contentBuilder.getDocument());
+	    wordPropertiesManager.writeToNodeContentAsPDF(contractDocs.get(0));
 
         /**
          * 
@@ -117,6 +175,8 @@ public class MergePropertiesToContractDocument extends AbstractAlfrescoListener 
         contractService.setServiceRegistry(this.getServiceRegistry());
         contractService.setStatusSupplierReview( contractDocs.get(0).getId());
 
+        System.out.println("Contract document completed...");
+        
 		} catch (Exception e) {
 		
 			System.out.println(e);

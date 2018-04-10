@@ -1,0 +1,2 @@
+2018-03-30 16:18:52,184 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-3] Starting 'Transformers' subsystem, ID: [Transformers, default]
+2018-03-30 16:18:57,840 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-3] Startup of 'Transformers' subsystem, ID: [Transformers, default] complete

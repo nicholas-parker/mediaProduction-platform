@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
 import com.mwt.contract.model.BankAccountModel;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.contract.model.INdividu;
 import com.mwt.contract.model.IndividualSupplierModel;
@@ -109,17 +110,7 @@ public class DocUtil {
 	   Map<QName, Serializable> contractDocumentAspectProperties = new HashMap<QName, Serializable>();
        mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTRACT_DATE, exec);
        mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTRACT_CODE, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_PAYE_STATUS, exec);
        mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTRACT_VALUE, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_RATE_PERIOD_SPECIFIER, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTRACT_VALUE_CURRENCY, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_WORKING_WEEK, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_OVERTIME_PAYABLE, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_OVERTIME_RATE, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_HOLIDAY_RATE, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD, exec);
-       mapper.taskToMap(contractDocumentAspectProperties, ContractDocumentModel.QN_LOCATION, exec);
 	   
 	   if( !nodeService.hasAspect(contractDocumentNode, ContractDocumentModel.QN_CONTRACT_ASPECT)) {
 			 nodeService.addAspect(contractDocumentNode, ContractDocumentModel.QN_CONTRACT_ASPECT, contractDocumentAspectProperties);
@@ -190,7 +181,33 @@ public class DocUtil {
 	   }
 
    }
+   
+   public static void mergeCrewEngagementAspect(DelegateExecution exec, NodeRef contractDocumentNode, ServiceRegistry serviceRegistry) {
 
+	   MapperUtil mapper = new MapperUtil();
+	   mapper.setNamespaceService(serviceRegistry.getNamespaceService());
+	   NodeService nodeService = serviceRegistry.getNodeService();
+	   
+	   Map<QName, Serializable> crewEngagementProperties = new HashMap<QName, Serializable>();
+	   mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_PAYE_STATUS, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_RATE_PERIOD_SPECIFIER, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_CONTRACT_VALUE_CURRENCY, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_WORKING_WEEK, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_OVERTIME_PAYABLE, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_OVERTIME_RATE, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_HOLIDAY_RATE, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_CONTACT_NOTICE_PERIOD, exec);
+       mapper.taskToMap(crewEngagementProperties, ContractCrewEngagementModel.QN_LOCATION, exec);
+
+       // DOING THIS.... add aspect
+       if( !nodeService.hasAspect(contractDocumentNode, ContractCrewEngagementModel.QN_CONTRACT_CREW_ENGAGEMENT_ASPECT)) {
+			 nodeService.addAspect(contractDocumentNode, ContractCrewEngagementModel.QN_CONTRACT_CREW_ENGAGEMENT_ASPECT, crewEngagementProperties);
+	   } else {
+		   NodeRefUtil.mergeNodeProperties(contractDocumentNode, crewEngagementProperties, nodeService);
+	   }
+   }
+   
    public static NodeRef createDocumentFromOriginalWithProperties(String name, NodeRef original, NodeRef targetParent, ServiceRegistry registry ) throws Exception {
    
 	   /**

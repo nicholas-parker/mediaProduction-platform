@@ -16,6 +16,7 @@ import org.alfresco.service.namespace.QName;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.activiti.WorkflowUtil;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.contract.model.ContractFormsModel;
 import com.mwt.contract.model.INdividu;
@@ -101,8 +102,8 @@ public class CreateRoleFromDefault extends AbstractAlfrescoListener implements E
 		    
 		    
 		    
-		    util.copyToMap(roleProps, INdividu.QN_SERVICE_NAME, roleProps, ProductionRoleModel.QN_ROLE_NAME, "");
-		    util.copyToMap(roleProps, INdividu.QN_SERVICE_DESCRIPTION, roleProps, ProductionRoleModel.QN_ROLE_DESCRIPTION, "");
+		    MapperUtil.copyToMap(roleProps, INdividu.QN_SERVICE_NAME, roleProps, ProductionRoleModel.QN_ROLE_NAME, "");
+		    MapperUtil.copyToMap(roleProps, INdividu.QN_SERVICE_DESCRIPTION, roleProps, ProductionRoleModel.QN_ROLE_DESCRIPTION, "");
 	    	roleProps.put(INdividu.QN_SERVICE_START, roleProps.get( ProductionRoleModel.QN_START_DATE));
 	    	roleProps.put(INdividu.QN_SERVICE_END, roleProps.get( ProductionRoleModel.QN_END_DATE));
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_CODE , "");
@@ -110,17 +111,17 @@ public class CreateRoleFromDefault extends AbstractAlfrescoListener implements E
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_STATUS, ContractDocumentModel.CONTRACT_STATUS_PREPARING);
 	    	roleProps.put(ContractDocumentModel.QN_SIGNING_TRANSACTION_ID, "");
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_APPROVAL_DATE, "");
-	    	util.copyToMap(roleProps, ContractDocumentModel.QN_PAYE_STATUS, roleProps, ProductionRoleModel.QN_PAYE_STATUS, "");
+	    	MapperUtil.copyToMap(roleProps, ContractCrewEngagementModel.QN_PAYE_STATUS, roleProps, ProductionRoleModel.QN_PAYE_STATUS, "");
 	    	roleProps.put(ContractDocumentModel.QN_CONTRACT_VALUE , 0);
-	    	util.copyToMap(roleProps, ContractDocumentModel.QN_RATE_PERIOD_SPECIFIER, roleProps, ProductionRoleModel.QN_RATE_PERIOD, "");
-	    	util.copyToMap(roleProps, ContractDocumentModel.QN_CONTRACT_VALUE_CURRENCY, roleProps, DefaultRoleModel.QN_CURRENCY, "");
-	    	util.copyToMap(roleProps, ContractDocumentModel.QN_WORKING_WEEK, roleProps, DefaultRoleModel.QN_WORKING_WEEK, "");
-	    	util.copyToMap(roleProps, ContractDocumentModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER, roleProps, ProductionRoleModel.QN_PAYMENT_PERIOD, "");
-	    	roleProps.put(ContractDocumentModel.QN_OVERTIME_PAYABLE, "NO");
-	    	roleProps.put(ContractDocumentModel.QN_OVERTIME_RATE, 0);
-	    	roleProps.put(ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD, 0);
-	    	roleProps.put(ContractDocumentModel.QN_LOCATION , "");
-	    	roleProps.put(ContractDocumentModel.QN_HOLIDAY_RATE, 0);
+	    	MapperUtil.copyToMap(roleProps, ContractCrewEngagementModel.QN_RATE_PERIOD_SPECIFIER, roleProps, ProductionRoleModel.QN_RATE_PERIOD, "");
+	    	MapperUtil.copyToMap(roleProps, ContractCrewEngagementModel.QN_CONTRACT_VALUE_CURRENCY, roleProps, DefaultRoleModel.QN_CURRENCY, "");
+	    	MapperUtil.copyToMap(roleProps, ContractCrewEngagementModel.QN_WORKING_WEEK, roleProps, DefaultRoleModel.QN_WORKING_WEEK, "");
+	    	MapperUtil.copyToMap(roleProps, ContractCrewEngagementModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER, roleProps, ProductionRoleModel.QN_PAYMENT_PERIOD, "");
+	    	roleProps.put(ContractCrewEngagementModel.QN_OVERTIME_PAYABLE, "NO");
+	    	roleProps.put(ContractCrewEngagementModel.QN_OVERTIME_RATE, 0);
+	    	roleProps.put(ContractCrewEngagementModel.QN_CONTACT_NOTICE_PERIOD, 0);
+	    	roleProps.put(ContractCrewEngagementModel.QN_LOCATION , "");
+	    	roleProps.put(ContractCrewEngagementModel.QN_HOLIDAY_RATE, 0);
 	    	
 	    	roleProps.put(ContractFormsModel.QNAME_NEW_SUPPLIER_FIRST_NAME,  "" );
 	    	roleProps.put(ContractFormsModel.QNAME_NEW_SUPPLIER_LAST_NAME,  "" );

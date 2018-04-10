@@ -12,10 +12,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.mwt.alfresco.model.PersonModel;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.contract.model.RegisteredOrgModel;
 import com.mwt.contract.model.INdividu;
-import com.mwt.production.MediaProductionOrganisationModel;
+import com.mwt.production.MediaProductionModel;
 import com.mwt.roles.ProductionRoleModel;
 import com.nvp.alfresco.docx.Mapper;
 
@@ -121,7 +122,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_PAYE_STATUS);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_PAYE_STATUS);
+		alfNames.add(ContractCrewEngagementModel.QN_PAYE_STATUS);
 		mapping.put(xmlName, alfNames);
 
 		/**
@@ -137,7 +138,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_CONTRACT_VALUE_CURRENCY);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_CONTRACT_VALUE_CURRENCY);
+		alfNames.add(ContractCrewEngagementModel.QN_CONTRACT_VALUE_CURRENCY);
 		mapping.put(xmlName, alfNames);
 
 		/**
@@ -145,7 +146,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_CONTRACT_PERIOD_SPECIFIER);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER);
+		alfNames.add(ContractCrewEngagementModel.QN_CONTRACT_PAYMENT_PERIOD_SPECIFIER);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -157,7 +158,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_OVERTIME_PAYABLE);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_OVERTIME_PAYABLE);
+		alfNames.add(ContractCrewEngagementModel.QN_OVERTIME_PAYABLE);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -165,7 +166,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_OVERTIME_RATE);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_OVERTIME_RATE);
+		alfNames.add(ContractCrewEngagementModel.QN_OVERTIME_RATE);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -177,7 +178,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_NOTICE_PERIOD_DURATION);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_CONTACT_NOTICE_PERIOD);
+		alfNames.add(ContractCrewEngagementModel.QN_CONTACT_NOTICE_PERIOD);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -185,7 +186,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_LOCATION);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(ContractDocumentModel.QN_LOCATION);
+		alfNames.add(ContractCrewEngagementModel.QN_LOCATION);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -246,7 +247,7 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_CLIENT_NAME);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(MediaProductionOrganisationModel.QN_PRODUCTION_ORGANISATION_NAME);
+		alfNames.add(MediaProductionModel.QN_PRODUCTION_ORGANISATION_NAME);
 		mapping.put(xmlName, alfNames);
 
 		/**
@@ -254,10 +255,10 @@ public class ServiceContractMapper extends Mapper {
 		 */
 		xmlName = new javax.xml.namespace.QName(TARGET_NAMESPACE, LOCAL_CLIENT_ADDRESS);
 		alfNames =  new ArrayList<org.alfresco.service.namespace.QName>();
-		alfNames.add(MediaProductionOrganisationModel.QN_PRODUCTION_ADDR1);
-		alfNames.add(MediaProductionOrganisationModel.QN_PRODUCTION_ADDR2);
-		alfNames.add(MediaProductionOrganisationModel.QN_PRODUCTION_ADDR3);
-		alfNames.add(MediaProductionOrganisationModel.QN_PRODUCTION_PO_CODE);
+		alfNames.add(MediaProductionModel.QN_PRODUCTION_ADDR1);
+		alfNames.add(MediaProductionModel.QN_PRODUCTION_ADDR2);
+		alfNames.add(MediaProductionModel.QN_PRODUCTION_ADDR3);
+		alfNames.add(MediaProductionModel.QN_PRODUCTION_PO_CODE);
 		mapping.put(xmlName, alfNames);
 		
 		/**
@@ -346,7 +347,7 @@ public class ServiceContractMapper extends Mapper {
 			 */
 			Element contractValueCurrency = doc.createElement(LOCAL_CONTRACT_VALUE_CURRENCY);
 			contractValueCurrency.appendChild(doc.createTextNode(
-					getStringValue(props, ContractDocumentModel.QN_CONTRACT_VALUE_CURRENCY)));
+					getStringValue(props, ContractCrewEngagementModel.QN_CONTRACT_VALUE_CURRENCY)));
 			doc.appendChild(contractValueCurrency);
 
 			/**

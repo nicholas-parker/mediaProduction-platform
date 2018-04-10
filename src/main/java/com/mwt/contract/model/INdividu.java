@@ -6,7 +6,7 @@ public class INdividu {
 
 	public static String servicePeriodAspectName = "servicePeriod";
 	public static String prefix = "contract";
-	public static String contractModelURI = "http://nvp.com/model/contract/1.0";
+	public static String contractModelURI = "http://mwt.com/model/contract/1.0";
 	
 	public static String PROP_LOCAL_SERVICE_NAME = "serviceName";
 	public static String PROP_LOCAL_SERVICE_DESCRIPTION = "serviceDescription";

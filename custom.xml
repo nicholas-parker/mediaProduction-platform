@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contract:contract xmlns:c="http://nvp.com/model/contract/1.0">
+    <!-- registered org all OK -->
+	<contract:registeredName>Sausage Man Inc</contract:registeredName>
+	<contract:formalAddress>The Office, High St, Tonbridge</contract:formalAddress>
+	<contract:formalPostCode>TN11 9SA</contract:formalPostCode>
+	
+	<!--  supplier details,  no supplier address at this point in time-->
+	<contract:supplierLastName>charter</contract:supplierLastName>
+	<contract:supplierFirstName>edward</contract:supplierFirstName>
+	
+	
+	----
+	<contract:serviceStart>Sun Mar 11 00:00:00 GMT 2018</contract:serviceStart>
+	<contract:contractValue>150</contract:contractValue>
+	<contract:serviceDescription />
+	
+	<contract:holidayRate>0.0</contract:holidayRate>
+	<contract:contractApprovalStatus>In preparation
+	</contract:contractApprovalStatus>
+	<contract:overtimeRate>0</contract:overtimeRate>
+	
+	<contract:PAYEstatus>PAYE</contract:PAYEstatus>
+	<contract:ratePeriodSpecifier>per day</contract:ratePeriodSpecifier>
+	<contract:contractDate />
+	<contract:overtimePayable>NO</contract:overtimePayable>
+	<contract:workingWeek>Six (6) days per week</contract:workingWeek>
+	<contract:serviceName>1st Assistant cameraman</contract:serviceName>
+	<contract:location>London, SE1</contract:location>
+	
+	<contract:serviceEnd>Mon Mar 12 00:00:00 GMT 2018</contract:serviceEnd>
+	<contract:contractCode>110</contract:contractCode>
+	<contract:contractValueCurrency>GBP</contract:contractValueCurrency>
+	<contract:paymentPeriodSpecifier>Weekly
+	</contract:paymentPeriodSpecifier>
+	<contract:operatingName />
+	
+	
+	<contract:noticePeriod>0</contract:noticePeriod>
+</contract:contract>

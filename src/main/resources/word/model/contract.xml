@@ -22,7 +22,55 @@
 	<c:serviceProviderVATNumber>serviceProviderVATNumber</c:serviceProviderVATNumber>
 	<c:contractDate>contractDate</c:contractDate>
 	<c:clientName>clientName</c:clientName>
-	<c:clientAddress>clientAddress</c:clientAddress>
+	<c:clientAddress>clientA<?xml version="1.0" encoding="UTF-8"?>
+<c:contract xmlns:c="http://mwt.com/model/word/serviceContract/1.0" xmlns:p="http://nvp.com/model/mediaProduction/1.0">
+	<!-- this model fits the version 1 crew PAYE contract -->
+	<!-- company -->
+	<c:registeredName>registeredName</c:registeredName>
+	<c:formalAddress>formalAddress</c:formalAddress>
+	<c:formalPostCode>formalPostCode</c:formalPostCode>
+	<!-- crew member -->
+	<c:supplierFirstName>supplierFirstName</c:supplierFirstName>
+	<c:supplierSecondName>supplierSecondName</c:supplierSecondName>
+	<c:supplierAddress1>supplierAddress1</c:supplierAddress1>
+	<c:supplierAddress2>supplierAddress2</c:supplierAddress2>
+	<c:supplierAddress3>supplierAddress3</c:supplierAddress3>
+	<c:supplierPostCode>supplierPostCode</c:supplierPostCode>
+	<c:supplierEmail>supplierEmail</c:supplierEmail>
+	<!-- name of production -->
+	<p:productionName>productionName</p:productionName>
+	<!-- capacity -->
+	<c:roleRef>roleRef</c:roleRef>
+	<c:roleName>roleName</c:roleName>
+    <!-- engagement period -->
+	<c:startDate>startDate</c:startDate>
+	<c:endDate>endDate</c:endDate>
+	<!-- fee -->
+	<c:contractValueCurrency>contractValueCurrency</c:contractValueCurrency>
+	<c:periodValue>paymentValue</c:periodValue>
+	<c:periodSpecifier>periodSpecifier</c:periodSpecifier>
+	<c:periodDuration>periodDuration</c:periodDuration>
+	<!--  no overtime section in this contract -->
+	<!-- c:overtimePayable>overtimePayable</c:overtimePayable -->
+	<!-- c:overtimeRate>overtimeRate</c:overtimeRate -->
+	<!-- holiday entitlement -->
+	<c:holidayRate>holidayRate</c:holidayRate>
+	<!-- working week ( & additional days) -->
+	<c:workingWeek>workingWeek</c:workingWeek>
+	<!-- production base -->
+	  <c:location>location</c:location>
+	  <!-- prod:baseAddress1></prod:baseAddress1 -->
+	  <!-- prod:baseAddress2></prod:baseAddress2 -->
+	  <!-- prod:baseAddress3></prod:baseAddress3 -->
+	  <!-- prod:basePostCode></prod:basePostCode -->
+    <!--  expenses -->
+      <!-- requires new fields -->
+    <!--  no notice period in this contract -->
+	<c:noticePeriodSpecifier>noticePeriodSpecifier</c:noticePeriodSpecifier>
+	<c:noticePeriodDuration>noticePeriodDuration</c:noticePeriodDuration>
+    <!-- date of agreement -->	
+	<c:contractDate>contractDate</c:contractDate>
+</c:contract>ddress</c:clientAddress>
 	<c:hsProviderNotified>H_S Notifications</c:hsProviderNotified>
 	<c:hsClientMitigated>H_S Mitigation</c:hsClientMitigated>
 </c:contract>

@@ -9,7 +9,7 @@ public class ContractTemplateModel {
 	public static String ContractModelName = "Contract Template";
 	public static String contractTemplateAspectName = "contractTemplate";
 	public static String prefix = "contract";
-	public static String contractModelURI = "http://nvp.com/model/contract/1.0";
+	public static String contractModelURI = "http://mwt.com/model/contract/1.0";
 	public static String CONTRACT_CONTAINER_NAME = "Contract Templates";
 	public static String CONTRACT_CONTAINER_ID = "contractTemplateContainer";
 	

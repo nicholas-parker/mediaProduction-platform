@@ -2,13 +2,13 @@ package com.mwt.roles;
 
 import org.alfresco.service.namespace.QName;
 
-public class DefaultRoleModel {
+public class DefaultRoleModel { 
 
 	// namespaces, types
 	public static String DefaultRoleListName = "defaultRoles";
 	public static String defaultRoleTypeName = "productionRoleType";
 	public static String prefix = "nvpList";
-	public static String roleTypeURI = "http://nvp.com/model/datalist/1.0";
+	public static String roleTypeURI = "http://mwt.com/model/datalist/1.0";
 	public static String PAYMENT_PAYE = "PAYE";
 	public static String PAYMENT_SELF_EMPLOYED = "Self Employed";
 	
@@ -32,6 +32,7 @@ public class DefaultRoleModel {
 	public static String PROP_OVERTIME_RATE = "overtimeRate";
 	public static String PROP_NOTICE_PERIOD = "noticePeriod";
 	public static String PROP_DAYS_PAID_HOLIDAY = "daysPaidHoliday";
+	public static String PROP_TYPE_CATEGORY = "typeCategory";
 	
 	// QNames, useful for node properties
 	public static QName QN_DEFAULT_ROLE = QName.createQName(roleTypeURI, defaultRoleTypeName);
@@ -54,5 +55,5 @@ public class DefaultRoleModel {
 	public static QName QN_OVERTIME_RATE = QName.createQName(roleTypeURI, PROP_OVERTIME_RATE);
 	public static QName QN_NOTICE_PERIOD = QName.createQName(roleTypeURI, PROP_NOTICE_PERIOD);
 	public static QName QN_DAYS_PAID_HOLIDAY = QName.createQName(roleTypeURI, PROP_DAYS_PAID_HOLIDAY);
-	
+	public static QName QN_TYPE_CATEGORY = QName.createQName(roleTypeURI, PROP_TYPE_CATEGORY);
 }
