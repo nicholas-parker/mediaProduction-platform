@@ -1,0 +1,86 @@
+2018-04-11 08:23:01,964 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-5] Error starting workflow 03110045 Failed to start workflow activiti$role-offer-contract_v0-1:1:35.
+2018-04-11 08:30:51,268 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-10] Error starting workflow 03110046 Failed to start workflow activiti$role-offer-contract_v0-1:1:35.
+2018-04-11 08:31:03,015 ERROR [org.alfresco.util.SocketOpenOfficeConnection] [MessageDispatcher] disconnected unexpectedly
+2018-04-11 08:35:41,234 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Using database URL 'jdbc:h2:/home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev/h2_data/alf_dev;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;MVCC=FALSE;LOCK_MODE=0' with user 'alfresco'.
+2018-04-11 08:35:41,236 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Connected to database H2 version 1.4.190 (2015-10-11)
+2018-04-11 08:35:55,165 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V4.2-metadata-query-indexes
+2018-04-11 08:35:55,165 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.1-metadata-query-indexes
+2018-04-11 08:35:55,165 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.2-remove-jbpm-tables-from-db
+2018-04-11 08:36:13,986 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2018-04-11 08:36:14,727 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1] complete
+2018-04-11 08:36:25,154 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor Repository Template Processor for extension ftl
+2018-04-11 08:36:25,165 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor Repository Script Processor for extension js
+2018-04-11 08:36:35,153 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2018-04-11 08:36:35,226 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted] complete
+2018-04-11 08:36:35,397 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Connecting to database: jdbc:h2:/home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev/h2_data/alf_dev, UserName=ALFRESCO, H2 JDBC Driver
+2018-04-11 08:36:35,398 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Schema managed by database dialect org.hibernate.dialect.H2Dialect.
+2018-04-11 08:36:35,691 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] No changes were made to the schema.
+2018-04-11 08:36:37,797 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'thirdparty' subsystem, ID: [thirdparty, default]
+2018-04-11 08:36:37,924 ERROR [org.alfresco.repo.content.transform.magick.AbstractImageMagickContentTransformerWorker] [localhost-startStop-1] ImageMagickContentTransformerWorker not available: 03110016 Failed to perform ImageMagick transformation: 
+Execution result: 
+   os:         Linux
+   command:    ./ImageMagick/bin/convert /tmp/Alfresco/ImageMagickContentTransformerWorker_init_source_6453452429523013630.gif -strip /tmp/Alfresco/ImageMagickContentTransformerWorker_init_target_1638456337991108221.png
+   succeeded:  false
+   exit code:  1
+   out:        
+   err:        Cannot run program "./ImageMagick/bin/convert": error=2, No such file or directory
+2018-04-11 08:36:37,926 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'thirdparty' subsystem, ID: [thirdparty, default] complete
+2018-04-11 08:36:37,926 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'OOoDirect' subsystem, ID: [OOoDirect, default]
+2018-04-11 08:36:38,962 WARN  [org.alfresco.util.OpenOfficeConnectionTester] [localhost-startStop-1] An initial OpenOffice connection could not be established.
+2018-04-11 08:36:38,973 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'OOoDirect' subsystem, ID: [OOoDirect, default] complete
+2018-04-11 08:36:38,976 INFO  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The root data directory ('dir.root') is: /home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev
+2018-04-11 08:36:38,976 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Search' subsystem, ID: [Search, managed, solr4]
+2018-04-11 08:36:40,625 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Search' subsystem, ID: [Search, managed, solr4] complete
+2018-04-11 08:36:40,732 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] Checking for patches to apply ...
+2018-04-11 08:36:41,304 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] No patches were required.
+2018-04-11 08:36:41,457 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Found 3 module package(s).
+2018-04-11 08:36:41,646 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'mediaProduction-platform' version 1.0-SNAPSHOT.
+2018-04-11 08:36:41,800 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-share-services' version 5.2.0.
+2018-04-11 08:36:41,873 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-trashcan-cleaner' version 2.2.
+2018-04-11 08:36:41,883 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'fileServers' subsystem, ID: [fileServers, default]
+2018-04-11 08:36:43,103 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2018-04-11 08:36:43,167 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'sysAdmin' subsystem, ID: [sysAdmin, default] complete
+2018-04-11 08:36:43,212 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'fileServers' subsystem, ID: [fileServers, default] complete
+2018-04-11 08:36:43,212 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'imap' subsystem, ID: [imap, default]
+2018-04-11 08:36:44,032 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'imap' subsystem, ID: [imap, default] complete
+2018-04-11 08:36:44,032 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, outbound]
+2018-04-11 08:36:46,087 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, outbound] complete
+2018-04-11 08:36:46,087 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, inbound]
+2018-04-11 08:36:46,260 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, inbound] complete
+2018-04-11 08:36:46,260 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2018-04-11 08:36:46,382 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Subscriptions' subsystem, ID: [Subscriptions, default] complete
+2018-04-11 08:36:46,603 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Synchronization' subsystem, ID: [Synchronization, default]
+2018-04-11 08:36:46,985 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Synchronization' subsystem, ID: [Synchronization, default] complete
+2018-04-11 08:36:47,109 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco JVM - v1.8.0_151-b12; maximum heap size 1751.500MB
+2018-04-11 08:36:47,109 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Server Mode :UNKNOWN
+2018-04-11 08:36:47,136 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco Content Services started (Community). Current version: 5.2.0 (r135134-b14) schema 10,005. Originally installed version: 5.2.0 (r135134-b14) schema 10,005.
+2018-04-11 08:36:47,168 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2018-04-11 08:36:48,122 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default] complete
+2018-04-11 08:36:48,123 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Replication' subsystem, ID: [Replication, default]
+2018-04-11 08:36:48,151 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Replication' subsystem, ID: [Replication, default] complete
+2018-04-11 08:37:00,486 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-11 08:37:00,487 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-11 08:37:00,487 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:37:06,858 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-11 08:37:06,859 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-11 08:37:06,859 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:37:06,873 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Repository Web Script Container (in 16461.957ms)
+2018-04-11 08:37:06,987 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor freemarker for extension ftl
+2018-04-11 08:37:07,000 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor javascript for extension js
+2018-04-11 08:37:14,568 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-11 08:37:14,568 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-11 08:37:14,568 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:37:14,983 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-11 08:37:14,983 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-11 08:37:14,983 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:37:15,293 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-11 08:37:15,294 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-11 08:37:15,294 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:37:15,323 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Public Api Web Script Container (in 8231.593ms)
+2018-04-11 08:37:15,946 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-11 08:37:15,947 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-11 08:37:15,947 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-11 08:38:05,383 WARN  [org.alfresco.util.OpenOfficeConnectionTester] [DefaultScheduler_Worker-3] Error trying to query Open Office version information. OpenOffice.org's ConfigurationRegistry not implemented in this version of OOo. This should not affect the operation of OOo.
+2018-04-11 08:38:05,392 INFO  [org.alfresco.util.OpenOfficeConnectionTester] [DefaultScheduler_Worker-3] The OpenOffice connection was re-established.
+2018-04-11 08:41:45,273 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-11] Starting 'Transformers' subsystem, ID: [Transformers, default]
+2018-04-11 08:41:45,982 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-11] Startup of 'Transformers' subsystem, ID: [Transformers, default] complete

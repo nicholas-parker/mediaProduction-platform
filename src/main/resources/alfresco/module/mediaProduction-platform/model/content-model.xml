@@ -493,7 +493,7 @@
 				<property name="nvpList:roleCategory">
 					<title>category</title>
 					<description>A single category this role instance is a member of</description>
-					<type>d:float</type>
+					<type>d:text</type>
 				</property>
 			</properties>
 			<associations>
