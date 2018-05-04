@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c:contract xmlns:c="http://mwt.com/model/contract/1.0" xmlns:p="http://nvp.com/model/mediaProduction/1.0">
+	<!-- this model is for document 'Crew Agreement PAYE v1.3.docx -->
+	<!-- company -->
+	<c:registeredName>8 Bit Productions Limited</c:registeredName>
+	<c:formalAddress>10 Bedford Square London </c:formalAddress>
+	<c:formalPostCode>WC1B 3RA</c:formalPostCode>
+	<!-- crew member -->
+	<c:supplierFirstName>Nicholas</c:supplierFirstName>
+	<c:supplierLastName>Parker</c:supplierLastName>
+	<c:supplierAddress1>Chance Cottage</c:supplierAddress1>
+	<c:supplierAddress2>Long Mill Lane</c:supplierAddress2>
+	<c:supplierAddress3>Dunks Green</c:supplierAddress3>
+	<c:supplierPostCode>TN11 9SA</c:supplierPostCode>
+	<c:supplierEmail>nick.parker1967@googlemail.com</c:supplierEmail>
+	<!-- name of production -->
+	<p:productionName>Go 8 Bit</p:productionName>
+	<!-- capacity -->
+	<c:serviceName>Cameraman</c:serviceName>
+	<c:serviceDescription>serviceDescription</c:serviceDescription>
+    <!-- engagement period -->
+    <c:servicePeriod>
+      <c:servicePeriodSequence>1</c:servicePeriodSequence>
+      <c:servicePeriodName>Launch day</c:servicePeriodName>
+      <c:servicePerdioDescription>servicePeriodDescription</c:servicePerdioDescription>
+      <c:serviceTypeCode>serviceTypeCode</c:serviceTypeCode>
+      <c:serviceStart>01/05/2018</c:serviceStart>
+	  <c:serviceEnd></c:serviceEnd>
+	  <!-- serviePeriodType:  SpecificDate, Period, UntilTerminated    -->
+	  <c:servicePeriodType>SpecificDate</c:servicePeriodType>
+	  <c:serviceContractValue>150</c:serviceContractValue>
+    </c:servicePeriod>
+	<c:servicePeriod>
+      <c:servicePeriodId>2</c:servicePeriodId>
+      <c:servicePeriodName>Pre Production</c:servicePeriodName>
+      <c:servicePerdioDescription>servicePeriodDescription</c:servicePerdioDescription>
+      <c:serviceTypeCode>serviceTypeCode</c:serviceTypeCode>
+      <c:serviceStart>07/05/2018</c:serviceStart>
+	  <c:serviceEnd>05/06/2018</c:serviceEnd>
+	  <!-- serviePeriodType:  SpecificDate, Period, UntilTerminated    -->
+	  <c:servicePeriodType>Period</c:servicePeriodType>
+	  <c:serviceContractValue>150</c:serviceContractValue>
+    </c:servicePeriod>
+    <c:servicePeriod>
+      <c:servicePeriodId>3</c:servicePeriodId>
+      <c:servicePeriodName>Production</c:servicePeriodName>
+      <c:servicePerdioDescription>servicePeriodDescription</c:servicePerdioDescription>
+      <c:serviceTypeCode>serviceTypeCode</c:serviceTypeCode>
+      <c:serviceStart>10/06/2018</c:serviceStart>
+	  <c:serviceEnd>18/08/2018</c:serviceEnd>
+	  <!-- serviePeriodType:  SpecificDate, Period, UntilTerminated    -->
+	  <c:servicePeriodType>Period</c:servicePeriodType>
+	  <c:serviceContractValue>150</c:serviceContractValue>
+    </c:servicePeriod>
+    <c:servicePeriod>
+      <c:servicePeriodId>4</c:servicePeriodId>
+      <c:servicePeriodName>Post Production</c:servicePeriodName>
+      <c:servicePerdioDescription>servicePeriodDescription</c:servicePerdioDescription>
+      <c:serviceTypeCode>serviceTypeCode</c:serviceTypeCode>
+      <c:serviceStart>14/08/2018</c:serviceStart>
+	  <c:serviceEnd></c:serviceEnd>
+	  <!-- serviePeriodType:  SpecificDate, Period, UntilTerminated    -->
+	  <c:servicePeriodType>UntilTerminated</c:servicePeriodType>
+	  <c:serviceContractValue>125</c:serviceContractValue>
+    </c:servicePeriod>
+	<!-- fee -->
+	<c:contractValueCurrency>GBP</c:contractValueCurrency>
+	<c:separateServicePeriodValue>false</c:separateServicePeriodValue>
+	<c:contractValue>150</c:contractValue>
+	<c:ratePeriodSpecifier>per day</c:ratePeriodSpecifier>
+	<c:paymentPeriodSpecifier>weekly</c:paymentPeriodSpecifier>
+	<!--  no overtime section in this contract -->
+	<!-- c:overtimePayable>overtimePayable</c:overtimePayable -->
+	<!-- c:overtimeRate>overtimeRate</c:overtimeRate -->
+	<!-- holiday entitlement -->
+	<c:holidayRate>110</c:holidayRate>
+	<!-- working week ( & additional days) -->
+	<c:workingWeek>six (6) days per week</c:workingWeek>
+	<!-- production base -->
+	  <c:location>Pinewood Studios, London, WC1 4ER</c:location>
+	  <!-- prod:baseAddress1></prod:baseAddress1 -->
+	  <!-- prod:baseAddress2></prod:baseAddress2 -->
+	  <!-- prod:baseAddress3></prod:baseAddress3 -->
+	  <!-- prod:basePostCode></prod:basePostCode -->
+    <!--  expenses -->
+      <!-- requires new fields -->
+    <!--  no notice period in this contract -->
+	<c:noticePeriodSpecifier>noticePeriodSpecifier</c:noticePeriodSpecifier>
+	<c:noticePeriodDuration>10</c:noticePeriodDuration>
+    <!-- date of agreement -->	
+	<c:contractDate>08/12/2017</c:contractDate>
+	<c:contractPerDiem>5</c:contractPerDiem>
+	<c:contractGeneralExpenses>yes</c:contractGeneralExpenses>
+	<c:contractTravelExpensesAvailable>true</c:contractTravelExpensesAvailable>
+	<c:contractTelephoneExpensesAvailable>true</c:contractTelephoneExpensesAvailable>
+	<c:contractTravelExpensesMinDistance>5</c:contractTravelExpensesMinDistance>
+	<c:contractTravelMileageClaimPence>45</c:contractTravelMileageClaimPence>
+	<c:contractOwnEquipmentExpensesAvailable>yes</c:contractOwnEquipmentExpensesAvailable>
+	<c:contractOwnEquipmentExpensesWeeklyRate>250</c:contractOwnEquipmentExpensesWeeklyRate>
+	<c:contractOwnEquipmentExpensesWeeksDuration>2</c:contractOwnEquipmentExpensesWeeksDuration>
+	<c:contractOwnEquipmentMaterial></c:contractOwnEquipmentMaterial>
+</c:contract>
