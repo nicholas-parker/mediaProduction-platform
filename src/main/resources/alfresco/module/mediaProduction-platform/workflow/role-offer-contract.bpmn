@@ -4,9 +4,15 @@
   <process id="role-offer-contract_v0-1" name="Manage role process" isExecutable="true" activiti:candidateStarterGroups="${contract_contractApprovalRole}">
     <documentation>Manage the role &amp; contract definition, offer and acceptance of a role</documentation>
     <startEvent id="startevent_role-offer-contract" name="Start role-offer-contract process">
+      <documentation>
+      Variables provided to the start event must be
+      roleId: node id for new role which the contract relates to
+      contractId: node id for the new contract to be managed to completion by this process
+      site: name of the production
+      </documentation>
       <extensionElements>
-        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.CreateRoleFromDefault"></activiti:executionListener>
-        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.CreateContractDocument"></activiti:executionListener>
+        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.SetContractManagementProcessGroup"></activiti:executionListener>
+        <activiti:executionListener event="end" class="com.mwt.activiti.handlers.roleContract.AddContractToWorkflow"></activiti:executionListener>
       </extensionElements>
     </startEvent>
     <sequenceFlow id="flow9" sourceRef="startevent_role-offer-contract" targetRef="usertask_setup_role"></sequenceFlow>

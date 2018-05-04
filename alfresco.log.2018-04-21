@@ -1,0 +1,59 @@
+2018-04-21 05:23:35,442 ERROR [org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl] [DefaultScheduler_Worker-1] The cleanup script failed: 
+org.alfresco.error.AlfrescoRuntimeException: 03210041 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03210040 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-21 05:23:35,544 ERROR [org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl] [DefaultScheduler_Worker-1] The post-exec cleanup script failed: 
+org.alfresco.error.AlfrescoRuntimeException: 03210043 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTablesPostExec.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:732)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03210042 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTablesPostExec.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-21 05:23:35,546 ERROR [org.quartz.core.JobRunShell] [DefaultScheduler_Worker-1] Job DEFAULT.propTablesCleanupJobDetail threw an unhandled Exception: 
+org.alfresco.error.AlfrescoRuntimeException: 03210041 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03210040 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-21 05:23:35,548 ERROR [org.quartz.core.ErrorLogger] [DefaultScheduler_Worker-1] Job (DEFAULT.propTablesCleanupJobDetail threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.alfresco.error.AlfrescoRuntimeException: 03210041 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:227)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03210041 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	... 1 more
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03210040 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more

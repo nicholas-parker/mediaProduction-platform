@@ -39,6 +39,11 @@ public class RESTResponse {
 		this.JSONResponse.put(STATUS_FIELD, STATUS_OK);
 	}
 	
+	public void setItemsOK(JSONObject item) {
+		this.JSONResponse.put(ITEMS_FIELD, item);
+		this.JSONResponse.put(STATUS_FIELD, STATUS_OK);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void setEntry(Object key, Object value) {
 			this.JSONResponse.put(key, value);

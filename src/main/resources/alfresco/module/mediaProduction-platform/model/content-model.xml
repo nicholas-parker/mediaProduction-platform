@@ -255,6 +255,21 @@
 					<description>The minimum budget expected to pay</description>
 					<type>d:int</type>
 				</property>
+				<property name="nvpList:typeHolidayPaidRate">
+					<title>Holiday pay rate</title>
+					<description>The rate paid for days holiday</description>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:typeOvertimePaidRate">
+					<title>Overtime pay rate</title>
+					<description>The rate paid for overtime</description>
+					<type>d:float</type>
+				</property>
+				<property name="nvpList:typeNoticePeriod">
+					<title>Notice Period</title>
+					<description>The notice period in days each party agrees to give</description>
+					<type>d:int</type>
+				</property>
 				<property name="nvpList:typeBudgetMax">
 					<title>Maximum Budget</title>
 					<description>The maximum budget expected to pay</description>
@@ -449,8 +464,39 @@
 						<constraint ref="nvp:PAYEStatusOptions" />
 					</constraints>
 				</property>
+				<property name="nvpList:workingWeek">
+					<title>Working week</title>
+					<description>The days in a week expected to work</description>
+					<type>d:text</type>
+					<constraints>
+						<constraint ref="contract:workingWeekConstraint" />
+					</constraints>
+				</property>
+				<property name="nvpList:holidayPaidRate">
+					<title>Holiday pay rate</title>
+					<description>The rate paid for days holiday</description>
+					<type>d:int</type>
+				</property>
+				<property name="nvpList:overtimePaidRate">
+					<title>Overtime pay rate</title>
+					<description>The rate paid for overtime</description>
+					<type>d:float</type>
+				</property>
+				<property name="nvpList:noticePeriod">
+					<title>Notice Period</title>
+					<description>The notice period in days each party agrees to give</description>
+					<type>d:int</type>
+				</property>
 				<property name="nvpList:contractProcessId">
 					<title>The process id of the Activiti process instance which is managing the contract</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:contractProcessName">
+					<title>The Activiti workflow name which is managing the contract</title>
+					<type>d:text</type>
+				</property>
+				<property name="nvpList:contractAdministrationTeam">
+					<title>The Activiti workflow name which is managing the contract</title>
 					<type>d:text</type>
 				</property>
 				<property name="nvpList:startDate">
@@ -476,6 +522,10 @@
 				<property name="nvpList:budgetMax">
 					<title>The maximum budget expected to pay</title>
 					<type>d:int</type>
+				</property>
+				<property name="nvpList:currency">
+					<title>The currency this role is paid in</title>
+					<type>d:text</type>
 				</property>
 				<property name="nvpList:totalBudgetMin">
 					<title>The minimum budget expected to pay</title>
@@ -516,7 +566,7 @@
 						<many>false</many>
 					</source>
 					<target>
-						<class>contract:contractDocument</class>
+						<class>cm:content</class>
 						<mandatory>false</mandatory>
 						<many>true</many>
 					</target>
@@ -1004,6 +1054,7 @@
 						<constraint ref="contract:yesNoConstraint" />
 					</constraints>
 				</property>
+				
 				<property name="contract:overtimeRate">
 					<title>Overtime rate</title>
 					<description>Indicates the amount paid in the overtime period</description>

@@ -3,6 +3,7 @@ package com.nvp.alfresco.datalist;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONArray;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptException;
@@ -66,18 +68,21 @@ public class Write extends AbstractWebScript {
 	        MapperUtil mapperUtil = new MapperUtil();
 	        mapperUtil.setNamespaceService(registry.getNamespaceService());
 	        Map<QName, Serializable> properties = mapperUtil.JSONToMap(jsonPost);
-	       	        
+	       	    
+	        JSONObject item = new JSONObject();
 	        if(properties.containsKey(ContentModel.PROP_NODE_UUID) && properties.get(ContentModel.PROP_NODE_UUID).toString().isEmpty() == Boolean.FALSE) {
 	        	util.updateListItem(siteName, listName, properties);
 	        } else {
-	        	util.createNode(siteName, listName, properties);	
+	        	Map<QName, Serializable> newProperties = util.createNode(siteName, listName, properties);
+	        	Map<String,String> flat = mapperUtil.QNameListToFlatMap(newProperties);
+	        	item.putAll(flat);
 	        }
 	        
 	        
 	        res.setStatus(HTTP_OK);
 	        res.setContentEncoding("charset=UTF-8");
 	        res.setContentType("application/json");
-	        response.setOK();
+	        response.setItemsOK(item);
 	        os.write(response.getBytes());
 	       
         

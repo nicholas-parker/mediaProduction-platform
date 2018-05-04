@@ -1,4 +1,4 @@
-2018-05-04 08:36:45,103 ERROR [org.alfresco.repo.action.executer.MailActionExecuter] [FeedNotifier1] Failed to send email to bs@gmail.com : org.springframework.mail.MailSendException: Mail server connection failed; nested exception is com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
+2018-04-24 08:25:20,666 ERROR [org.alfresco.repo.action.executer.MailActionExecuter] [FeedNotifier1] Failed to send email to bs@gmail.com : org.springframework.mail.MailSendException: Mail server connection failed; nested exception is com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused (Connection refused). Failed messages: com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
   nested exception is:
@@ -6,8 +6,8 @@
 Failed message 1: com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
   nested exception is:
 	java.net.ConnectException: Connection refused (Connection refused)
-2018-05-04 08:36:45,530 WARN  [org.alfresco.repo.activities.feed.FeedNotifier] [FeedNotifier1] FeedNotifier: Failed to process entry "Person bs@gmail.com".
-org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs@gmail.com
+2018-04-24 08:25:20,715 WARN  [org.alfresco.repo.activities.feed.FeedNotifier] [FeedNotifier1] FeedNotifier: Failed to process entry "Person bs@gmail.com".
+org.alfresco.error.AlfrescoRuntimeException: 03240043 Failed to send email to:bs@gmail.com
 	at org.alfresco.repo.action.executer.MailActionExecuter.sendEmail(MailActionExecuter.java:1077)
 	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:524)
 	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:274)
@@ -46,7 +46,7 @@ org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
-	at com.sun.proxy.$Proxy65.executeAction(Unknown Source)
+	at com.sun.proxy.$Proxy64.executeAction(Unknown Source)
 	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:187)
 	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
 	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
@@ -66,8 +66,8 @@ org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-2018-05-04 08:36:46,005 ERROR [org.alfresco.repo.activities.feed.FeedNotifier] [DefaultScheduler_Worker-6] FeedNotifier: 1 error(s) detected. Last error from entry "Person bs@gmail.com"
-org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs@gmail.com
+2018-04-24 08:25:20,722 ERROR [org.alfresco.repo.activities.feed.FeedNotifier] [DefaultScheduler_Worker-2] FeedNotifier: 1 error(s) detected. Last error from entry "Person bs@gmail.com"
+org.alfresco.error.AlfrescoRuntimeException: 03240043 Failed to send email to:bs@gmail.com
 	at org.alfresco.repo.action.executer.MailActionExecuter.sendEmail(MailActionExecuter.java:1077)
 	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:524)
 	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:274)
@@ -106,7 +106,7 @@ org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs
 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
-	at com.sun.proxy.$Proxy65.executeAction(Unknown Source)
+	at com.sun.proxy.$Proxy64.executeAction(Unknown Source)
 	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:187)
 	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
 	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
@@ -126,3 +126,10 @@ org.alfresco.error.AlfrescoRuntimeException: 04040062 Failed to send email to:bs
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
+2018-04-24 14:46:22,233 ERROR [com.nvp.alfresco.datalist.Write] [http-bio-8080-exec-30] Error creating new data list item [slingshot]/[productionRoles]. null
+2018-04-24 14:46:55,784 ERROR [com.nvp.alfresco.datalist.Write] [http-bio-8080-exec-2] Error creating new data list item [slingshot]/[productionRoles]. null
+2018-04-24 17:45:51,064 ERROR [com.nvp.alfresco.datalist.Write] [http-bio-8080-exec-22] Error creating new data list item [slingshot]/[productionRoles]. null
+2018-04-24 17:47:16,627 ERROR [com.nvp.alfresco.datalist.Write] [http-bio-8080-exec-30] Error creating new data list item [slingshot]/[productionRoles]. null
+2018-04-24 18:19:25,974 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-14] Error starting workflow null
+2018-04-24 18:37:00,086 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-10] Error starting workflow null
+2018-04-24 18:38:03,169 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-27] Error starting workflow null

@@ -95,7 +95,11 @@ public class DataListUtil {
 		// QName dataType = QName.createQName(modelNamespace, modelType);
 		
 		// TODO - remove this line whe we work out how to set the type of the data model we are writing as per the above block
-		QName dataType = DefaultRoleModel.QN_DEFAULT_ROLE; 
+		QName dataType = null;
+		if(listName.contentEquals("defaultRoles")) {
+		  dataType = DefaultRoleModel.QN_DEFAULT_ROLE;} 
+		if(listName.contentEquals("productionRoles")) {
+	      dataType = ProductionRoleModel.QN_PRODUCTION_ROLE;}
 		
 		String nodeName = java.util.UUID.randomUUID().toString();
 		 

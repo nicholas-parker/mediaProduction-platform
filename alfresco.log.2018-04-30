@@ -1,0 +1,278 @@
+2018-04-30 08:24:26,644 ERROR [org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl] [DefaultScheduler_Worker-4] The cleanup script failed: 
+org.alfresco.error.AlfrescoRuntimeException: 03300024 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03300023 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-30 08:24:27,289 ERROR [org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl] [DefaultScheduler_Worker-4] The post-exec cleanup script failed: 
+org.alfresco.error.AlfrescoRuntimeException: 03300026 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTablesPostExec.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:732)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03300025 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTablesPostExec.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-30 08:24:27,433 ERROR [org.quartz.core.JobRunShell] [DefaultScheduler_Worker-4] Job DEFAULT.propTablesCleanupJobDetail threw an unhandled Exception: 
+org.alfresco.error.AlfrescoRuntimeException: 03300024 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03300023 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-30 08:24:27,435 ERROR [org.quartz.core.ErrorLogger] [DefaultScheduler_Worker-4] Job (DEFAULT.propTablesCleanupJobDetail threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception. [See nested exception: org.alfresco.error.AlfrescoRuntimeException: 03300024 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:227)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:563)
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03300024 Unable to run SQL script: dir=alfresco/dbscripts/utility/${db.script.dialect}, name=CleanAlfPropTables.sql
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:73)
+	at org.alfresco.repo.domain.propval.ibatis.PropertyValueDAOImpl.cleanupUnusedValues(PropertyValueDAOImpl.java:720)
+	at org.alfresco.repo.attributes.PropTablesCleaner.execute(PropTablesCleaner.java:82)
+	at org.alfresco.repo.attributes.PropTablesCleanupJob.execute(PropTablesCleanupJob.java:54)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:216)
+	... 1 more
+Caused by: org.alfresco.error.AlfrescoRuntimeException: 03300023 The schema script could not be found at location alfresco/dbscripts/utility/${db.script.dialect}/CleanAlfPropTables.sql
+	at org.alfresco.error.AlfrescoRuntimeException.create(AlfrescoRuntimeException.java:52)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:189)
+	at org.alfresco.repo.domain.schema.script.ScriptExecutorImpl.executeScriptUrl(ScriptExecutorImpl.java:173)
+	at org.alfresco.repo.domain.schema.script.ScriptBundleExecutorImpl.exec(ScriptBundleExecutorImpl.java:59)
+	... 5 more
+2018-04-30 08:24:30,776 ERROR [org.alfresco.repo.action.executer.MailActionExecuter] [FeedNotifier1] Failed to send email to bs@gmail.com : org.springframework.mail.MailSendException: Mail server connection failed; nested exception is com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused (Connection refused). Failed messages: com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused (Connection refused); message exceptions (1) are:
+Failed message 1: com.sun.mail.util.MailConnectException: Couldn't connect to host, port: smtp.example.com, 25; timeout -1;
+  nested exception is:
+	java.net.ConnectException: Connection refused (Connection refused)
+2018-04-30 08:24:30,787 WARN  [org.alfresco.repo.activities.feed.FeedNotifier] [FeedNotifier1] FeedNotifier: Failed to process entry "Person bs@gmail.com".
+org.alfresco.error.AlfrescoRuntimeException: 03300045 Failed to send email to:bs@gmail.com
+	at org.alfresco.repo.action.executer.MailActionExecuter.sendEmail(MailActionExecuter.java:1077)
+	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:524)
+	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:274)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.__invoke(DelegatingMethodAccessorImpl.java:43)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.alfresco.repo.management.subsystems.SubsystemProxyFactory$1.invoke(SubsystemProxyFactory.java:79)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy322.execute(Unknown Source)
+	at org.alfresco.repo.action.ActionServiceImpl.directActionExecution(ActionServiceImpl.java:846)
+	at org.alfresco.repo.action.ActionServiceImpl.executeActionImpl(ActionServiceImpl.java:747)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:581)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:567)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:855)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.__invoke(DelegatingMethodAccessorImpl.java:43)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.alfresco.repo.security.permissions.impl.AlwaysProceedMethodInterceptor.invoke(AlwaysProceedMethodInterceptor.java:41)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.alfresco.repo.security.permissions.impl.ExceptionTranslatorMethodInterceptor.invoke(ExceptionTranslatorMethodInterceptor.java:53)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.alfresco.repo.audit.AuditMethodInterceptor.invoke(AuditMethodInterceptor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy65.executeAction(Unknown Source)
+	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:187)
+	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.access$2(FeedNotifierImpl.java:388)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:379)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:464)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:375)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.tenant.TenantUtil.runAsWork(TenantUtil.java:126)
+	at org.alfresco.repo.tenant.TenantUtil.runAsTenant(TenantUtil.java:95)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:370)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.execute(BatchProcessor.java:720)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:464)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.run(BatchProcessor.java:764)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2018-04-30 08:24:30,804 ERROR [org.alfresco.repo.activities.feed.FeedNotifier] [DefaultScheduler_Worker-9] FeedNotifier: 1 error(s) detected. Last error from entry "Person bs@gmail.com"
+org.alfresco.error.AlfrescoRuntimeException: 03300045 Failed to send email to:bs@gmail.com
+	at org.alfresco.repo.action.executer.MailActionExecuter.sendEmail(MailActionExecuter.java:1077)
+	at org.alfresco.repo.action.executer.MailActionExecuter.executeImpl(MailActionExecuter.java:524)
+	at org.alfresco.repo.action.executer.ActionExecuterAbstractBase.execute(ActionExecuterAbstractBase.java:274)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.__invoke(DelegatingMethodAccessorImpl.java:43)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.alfresco.repo.management.subsystems.SubsystemProxyFactory$1.invoke(SubsystemProxyFactory.java:79)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy322.execute(Unknown Source)
+	at org.alfresco.repo.action.ActionServiceImpl.directActionExecution(ActionServiceImpl.java:846)
+	at org.alfresco.repo.action.ActionServiceImpl.executeActionImpl(ActionServiceImpl.java:747)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:581)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:567)
+	at org.alfresco.repo.action.ActionServiceImpl.executeAction(ActionServiceImpl.java:855)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.__invoke(DelegatingMethodAccessorImpl.java:43)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)
+	at org.alfresco.repo.security.permissions.impl.AlwaysProceedMethodInterceptor.invoke(AlwaysProceedMethodInterceptor.java:41)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.alfresco.repo.security.permissions.impl.ExceptionTranslatorMethodInterceptor.invoke(ExceptionTranslatorMethodInterceptor.java:53)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.alfresco.repo.audit.AuditMethodInterceptor.invoke(AuditMethodInterceptor.java:166)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:96)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:260)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:94)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)
+	at com.sun.proxy.$Proxy65.executeAction(Unknown Source)
+	at org.alfresco.repo.activities.feed.EmailUserNotifier.notifyUser(EmailUserNotifier.java:187)
+	at org.alfresco.repo.activities.feed.AbstractUserNotifier.notifyUser(AbstractUserNotifier.java:228)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.processInternal(FeedNotifierImpl.java:393)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.access$2(FeedNotifierImpl.java:388)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:379)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1$1.execute(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:464)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:375)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2$1.doWork(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.tenant.TenantUtil.runAsWork(TenantUtil.java:126)
+	at org.alfresco.repo.tenant.TenantUtil.runAsTenant(TenantUtil.java:95)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:370)
+	at org.alfresco.repo.activities.feed.FeedNotifierImpl$2.process(FeedNotifierImpl.java:1)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.execute(BatchProcessor.java:720)
+	at org.alfresco.repo.transaction.RetryingTransactionHelper.doInTransaction(RetryingTransactionHelper.java:464)
+	at org.alfresco.repo.batch.BatchProcessor$TxnCallback.run(BatchProcessor.java:764)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2018-04-30 09:07:19,421 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-1] Error starting workflow String index out of range: -1
+2018-04-30 12:40:32,026 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-16] Error starting workflow String index out of range: -1
+2018-04-30 12:46:08,034 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-22] Error starting workflow String index out of range: -1
+2018-04-30 13:18:12,131 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-1] Error starting workflow String index out of range: -1
+2018-04-30 17:42:53,585 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-29] Error starting workflow String index out of range: -1
+2018-04-30 17:45:11,120 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-1] Error starting workflow String index out of range: -1
+2018-04-30 18:16:00,502 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-8] Error starting workflow String index out of range: -1
+2018-04-30 18:16:03,157 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-31] Error starting workflow String index out of range: -1
+2018-04-30 21:21:45,461 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Using database URL 'jdbc:h2:/home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev/h2_data/alf_dev;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=10000;MVCC=FALSE;LOCK_MODE=0' with user 'alfresco'.
+2018-04-30 21:21:45,531 INFO  [org.alfresco.repo.admin] [localhost-startStop-1] Connected to database H2 version 1.4.190 (2015-10-11)
+2018-04-30 21:21:57,618 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V4.2-metadata-query-indexes
+2018-04-30 21:21:57,619 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.1-metadata-query-indexes
+2018-04-30 21:21:57,619 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Ignoring script patch (post-Hibernate): patch.db-V5.2-remove-jbpm-tables-from-db
+2018-04-30 21:22:13,510 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1]
+2018-04-30 21:22:14,061 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Authentication' subsystem, ID: [Authentication, managed, alfrescoNtlm1] complete
+2018-04-30 21:22:22,147 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor Repository Template Processor for extension ftl
+2018-04-30 21:22:22,158 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor Repository Script Processor for extension js
+2018-04-30 21:22:30,994 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted]
+2018-04-30 21:22:31,062 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ContentStore' subsystem, ID: [ContentStore, managed, unencrypted] complete
+2018-04-30 21:22:31,131 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Connecting to database: jdbc:h2:/home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev/h2_data/alf_dev, UserName=ALFRESCO, H2 JDBC Driver
+2018-04-30 21:22:31,131 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] Schema managed by database dialect org.hibernate.dialect.H2Dialect.
+2018-04-30 21:22:31,483 INFO  [org.alfresco.repo.domain.schema.SchemaBootstrap] [localhost-startStop-1] No changes were made to the schema.
+2018-04-30 21:22:33,133 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'thirdparty' subsystem, ID: [thirdparty, default]
+2018-04-30 21:22:33,288 ERROR [org.alfresco.repo.content.transform.magick.AbstractImageMagickContentTransformerWorker] [localhost-startStop-1] ImageMagickContentTransformerWorker not available: 03300016 Failed to perform ImageMagick transformation: 
+Execution result: 
+   os:         Linux
+   command:    ./ImageMagick/bin/convert /tmp/Alfresco/ImageMagickContentTransformerWorker_init_source_1389672257539140799.gif -strip /tmp/Alfresco/ImageMagickContentTransformerWorker_init_target_1571632546139760247.png
+   succeeded:  false
+   exit code:  1
+   out:        
+   err:        Cannot run program "./ImageMagick/bin/convert": error=2, No such file or directory
+2018-04-30 21:22:33,291 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'thirdparty' subsystem, ID: [thirdparty, default] complete
+2018-04-30 21:22:33,292 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'OOoDirect' subsystem, ID: [OOoDirect, default]
+2018-04-30 21:22:35,417 WARN  [org.alfresco.util.OpenOfficeConnectionTester] [localhost-startStop-1] Error trying to query Open Office version information. OpenOffice.org's ConfigurationRegistry not implemented in this version of OOo. This should not affect the operation of OOo.
+2018-04-30 21:22:35,425 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'OOoDirect' subsystem, ID: [OOoDirect, default] complete
+2018-04-30 21:22:35,436 INFO  [org.alfresco.repo.admin.ConfigurationChecker] [localhost-startStop-1] The root data directory ('dir.root') is: /home/nick/git/mediaProduction-platform/mediaProduction-platform/alf_data_dev
+2018-04-30 21:22:35,437 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Search' subsystem, ID: [Search, managed, solr4]
+2018-04-30 21:22:36,009 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Search' subsystem, ID: [Search, managed, solr4] complete
+2018-04-30 21:22:36,075 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] Checking for patches to apply ...
+2018-04-30 21:22:36,512 INFO  [org.alfresco.repo.admin.patch.PatchExecuter] [localhost-startStop-1] No patches were required.
+2018-04-30 21:22:36,542 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Found 3 module package(s).
+2018-04-30 21:22:36,669 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'mediaProduction-platform' version 1.0-SNAPSHOT.
+2018-04-30 21:22:36,772 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-share-services' version 5.2.0.
+2018-04-30 21:22:36,792 INFO  [org.alfresco.repo.module.ModuleServiceImpl] [localhost-startStop-1] Starting module 'alfresco-trashcan-cleaner' version 2.2.
+2018-04-30 21:22:36,805 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'fileServers' subsystem, ID: [fileServers, default]
+2018-04-30 21:22:37,593 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'sysAdmin' subsystem, ID: [sysAdmin, default]
+2018-04-30 21:22:37,627 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'sysAdmin' subsystem, ID: [sysAdmin, default] complete
+2018-04-30 21:22:37,652 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'fileServers' subsystem, ID: [fileServers, default] complete
+2018-04-30 21:22:37,652 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'imap' subsystem, ID: [imap, default]
+2018-04-30 21:22:37,964 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'imap' subsystem, ID: [imap, default] complete
+2018-04-30 21:22:37,964 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, outbound]
+2018-04-30 21:22:38,927 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, outbound] complete
+2018-04-30 21:22:38,927 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'email' subsystem, ID: [email, inbound]
+2018-04-30 21:22:39,160 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'email' subsystem, ID: [email, inbound] complete
+2018-04-30 21:22:39,160 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Subscriptions' subsystem, ID: [Subscriptions, default]
+2018-04-30 21:22:39,194 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Subscriptions' subsystem, ID: [Subscriptions, default] complete
+2018-04-30 21:22:39,246 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Synchronization' subsystem, ID: [Synchronization, default]
+2018-04-30 21:22:39,484 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Synchronization' subsystem, ID: [Synchronization, default] complete
+2018-04-30 21:22:39,516 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco JVM - v1.8.0_151-b12; maximum heap size 1751.500MB
+2018-04-30 21:22:39,516 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Server Mode :UNKNOWN
+2018-04-30 21:22:39,525 INFO  [org.alfresco.service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco Content Services started (Community). Current version: 5.2.0 (r135134-b14) schema 10,005. Originally installed version: 5.2.0 (r135134-b14) schema 10,005.
+2018-04-30 21:22:39,537 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default]
+2018-04-30 21:22:40,062 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'ActivitiesFeed' subsystem, ID: [ActivitiesFeed, default] complete
+2018-04-30 21:22:40,063 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Starting 'Replication' subsystem, ID: [Replication, default]
+2018-04-30 21:22:40,093 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [localhost-startStop-1] Startup of 'Replication' subsystem, ID: [Replication, default] complete
+2018-04-30 21:22:51,183 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-30 21:22:51,185 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-30 21:22:51,185 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:22:57,070 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-30 21:22:57,070 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-30 21:22:57,070 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:22:57,082 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Repository Web Script Container (in 15091.28ms)
+2018-04-30 21:22:57,166 INFO  [org.springframework.extensions.webscripts.TemplateProcessorRegistry] [localhost-startStop-1] Registered template processor freemarker for extension ftl
+2018-04-30 21:22:57,170 INFO  [org.springframework.extensions.webscripts.ScriptProcessorRegistry] [localhost-startStop-1] Registered script processor javascript for extension js
+2018-04-30 21:23:02,400 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 412 Web Scripts (+0 failed), 561 URLs
+2018-04-30 21:23:02,400 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 1 Package Description Documents (+0 failed) 
+2018-04-30 21:23:02,400 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:23:02,615 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-30 21:23:02,615 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-30 21:23:02,615 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:23:02,810 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-30 21:23:02,810 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-30 21:23:02,810 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [localhost-startStop-1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:23:02,826 INFO  [org.springframework.extensions.webscripts.AbstractRuntimeContainer] [localhost-startStop-1] Initialised Public Api Web Script Container (in 5553.3804ms)
+2018-04-30 21:23:03,218 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 13 Web Scripts (+0 failed), 102 URLs
+2018-04-30 21:23:03,219 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Package Description Documents (+0 failed) 
+2018-04-30 21:23:03,219 INFO  [org.springframework.extensions.webscripts.DeclarativeRegistry] [asynchronouslyRefreshedCacheThreadPool1] Registered 0 Schema Description Documents (+0 failed) 
+2018-04-30 21:28:15,125 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-7] Starting 'Transformers' subsystem, ID: [Transformers, default]
+2018-04-30 21:28:15,755 INFO  [org.alfresco.repo.management.subsystems.ChildApplicationContextFactory] [http-bio-8080-exec-7] Startup of 'Transformers' subsystem, ID: [Transformers, default] complete
+2018-04-30 21:28:41,300 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-7] Error starting workflow String index out of range: -1
+2018-04-30 21:39:34,989 ERROR [com.nvp.alfresco.datalist.Create] [http-bio-8080-exec-12] Error starting workflow String index out of range: -1

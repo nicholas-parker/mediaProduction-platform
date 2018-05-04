@@ -13,6 +13,7 @@ public class ProductionRoleModel {
 	
 	// local field names, useful for JSON to object
 	public static String PROP_ROLE_TYPE = "roleType";
+	public static String PROP_ROLE_ID = "roleId";
 	public static String PROP_ROLE_NAME = "roleName";
 	public static String PROP_CREATED_DATE = "createdDate";
 	public static String PROP_OFFER_DATE= "offerDate";
@@ -36,6 +37,7 @@ public class ProductionRoleModel {
 	
 	// QNames, useful for node properties  
 	public static QName QN_PRODUCTION_ROLE = QName.createQName(roleItemURI, productionRoleTypeName);
+	public static QName QN_ROLE_ID = QName.createQName(roleItemURI, PROP_ROLE_ID);
 	public static QName QN_ROLE_TYPE = QName.createQName(roleItemURI, PROP_ROLE_TYPE);
 	public static QName QN_ROLE_NAME = QName.createQName(roleItemURI, PROP_ROLE_NAME);
 	public static QName QN_CREATED_DATE = QName.createQName(roleItemURI, PROP_CREATED_DATE);
@@ -84,7 +86,7 @@ public class ProductionRoleModel {
 	public static String ROLE_STATUS_FINAL_APPROVAL = "Final approval";
 	public static String ROLE_STATUS_APPROVED = "Approved";
 	public static String ROLE_STATUS_ACTIVE = "Active";
-	public static String ROLE_STATUS_COMPLETED = "COmpleted";
+	public static String ROLE_STATUS_COMPLETED = "Completed";
 	public static String ROLE_STATUS_NEW_SUPPLIER = "New supplier";
 	public static String ROLE_STATUS_CANCELED = "Canceled";
 	

@@ -67,7 +67,7 @@ public class SetSetupTaskDescription  extends AbstractAlfrescoListener implement
 		if(firstTime) {
 			
 			StringBuilder description = new StringBuilder();
-			description.append(task.getVariable("nvpList_roleName").toString());
+			description.append(task.getVariable("contract_serviceName").toString());
 			description.append(": complete the offer details , select the candidate and submit the offer to the candidate");
 			task.setDescription(description.toString());
 
@@ -86,7 +86,7 @@ public class SetSetupTaskDescription  extends AbstractAlfrescoListener implement
 		if(declinedTime) {
 
 			StringBuilder description = new StringBuilder();
-			description.append(task.getVariable("nvpList_roleName").toString());
+			description.append(task.getVariable("contract_serviceName").toString());
 			description.append(": candidate has declined the position, ammend the offer or forward to an alternative candidate.");
 			task.setDescription(description.toString());
 			
