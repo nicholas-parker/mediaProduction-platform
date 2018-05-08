@@ -819,12 +819,17 @@
 				</property>
 				<property name="contract:registeredNum">
 					<title>Registered Number</title>
-					<description>Registration number with registration authority</description>
+					<description>Registration number with registration authority for example company number in the UK</description>
 					<type>d:text</type>
 				</property>
 				<property name="contract:registerRegion">
 					<title>Registered Region</title>
-					<description>Region the organisation is registered in</description>
+					<description>Region the organisation is registered in for example England and Wales</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:registerOrg">
+					<title>Register Organisation</title>
+					<description>The organisation which holds the registration information such as Companies House in the UK</description>
 					<type>d:text</type>
 				</property>
 				<property name="contract:taxNumber">
