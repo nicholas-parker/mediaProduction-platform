@@ -977,10 +977,20 @@
 					<description>The date this content was approved</description>
 					<type>d:date</type>
 				</property>
-				<property name="contract:signingTransactionId">
-					<title>Signing Transaction Id</title>
-					<description>The Id of the transaction in the block chain where all parties sign the contract</description>
+				<property name="contract:contractSignStatus">
+					<title>Approval Status</title>
+					<description>A flag which indicates if content has been approved</description>
 					<type>d:text</type>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>	
+				<property name="contract:contractSignDate">
+					<title>Approval Date</title>
+					<description>The date this content was approved</description>
+					<type>d:date</type>
 				</property>
 				<property name="contract:contractValue">
 					<title>Contract Value</title>
@@ -990,6 +1000,48 @@
 				<property name="contract:contractDeliverableType">
 					<title>Contract Deliverable Type</title>
 					<description>The type of deliverable item, currently SERVICE or PRODUCT</description>
+					<type>d:text</type>
+				</property>
+		      </properties>
+			</aspect>
+
+    		<aspect name="contract:electronicSignature">
+			  <title>Electronic signature</title>
+			  <description>An aspect which models the electronic signing of a document between two parties</description>
+			  <properties>
+				<property name="contract:signingTransactionId">
+					<title>Signing Transaction Id</title>
+					<description>The Id of the transaction in the block chain where all parties sign the contract, refer to this transaction for details of the signing</description>
+					<type>d:text</type>
+				</property>
+                <property name="contract:recipientElectronicConfirmation">
+					<title>Recipient electronic confirmation</title>
+					<description>A YES | NO which indicates the recipient of the goods or services supplied under the contract has agreed to electronically sign the document</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:recipientElectronicConfirmationDate">
+					<title>Recipient electronic confirmation date</title>
+					<description>The date at which the recipient agreed to electronic signature being used</description>
+					<type>d:date</type>
+				</property>
+                <property name="contract:supplierElectronicConfirmation">
+					<title>Supplier electronic confirmation</title>
+					<description>A YES | NO which indicates the supplier of the goods or services supplied under the contract has agreed to electronically sign the document</description>
+					<type>d:text</type>
+				</property>
+				<property name="contract:supplierElectronicConfirmationDate">
+					<title>Supplier electronic confirmation date</title>
+					<description>The date at which the supplier agreed to electronically sign the document</description>
+					<type>d:text</type>
+				</property>
+                <property name="contract:supplierPublicKey">
+					<title>Supplier public key</title>
+					<description>The public key of the supplier</description>
+					<type>d:text</type>
+				</property>
+                <property name="contract:recipientPublicKey">
+					<title>Recipient public key</title>
+					<description>The public key of the recipient</description>
 					<type>d:text</type>
 				</property>
 		      </properties>
@@ -1059,7 +1111,6 @@
 						<constraint ref="contract:yesNoConstraint" />
 					</constraints>
 				</property>
-				
 				<property name="contract:overtimeRate">
 					<title>Overtime rate</title>
 					<description>Indicates the amount paid in the overtime period</description>

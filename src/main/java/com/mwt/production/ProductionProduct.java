@@ -48,7 +48,7 @@ public class ProductionProduct {
 		}
 		/**
 		 * 
-		 * create the 'Contracts' folder
+		 * create the 'Contracts' folder & 'Contracts Template' folder
 		 * 
 		 */
 		try {

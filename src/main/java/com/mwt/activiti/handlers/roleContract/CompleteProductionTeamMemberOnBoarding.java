@@ -8,16 +8,20 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.ExecutionListener;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.alfresco.model.ContentModel;
+import org.alfresco.service.cmr.repository.AssociationRef;
 import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
+import org.alfresco.service.namespace.QNamePattern;
 
 import com.mwt.activiti.AbstractAlfrescoListener;
 import com.mwt.contract.ContractService;
+import com.mwt.contract.model.ContractCrewEngagementModel;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.crew.CrewService;
 import com.mwt.roles.ProductionRoleManager;
+import com.mwt.roles.ProductionRoleModel;
 import com.nvp.util.DocUtil;
 import com.nvp.util.NodeRefUtil;
 
@@ -115,16 +119,19 @@ public class CompleteProductionTeamMemberOnBoarding extends AbstractAlfrescoList
         /**
          * 
          * set the contract status to FINAL_COMPLETE, an end state.
+         * set the role status to approved.
          * 
          */
+        String contractNodeUUID = null;
         if( this.hasValue(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID, exec)) {
             
+        	/** contract status */
         	try {
        
-        		String nodeUUID = exec.getVariable(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID).toString();
+        		contractNodeUUID = exec.getVariable(ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID).toString();
         		ContractService contractService = new ContractService();
             	contractService.setServiceRegistry(this.getServiceRegistry());
-            	contractService.setStatusFinalApproved(nodeUUID);
+            	contractService.setStatusFinalApproved(contractNodeUUID);
             
         	} catch (Exception e) {
         		
@@ -133,39 +140,51 @@ public class CompleteProductionTeamMemberOnBoarding extends AbstractAlfrescoList
         		
         	}
         	
+        	/** role status */
+           	try {
+                
+           		NodeRef contractNode = NodeRefUtil.NodeReffromUUID(contractNodeUUID);
+           		QName sourceName = ProductionRoleModel.QN_ASSOC_ROLE_CONTRACT_DOCUMENTS;
+           		List<AssociationRef> role = nodeService.getSourceAssocs(contractNode, sourceName);
+           		if(role.size() > 0) {
+           		
+           			NodeRef roleNode = role.get(0).getSourceRef();
+           			String nodeUUID = roleNode.getId();
+           			ProductionRoleManager productionRoleManager = new ProductionRoleManager();
+                	productionRoleManager.setServiceRegistry(this.getServiceRegistry());
+                	productionRoleManager.setStatusApproved(nodeUUID);
+                	
+           		}
+        		
+        		
+            
+        	} catch (Exception e) {
+        		 
+        		e.printStackTrace();
+        		throw e;
+
+            	// RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ROLE_NODE_REF);
+            	// e.printStackTrace();
+            	// throw e;
+
+        	}
+
+        	
         } else {
         	
-        	RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ROLE_NODE_REF);
+        	RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ContractDocumentModel.CONTRACT_DOCUMENT_NODE_ID);
         	e.printStackTrace();
         	throw e;
         }
         
         /**
-         * set the role status to complete
+         * set the role status to complete, the role is found from the contract source association
          * 
          */
-        if( this.hasValue(ROLE_NODE_REF, exec)) {
-        
-        	try {
-       
-        		String nodeUUID = NodeRefUtil.UUIDfromURL( exec.getVariable(ROLE_NODE_REF).toString() );
-        		ProductionRoleManager productionRoleManager = new ProductionRoleManager();
-            	productionRoleManager.setServiceRegistry(this.getServiceRegistry());
-            	productionRoleManager.setStatusApproved(nodeUUID);
-            
-        	} catch (Exception e) {
-        		
-        		e.printStackTrace();
-        		throw e;
-        		
-        	}
         	
-        } else {
+
         	
-        	RoleContractException e =  new RoleContractException("Unable to set role status to complete as process " +  exec.getProcessInstanceId().toString() + " does not have a valid " + ROLE_NODE_REF);
-        	e.printStackTrace();
-        	throw e;
-        }
+
         	
 	}
 

@@ -99,84 +99,12 @@ public class MergePropertiesToContractDocument extends AbstractAlfrescoListener 
 		DocUtil.mergeBankAccountAspect(exec, contractDocs.get(0), this.getServiceRegistry());
 		ApplyRightToWorkAspectFromProcess.Merge(exec, contractDocs.get(0), this.getServiceRegistry());
 		
-		/**
-		 * 
-		 * merge the contract document node properties into the contract documentNodement itself
-		 * 
-		 */
-		Map<QName, Serializable> contractDocumentProperties = new HashMap<QName, Serializable>();
-		NodeService nodeService = this.getServiceRegistry().getNodeService();
-		contractDocumentProperties = nodeService.getProperties(contractDocs.get(0));
-
-		/**
-		 * get an array of servicePeriod nodes
-		 */
-		Set<QName> servicePeriodTypeName = new HashSet<QName>();
-		servicePeriodTypeName.add(ServicePeriodModel.QN_SERVICEPERIOD_TYPE);
-		List<ChildAssociationRef> childRefs = nodeService.getChildAssocs(contractDocs.get(0), servicePeriodTypeName);
-		
-		/**
-		 * 
-		 * build the XML to merge into the document
-		 * 
-		 */
-		ContractContentBuilder contentBuilder = new ContractContentBuilder();
-		try {
-		contentBuilder.propertiesToCustomContent(contractDocumentProperties);
-		if(!childRefs.isEmpty()) {
-			Map<QName, Serializable> servicePeriodProperties = new HashMap<QName, Serializable>();
-			for(ChildAssociationRef childAssoc : childRefs ) {
-				servicePeriodProperties = nodeService.getProperties(childAssoc.getChildRef());
-				
-				String servicePeriodId = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_ID);
-				String servicePeriodName = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_NAME); 
-				String servicePeriodDesc = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_DESCRIPTION); 
-				String serviceTypeCode = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_TYPE_CODE);
-				String servicePeriodType = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_PERIOD_TYPE);
-				String serviceStart = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_START).toString(); 
-				String serviceEnd = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_END).toString();
-				
-				        contentBuilder.addServicePeriod(servicePeriodId,
-				        								servicePeriodName, 
-				        								servicePeriodDesc, 
-				        								serviceTypeCode, 
-				        								servicePeriodType,
-				        								serviceStart, 
-				        								serviceEnd);
-			}
-
-		}
-		
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (TransformerException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        }
-		
-		
 		try {
 			
-		WordPropertiesManager wordPropertiesManager = new WordPropertiesManager();
-		wordPropertiesManager.setServiceRegistry(this.getServiceRegistry());
-	    wordPropertiesManager.setWordNodeRef(contractDocs.get(0));
-	    wordPropertiesManager.mergeProperties(contentBuilder.getDocument());
-	    wordPropertiesManager.writeToNodeContentAsPDF(contractDocs.get(0));
-
-        /**
-         * 
-         * set the contract document status
-         * 
-         */
-        ContractService contractService = new ContractService();
-        contractService.setServiceRegistry(this.getServiceRegistry());
-        contractService.setStatusSupplierReview( contractDocs.get(0).getId());
-
-        System.out.println("Contract document completed...");
-        
+			ContractService contractService = new ContractService();
+			contractService.setServiceRegistry(this.getServiceRegistry());
+			contractService.mergeContractPropertiesToContent(contractDocs.get(0), false);
+			
 		} catch (Exception e) {
 		
 			System.out.println(e);

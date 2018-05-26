@@ -32,6 +32,7 @@ import com.mwt.production.MediaProductionModel;
 import org.w3c.dom.Document;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.repo.transaction.RetryingTransactionHelper;
 import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.dictionary.DataTypeDefinition;
 import org.alfresco.service.cmr.dictionary.InvalidTypeException;
@@ -439,28 +440,37 @@ public class WordPropertiesManager {
 		
 		try {
 			
-			/** convert to PDF and write to node content */
+			Boolean result = this.registry.getRetryingTransactionHelper().doInTransaction(new RetryingTransactionHelper.RetryingTransactionCallback<Boolean>(){
+			    
+				public Boolean execute() throws Throwable {
+
+					/** convert to PDF and write to node content */
+					
+					Docx4J.toPDF(wordMLPackage, outStream);
+					InputStream inStream = new ByteArrayInputStream(outStream.toByteArray());			
+					writer.putContent(inStream);
+					outStream.close();
+					inStream.close();
+					
+					/** change the document filename */
+					NodeService nodeService = registry.getNodeService();
+					String fileName = nodeService.getProperty(nodeRef, ContentModel.PROP_NAME).toString();
+					String newName;
+					if(fileName.contains(".")) {
+						String[] parts = fileName.split(".");
+						newName = parts[0] + ".pdf";
+					} else {
+						newName = fileName + ".pdf";
+					}
+					nodeService.setProperty(nodeRef, ContentModel.PROP_NAME, newName);
+					System.out.println("Saved document as PDF");
+
+					return true;
+			    }   
+			});
 			
-			Docx4J.toPDF(wordMLPackage, outStream);
-			InputStream inStream = new ByteArrayInputStream(outStream.toByteArray());			
-			writer.putContent(inStream);
-			outStream.close();
-			inStream.close();
 			
-			/** change the document filename */
-			NodeService nodeService = this.registry.getNodeService();
-			String fileName = nodeService.getProperty(nodeRef, ContentModel.PROP_NAME).toString();
-			String newName;
-			if(fileName.contains(".")) {
-				String[] parts = fileName.split(".");
-				newName = parts[0] + ".pdf";
-			} else {
-				newName = fileName + ".pdf";
-			}
-			nodeService.setProperty(nodeRef, ContentModel.PROP_NAME, newName);
-			System.out.println("Saved document as PDF");
-			
-		} catch (Docx4JException e) {
+		} catch (Throwable e) {
 			
 			e.printStackTrace();
 			IOUtils.closeQuietly(outStream);
@@ -471,13 +481,8 @@ public class WordPropertiesManager {
 				ce.printStackTrace();
 			}
 			
-		} catch (IOException ioe) {
-			
-			ioe.printStackTrace();
+		} 
 		
-		}
-		
-
 		return;
 
 	}

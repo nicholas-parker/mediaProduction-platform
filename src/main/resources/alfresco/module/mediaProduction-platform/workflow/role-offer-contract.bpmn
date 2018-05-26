@@ -36,7 +36,6 @@
                                       task.name="Review your job offer for " + contract_serviceName;]]></activiti:string>
           </activiti:field>
         </activiti:taskListener>
-        <activiti:taskListener event="complete" class="com.mwt.activiti.handlers.roleContract.MergePropertiesToContractDocument"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <boundaryEvent id="boundary_withdraw_candidate_offer" attachedToRef="usertask_supplier_review_offer" cancelActivity="true">
@@ -50,17 +49,14 @@
         <![CDATA[${candidateReviewOutcome == 'Accepted'} ]]>
       </conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow_review_declined" sourceRef="usertask_supplier_review_offer" targetRef="servicetask_update_rolecontract_after_candidate_decline">
+    <sequenceFlow id="flow_review_declined" sourceRef="usertask_supplier_review_offer" targetRef="usertask_setup_role">
       <conditionExpression xsi:type="tFormalExpression">
         <![CDATA[${candidateReviewOutcome == 'Declined'} ]]>
       </conditionExpression>
     </sequenceFlow>
-    <serviceTask id="servicetask_update_rolecontract_after_candidate_decline" name="Update the role and contract after candidate declines" activiti:class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierDecline"></serviceTask>
-    <sequenceFlow id="flow_return_to_setup" sourceRef="servicetask_update_rolecontract_after_candidate_decline" targetRef="usertask_setup_role"></sequenceFlow>
     <userTask id="usertask_productionTeam_approve_offer" name="Check right to work and confirm crew position" activiti:candidateGroups="${contract_contractApprovalRole}" activiti:formKey="mwtwf:approveContractDetailsTask">
       <extensionElements>
         <activiti:taskListener event="create" class="com.mwt.activiti.handlers.TaskContextProductionPublic"></activiti:taskListener>
-        <activiti:taskListener event="create" class="com.mwt.activiti.handlers.roleContract.UpdateContractAfterSupplierAccept"></activiti:taskListener>
         <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
           <activiti:field name="script">
             <activiti:string><![CDATA[task.description = "Check the right to work and approve the crew member for " + contract_serviceName;]]></activiti:string>

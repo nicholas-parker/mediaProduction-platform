@@ -3,8 +3,13 @@ package com.mwt.contract;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.repo.site.SiteModel;
@@ -12,6 +17,7 @@ import org.alfresco.service.ServiceRegistry;
 import org.alfresco.service.cmr.model.FileFolderService;
 import org.alfresco.service.cmr.model.FileInfo;
 import org.alfresco.service.cmr.model.FileNotFoundException;
+import org.alfresco.service.cmr.repository.ChildAssociationRef;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.ResultSet;
@@ -22,12 +28,15 @@ import org.alfresco.service.namespace.QName;
 import com.mwt.contract.ContractServiceException;
 import com.mwt.contract.model.ContractDocumentModel;
 import com.mwt.contract.model.RegisteredOrgModel;
+import com.mwt.contract.model.ServicePeriodModel;
+import com.mwt.contract.propertyBuilder.ContractContentBuilder;
 import com.mwt.production.ContractDocumentTypes;
 import com.mwt.production.MediaProductionModel;
 import com.mwt.production.ProductionDocumentModel;
 import com.mwt.roles.ProductionRoleException;
 import com.mwt.roles.ProductionRoleManager;
 import com.mwt.roles.ProductionRoleModel;
+import com.nvp.alfresco.docx.WordPropertiesManager;
 import com.nvp.util.DocUtil;
 import com.nvp.util.MapperUtil;
 import com.nvp.util.NodeRefUtil;
@@ -38,6 +47,7 @@ public class ContractService {
 	
 	public static String CONTRACT_COMPONENT_ID = "contractContainer";
 	public static String CONTRACT_CONTAINER_NAME = "Contracts";
+    public static String CONTRACT_TEMPLATE_CONTAINER_NAME = "Contract Templates";
     
     public void setServiceRegistry(ServiceRegistry registry) {
         this.registry = registry;
@@ -195,6 +205,96 @@ public class ContractService {
 		 return contractDocumentNode;
 		 
     }
+    
+    /**
+     * merges the node metadata into the node content using Docx4J libraries.
+     * Content must be a docx type
+     * 
+     */
+    public void mergeContractPropertiesToContent(NodeRef contractNode, boolean saveAsPDF) throws ContractTemplateServiceException {
+    
+		/**
+		 * 
+		 * merge the contract document node properties into the contract documentNodement itself
+		 * 
+		 */
+		Map<QName, Serializable> contractDocumentProperties = new HashMap<QName, Serializable>();
+		NodeService nodeService = this.registry.getNodeService();
+		contractDocumentProperties = nodeService.getProperties(contractNode);
+
+		/**
+		 * get an array of servicePeriod nodes
+		 */
+		Set<QName> servicePeriodTypeName = new HashSet<QName>();
+		servicePeriodTypeName.add(ServicePeriodModel.QN_SERVICEPERIOD_TYPE);
+		List<ChildAssociationRef> childRefs = nodeService.getChildAssocs(contractNode, servicePeriodTypeName);
+		
+		/**
+		 * 
+		 * build the XML to merge into the document
+		 * 
+		 */
+		ContractContentBuilder contentBuilder = new ContractContentBuilder();
+		try {
+		contentBuilder.propertiesToCustomContent(contractDocumentProperties);
+		if(!childRefs.isEmpty()) {
+			Map<QName, Serializable> servicePeriodProperties = new HashMap<QName, Serializable>();
+			for(ChildAssociationRef childAssoc : childRefs ) {
+				servicePeriodProperties = nodeService.getProperties(childAssoc.getChildRef());
+				
+				String servicePeriodId = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_ID);
+				String servicePeriodName = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_NAME); 
+				String servicePeriodDesc = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICEPERIOD_DESCRIPTION); 
+				String serviceTypeCode = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_TYPE_CODE);
+				String servicePeriodType = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_PERIOD_TYPE);
+				String serviceStart = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_START).toString(); 
+				String serviceEnd = (String) servicePeriodProperties.get(ServicePeriodModel.QN_SERVICE_END).toString();
+				
+				        contentBuilder.addServicePeriod(servicePeriodId,
+				        								servicePeriodName, 
+				        								servicePeriodDesc, 
+				        								serviceTypeCode, 
+				        								servicePeriodType,
+				        								serviceStart, 
+				        								serviceEnd);
+			}
+
+		}
+		
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+			throw new ContractTemplateServiceException("Error creating the content to merge into the document", e1);
+		} catch (TransformerException e2) {
+			e2.printStackTrace();
+			throw new ContractTemplateServiceException("Error creating the content to merge into the document", e2);
+        } catch (Exception e3) {
+        	e3.printStackTrace();
+        	throw new ContractTemplateServiceException("Error creating the content to merge into the document", e3);
+        }
+		
+		
+		try {
+			
+		  WordPropertiesManager wordPropertiesManager = new WordPropertiesManager();
+		  wordPropertiesManager.setServiceRegistry(this.registry);
+	      wordPropertiesManager.setWordNodeRef(contractNode);
+	      wordPropertiesManager.mergeProperties(contentBuilder.getDocument());
+	      if(saveAsPDF) {
+	        wordPropertiesManager.writeToNodeContentAsPDF(contractNode);
+	      } else {
+	    	wordPropertiesManager.writeToNodeContent(contractNode);  
+	      }
+
+          System.out.println("Contract document content update completed...");
+        
+		} catch (Exception e) {
+		
+			System.out.println(e);
+			throw new ContractTemplateServiceException("Error merging the content into the document", e);
+		}
+
+    }
+    
     
     /**
      * 
@@ -557,7 +657,8 @@ public class ContractService {
 	   try {
 		   
 		   NodeRef docLibContainer = siteService.getContainer(siteShortName, SiteService.DOCUMENT_LIBRARY);
-		   
+
+		   // Contracts folder
 		   contractsContainer = fileFolderService.create(docLibContainer, 
                    CONTRACT_CONTAINER_NAME, 
                    ContractDocumentModel.QN_CONTRACT_CONTAINER_TYPE).getNodeRef();
@@ -565,6 +666,13 @@ public class ContractService {
 		   Map<QName, Serializable> containerProperties = new HashMap<QName, Serializable>();
 		   containerProperties.put(SiteModel.PROP_COMPONENT_ID, ContractDocumentModel.CONTRACT_CONTAINER_ID);
 		   nodeService.addAspect(contractsContainer , SiteModel.ASPECT_SITE_CONTAINER, containerProperties);
+
+		   // Contracts template
+		   contractsContainer = fileFolderService.create(docLibContainer, 
+                   CONTRACT_TEMPLATE_CONTAINER_NAME, 
+                   ContractDocumentModel.QN_CONTRACT_CONTAINER_TYPE).getNodeRef();
+
+		   
 
 	   } catch (Exception e) {
 

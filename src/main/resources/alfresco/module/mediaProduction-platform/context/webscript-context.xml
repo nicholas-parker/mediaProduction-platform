@@ -100,5 +100,11 @@
 	      parent="webscript">
 	      <property name='serviceRegistry' ref='ServiceRegistry' />
 	</bean>
+
+	<bean id="webscript.mwt.contract.mergecontractpropertiestocontentservice.get" 
+	      class="com.mwt.contract.MergeContractPropertiesToContentService"
+	      parent="webscript">
+	      <property name='serviceRegistry' ref='ServiceRegistry' />
+	</bean>
 	      
 </beans>
