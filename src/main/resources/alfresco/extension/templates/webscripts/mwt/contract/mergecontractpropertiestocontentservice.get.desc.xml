@@ -1,0 +1,9 @@
+<webscript>
+	<shortname>Merge Contract Properties To Template</shortname>
+	<description>Merge a nodes properties into the content using the Docx4J libraries</description>
+	<url>/mwt/contract/merge/{nodeId}/{saveAsPdf}</url>
+	<format default="json"></format>
+	<authentication>user</authentication>
+	<transaction allow="readwrite" buffersize="0">required</transaction>
+	<lifecycle>public_api</lifecycle>
+</webscript>
